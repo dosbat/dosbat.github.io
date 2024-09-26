@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【Docker更新】使用watchtower自动更新容器 | DOS/BAT</title><meta name="author" content="0x01"><meta name="copyright" content="0x01"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Watchtower是用来在后台自动更新docker容器镜像的神器，配置部署好docker容器之后，使用watchtower就可以做到后台自动更新。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Docker更新】使用watchtower自动更新容器">
+<meta property="og:url" content="https://dosbat.com/2023/08/29/%E3%80%90Docker%E6%9B%B4%E6%96%B0%E3%80%91%E4%BD%BF%E7%94%A8watchtower%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%E5%AE%B9%E5%99%A8/index.html">
+<meta property="og:site_name" content="DOS&#x2F;BAT">
+<meta property="og:description" content="Watchtower是用来在后台自动更新docker容器镜像的神器，配置部署好docker容器之后，使用watchtower就可以做到后台自动更新。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/01/pP0IMCj.jpg">
+<meta property="article:published_time" content="2023-08-29T04:11:12.000Z">
+<meta property="article:modified_time" content="2023-09-01T07:54:42.564Z">
+<meta property="article:author" content="0x01">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Watchtower">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/09/01/pP0IMCj.jpg"><link rel="shortcut icon" href="https://s1.ax1x.com/2023/09/09/pP62Apj.png"><link rel="canonical" href="https://dosbat.com/2023/08/29/%E3%80%90Docker%E6%9B%B4%E6%96%B0%E3%80%91%E4%BD%BF%E7%94%A8watchtower%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%E5%AE%B9%E5%99%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 0x01","link":"链接: ","source":"来源: DOS/BAT","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【Docker更新】使用watchtower自动更新容器',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-01 15:54:42'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">93</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/dailyorder/"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 收藏</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2023/09/01/pP0IMCj.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="DOS/BAT"><span class="site-name">DOS/BAT</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/dailyorder/"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 收藏</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【Docker更新】使用watchtower自动更新容器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-29T04:11:12.000Z" title="发表于 2023-08-29 12:11:12">2023-08-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-01T07:54:42.564Z" title="更新于 2023-09-01 15:54:42">2023-09-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Ops/">Ops</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Ops/Docker/">Docker</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【Docker更新】使用watchtower自动更新容器"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>借助<code>Watchtower</code> ，只需将新映像推送到 <code>Docker Hub</code> 自己的映像注册表即可更新容器化应用程序的运行版本。<code>Watchtower</code> 将拉取的新映像，正常关闭现有容器，并使用最初部署时使用的相同选项重新启动它。</p>
+<h5 id="docker-run"><a href="#docker-run" class="headerlink" title="docker run"></a>docker run</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d \</span><br><span class="line">--name watchtower \</span><br><span class="line">-v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">containrrr/watchtower</span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">&quot;3&quot;</span></span><br><span class="line">services:</span><br><span class="line">  watchtower:</span><br><span class="line">    image: containrrr/watchtower</span><br><span class="line">    volumes:</span><br><span class="line">      - /var/run/docker.sock:/var/run/docker.sock</span><br></pre></td></tr></table></figure>
+
+<h2 id="容器选择"><a href="#容器选择" class="headerlink" title="容器选择"></a>容器选择</h2><h3 id="完全排除更新"><a href="#完全排除更新" class="headerlink" title="完全排除更新"></a>完全排除更新</h3><p>如果需要排除某些容器，请将<code>com. centurylinklabs.watchtower.enable</code>标签设置为<code>false</code>。为了清楚起见，应该在您希望忽略的<strong>容器上</strong>设置此值，而不是在了<code>Watchtower</code>上设置此值。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><h5 id="dockerfile"><a href="#dockerfile" class="headerlink" title="dockerfile"></a>dockerfile</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LABEL com.centurylinklabs.watchtower.enable=<span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-run-1"><a href="#docker-run-1" class="headerlink" title="docker run"></a>docker run</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --label=com.centurylinklabs.watchtower.enable=<span class="literal">false</span> someimage</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">&quot;3&quot;</span></span><br><span class="line">services:</span><br><span class="line">  someimage:</span><br><span class="line">    container_name: someimage</span><br><span class="line">    labels:</span><br><span class="line">      - <span class="string">&quot;com.centurylinklabs.watchtower.enable=false&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="启用更新"><a href="#启用更新" class="headerlink" title="启用更新"></a>启用更新</h3><p>相反，如果您只想包含带有<code>启用</code>标签的容器，请在启动时传递<code>--label-enable</code>标志或<code>WATCHTOWER_LABEL_ENABLE</code>环境变量给瞭望塔，并在要监视的容器上设置<code>com. centurylinklabs.watchtower.enable</code>标签，其值为。<code>true</code></p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><h5 id="dockerfile-1"><a href="#dockerfile-1" class="headerlink" title="dockerfile"></a>dockerfile</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LABEL com.centurylinklabs.watchtower.enable=<span class="string">&quot;true&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-run-2"><a href="#docker-run-2" class="headerlink" title="docker run"></a>docker run</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --label=com.centurylinklabs.watchtower.enable=<span class="literal">true</span> someimage</span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-compose-1"><a href="#docker-compose-1" class="headerlink" title="docker-compose"></a>docker-compose</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">&quot;3&quot;</span></span><br><span class="line">services:</span><br><span class="line">  someimage:</span><br><span class="line">    container_name: someimage</span><br><span class="line">    labels:</span><br><span class="line">      - <span class="string">&quot;com.centurylinklabs.watchtower.enable=true&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Watchtower</code> 通过根据每个配置的标准进行测试来过滤正在运行的容器。如果满足所有标准，则对容器进行监控。例如： - 如果容器的名称在监控名称列表中（非空<code>--name</code>参数）但未启用（<code>centurylinklabs.watchtower.enable=false</code>），则不会被监控；- 如果容器的名称不在监控名称列表中（非空<code>--name</code>参数），即使启用（<code>centurnlinklabs.watchtower.enable=true</code>且<code>--label-enable</code>设置了<code>flag</code>），也不会被监控；</p>
+<h3 id="仅监控"><a href="#仅监控" class="headerlink" title="仅监控"></a>仅监控</h3><p>单个容器可以标记为<code>仅受监视（而不更新）</code>。</p>
+<p>为此，请在该容器上设置<code>com. centurylinklabs.watchtower.monitor-only</code>标签<code>true</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LABEL com.centurylinklabs.watchtower.monitor-only=&quot;true&quot;</span><br></pre></td></tr></table></figure>
+
+<p>或者，可以将其指定为<code>docker run</code>命令行的一部分：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --label=com.centurylinklabs.watchtower.monitor-only=<span class="literal">true</span> someimage</span><br></pre></td></tr></table></figure>
+
+<p>当在容器上指定标签时，了望塔会将该容器视为与已设置的标签完全相同<code>WATCHTOWER_MONITOR_ONLY</code>，但效果仅限于单个容器。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://dosbat.com">0x01</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://dosbat.com/2023/08/29/%E3%80%90Docker%E6%9B%B4%E6%96%B0%E3%80%91%E4%BD%BF%E7%94%A8watchtower%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%E5%AE%B9%E5%99%A8/">https://dosbat.com/2023/08/29/%E3%80%90Docker%E6%9B%B4%E6%96%B0%E3%80%91%E4%BD%BF%E7%94%A8watchtower%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%E5%AE%B9%E5%99%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://dosbat.com" target="_blank">DOS/BAT</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/Watchtower/">Watchtower</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2023/09/01/pP0IMCj.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/31/%E3%80%90Docker%E5%AD%98%E5%82%A8%E3%80%91%E5%AE%B9%E5%99%A8%E8%BF%81%E7%A7%BB/" title="【Docker存储】容器迁移"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0oPdU.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【Docker存储】容器迁移</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/25/Grafana%E8%AE%BE%E7%BD%AE%E5%85%8D%E5%AF%86%E6%9F%A5%E7%9C%8B/" title="Grafana设置免登陆访问"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0qJq1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Grafana设置免登陆访问</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/12/21/CentOS7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" title="CentOS7 环境变量详解"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-21</div><div class="title">CentOS7 环境变量详解</div></div></a></div><div><a href="/2021/12/11/Centos7%E6%90%AD%E5%BB%BADocker%E7%8E%AF%E5%A2%83/" title="Centos 7搭建 Docker 环境"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-11</div><div class="title">Centos 7搭建 Docker 环境</div></div></a></div><div><a href="/2023/01/01/Docker%E5%A4%87%E5%BF%98%E5%BD%95/" title="Docker 备忘录"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0oPdU.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-01</div><div class="title">Docker 备忘录</div></div></a></div><div><a href="/2023/03/20/Docker%E6%90%AD%E5%BB%BADNS%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Docker搭建DNS服务器"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0oPdU.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-20</div><div class="title">Docker搭建DNS服务器</div></div></a></div><div><a href="/2023/02/01/Docker%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="Docker环境搭建"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0oPdU.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-01</div><div class="title">Docker环境搭建</div></div></a></div><div><a href="/2023/02/18/Linux%20%E4%BA%A4%E4%BA%92%E6%9D%83%E9%99%90%20binfalse%20%E4%B8%8Esbinnologin%E5%8C%BA%E5%88%AB/" title="Linux 交互权限 &#x2F;bin&#x2F;false 与&#x2F;sbin&#x2F;nologin区别？"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-18</div><div class="title">Linux 交互权限 &#x2F;bin&#x2F;false 与&#x2F;sbin&#x2F;nologin区别？</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0x01</div><div class="author-info__description">有人辞官归故里，有人星夜赶科场。 少年不知愁滋味，老来方知行路难。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">93</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/isslower" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dosbat666@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://dosbat.com/link" target="_blank" title="友链"><i class="fas fa-link"></i></a><a class="social-icon" href="https://dosbat.com/tags" target="_blank" title="便签"><i class="fab fa-tag"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#docker-run"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">docker run</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#docker-compose-yml"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">docker-compose.yml</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">容器选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E5%85%A8%E6%8E%92%E9%99%A4%E6%9B%B4%E6%96%B0"><span class="toc-number">2.1.</span> <span class="toc-text">完全排除更新</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.1.1.</span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dockerfile"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">dockerfile</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#docker-run-1"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">docker run</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#docker-compose"><span class="toc-number">2.1.1.3.</span> <span class="toc-text">docker-compose</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E6%9B%B4%E6%96%B0"><span class="toc-number">2.2.</span> <span class="toc-text">启用更新</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#dockerfile-1"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">dockerfile</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#docker-run-2"><span class="toc-number">2.2.1.2.</span> <span class="toc-text">docker run</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#docker-compose-1"><span class="toc-number">2.2.1.3.</span> <span class="toc-text">docker-compose</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%85%E7%9B%91%E6%8E%A7"><span class="toc-number">2.3.</span> <span class="toc-text">仅监控</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/09/26/RHCSA%E8%AE%A4%E8%AF%81%E8%80%83%E8%AF%95-%E9%99%84%E5%8A%A0%E9%A2%98/" title="RHCSA认证考试-附加题"><img src="https://z1.ax1x.com/2023/09/22/pPoVYH1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RHCSA认证考试-附加题"/></a><div class="content"><a class="title" href="/2024/09/26/RHCSA%E8%AE%A4%E8%AF%81%E8%80%83%E8%AF%95-%E9%99%84%E5%8A%A0%E9%A2%98/" title="RHCSA认证考试-附加题">RHCSA认证考试-附加题</a><time datetime="2024-09-26T07:17:08.412Z" title="发表于 2024-09-26 15:17:08">2024-09-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/29/Cgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6/" title="Cgroups资源限制"><img src="https://s11.ax1x.com/2023/12/29/piLg7RA.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Cgroups资源限制"/></a><div class="content"><a class="title" href="/2023/12/29/Cgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6/" title="Cgroups资源限制">Cgroups资源限制</a><time datetime="2023-12-29T07:15:29.000Z" title="发表于 2023-12-29 15:15:29">2023-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/21/%E5%AE%89%E5%85%A8%E5%9F%BA%E7%BA%BF-%E8%85%BE%E8%AE%AF%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86/" title="安全基线-腾讯安全标准"><img src="https://s11.ax1x.com/2023/09/01/pP0Lmyd.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="安全基线-腾讯安全标准"/></a><div class="content"><a class="title" href="/2023/12/21/%E5%AE%89%E5%85%A8%E5%9F%BA%E7%BA%BF-%E8%85%BE%E8%AE%AF%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86/" title="安全基线-腾讯安全标准">安全基线-腾讯安全标准</a><time datetime="2023-12-21T03:15:22.000Z" title="发表于 2023-12-21 11:15:22">2023-12-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/13/%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91Zabbix%206%20%20HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2/" title="源码编译Zabbix 6  HA高可用部署"><img src="https://z1.ax1x.com/2023/12/13/pifryfs.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="源码编译Zabbix 6  HA高可用部署"/></a><div class="content"><a class="title" href="/2023/12/13/%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91Zabbix%206%20%20HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2/" title="源码编译Zabbix 6  HA高可用部署">源码编译Zabbix 6  HA高可用部署</a><time datetime="2023-12-13T09:15:21.000Z" title="发表于 2023-12-13 17:15:21">2023-12-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/13/Linux%E5%88%86%E5%8C%BA%E4%B9%8BEXT2,EXT3,EXT4,XFS/" title="Linux分区之EXT2,EXT3,EXT4,XFS"><img src="https://z1.ax1x.com/2023/12/13/pif0otA.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux分区之EXT2,EXT3,EXT4,XFS"/></a><div class="content"><a class="title" href="/2023/12/13/Linux%E5%88%86%E5%8C%BA%E4%B9%8BEXT2,EXT3,EXT4,XFS/" title="Linux分区之EXT2,EXT3,EXT4,XFS">Linux分区之EXT2,EXT3,EXT4,XFS</a><time datetime="2023-12-13T02:15:36.000Z" title="发表于 2023-12-13 10:15:36">2023-12-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 0x01</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

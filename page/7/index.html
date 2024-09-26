@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>DOS/BAT</title><meta name="author" content="0x01"><meta name="copyright" content="0x01"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="有人辞官归故里，有人星夜赶科场。 少年不知愁滋味，老来方知行路难。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DOS&#x2F;BAT">
+<meta property="og:url" content="https://dosbat.com/page/7/index.html">
+<meta property="og:site_name" content="DOS&#x2F;BAT">
+<meta property="og:description" content="有人辞官归故里，有人星夜赶科场。 少年不知愁滋味，老来方知行路难。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/09/pP62cut.png">
+<meta property="article:author" content="0x01">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/09/09/pP62cut.png"><link rel="shortcut icon" href="https://s1.ax1x.com/2023/09/09/pP62Apj.png"><link rel="canonical" href="https://dosbat.com/page/7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 0x01","link":"链接: ","source":"来源: DOS/BAT","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DOS/BAT',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-09-26 15:17:22'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">93</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/dailyorder/"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 收藏</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://s1.ax1x.com/2023/01/09/pSekGN9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="DOS/BAT"><span class="site-name">DOS/BAT</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/dailyorder/"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 收藏</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">DOS/BAT</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/isslower" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dosbat666@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://dosbat.com/link" target="_blank" title="友链"><i class="fas fa-link"></i></a><a class="social-icon" href="https://dosbat.com/tags" target="_blank" title="便签"><i class="fab fa-tag"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2023/01/01/Linux%20%E9%85%8D%E7%BD%AEmail%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" title="Linux配置mail发送qq邮箱"><img class="post-bg" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux配置mail发送qq邮箱"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/01/01/Linux%20%E9%85%8D%E7%BD%AEmail%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" title="Linux配置mail发送qq邮箱">Linux配置mail发送qq邮箱</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-01T08:05:59.000Z" title="发表于 2023-01-01 16:05:59">2023-01-01</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-01T09:56:09.666Z" title="更新于 2023-09-01 17:56:09">2023-09-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">系统运维</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">配置安装mailx1yum -y install mailx
+
+配置文件1vim /etc/mail.rc
+1234567set from=发送方qq邮箱set smtp=smtps://smtp.qq.com:465set smtp-auth-user=发送方qq邮箱set smtp-auth-password=鉴权密码set smtp-auth=loginset ssl-verify=ignoreset nss-config-dir=/etc/pki/nssdb
+
+
+获取邮箱鉴权密码
+在任何邮箱平台中开启smtp,开启后会得到一个授权码
+
+
+这个授权码就代替了密码（邮箱设置界面开启）
+
+
+
+配SSL证书下载证书输出到指定目录1echo   -n &quot; &quot; |  openssl s_client -connect smtp.qq.com:465 | sed -ne  &#x27;/-BEGIN CERTIFICATE-/,/-END CERTIFIICATE-/p&#x27;  &gt;  /etc/pki/nssdb/qq.crt
+
+配置协议1certutil - ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/01/01/Docker%E5%A4%87%E5%BF%98%E5%BD%95/" title="Docker 备忘录"><img class="post-bg" src="https://s1.ax1x.com/2023/09/01/pP0oPdU.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker 备忘录"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/01/01/Docker%E5%A4%87%E5%BF%98%E5%BD%95/" title="Docker 备忘录">Docker 备忘录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-01T05:11:22.000Z" title="发表于 2023-01-01 13:11:22">2023-01-01</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-01T08:07:03.855Z" title="更新于 2023-09-01 16:07:03">2023-09-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ops/">Ops</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ops/Docker/">Docker</a></span></div><div class="content">生命周期命令创建一个容器（不启动它）：
+1docker create [IMAGE]
+重命名现有容器
+1docker rename [CONTAINER_NAME] [NEW_CONTAINER_NAME]
+在新容器中运行命令
+1docker run [IMAGE] [COMMAND]
+退出后移除容器
+1docker run --rm [IMAGE]
+启动一个容器并保持运行
+1docker run -td [IMAGE]
+启动一个容器并在容器中创建一个交互式 bash shell
+1docker run -it [IMAGE]
+在容器内创建、启动和运行命令，并在执行命令后移除容器。
+1docker run -it-rm [IMAGE]
+在已经运行的容器内执行命令。
+1docker exec -it [container]
+
+删除一个容器（如果它没有运行）
+1docker rm [CONTAINER]
+
+更新容器的配置
+1docker update [CONTAINER]
+启动和停止容器启动容器
+1docker start [CONTAINER]
+
+停止运行容器
+1docker stop ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/01/01/Centos%E9%94%99%E8%AF%AF%EF%BC%9A%E4%B8%BArepo%20'appstream'%E4%B8%8B%E8%BD%BD%E5%85%83%E6%95%B0%E6%8D%AE%E5%A4%B1%E8%B4%A5/" title="CentOS 错误：为 repo 'appstream' 下载元数据失败..."><img class="post-bg" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CentOS 错误：为 repo 'appstream' 下载元数据失败..."></a></div><div class="recent-post-info"><a class="article-title" href="/2023/01/01/Centos%E9%94%99%E8%AF%AF%EF%BC%9A%E4%B8%BArepo%20'appstream'%E4%B8%8B%E8%BD%BD%E5%85%83%E6%95%B0%E6%8D%AE%E5%A4%B1%E8%B4%A5/" title="CentOS 错误：为 repo 'appstream' 下载元数据失败...">CentOS 错误：为 repo 'appstream' 下载元数据失败...</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-01T03:15:29.000Z" title="发表于 2023-01-01 11:15:29">2023-01-01</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-04T01:06:35.315Z" title="更新于 2023-09-04 09:06:35">2023-09-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">系统运维</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97/">错误日志</a></span></div><div class="content">报错场景​    
+1sudo yum install -y yum-utils
+
+出现如下错误的错误：为 repo ‘appstream’ 下载元数据失败 : Cannot prepare internal mirrorlist: No URLs in mirrorlist
+错误原因
+在2022年1月31日，CentOS团队终于从官方镜像中移除CentOS 8的所有包。
+CentOS8已于2021年12月31日寿终正非，但软件包仍在官方镜像上保留了一段时间。现在他们被转移到https://vault.centos.org
+
+解决方法如果你仍然需要运行CentOS 8，你可以在/etc/yum.repos.d中更新一下源。使用vault.centos.org代替mirror.centos.org。
+执行一下两行代码进行修改
+123sudo sed -i -e &quot;s|mirrorlist=|#mirrorlist=|g&quot; /etc/yum.repos.d/CentOS-* sudo sed -i -e &quot;s|#baseurl=http://mirror.ce ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/12/21/CentOS7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" title="CentOS7 环境变量详解"><img class="post-bg" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CentOS7 环境变量详解"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/21/CentOS7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" title="CentOS7 环境变量详解">CentOS7 环境变量详解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-21T10:15:20.000Z" title="发表于 2022-12-21 18:15:20">2022-12-21</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-04T01:06:35.324Z" title="更新于 2023-09-04 09:06:35">2023-09-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">系统运维</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/Linux%E5%9F%BA%E7%A1%80/">Linux基础</a></span></div><div class="content">概念1、环境变量的含义程序（操作系统命令和应用程序）的执行都需要运行环境，这个环境是由多个环境变量组成的。
+2、环境变量的分类
+按生效的范围分类。系统环境变量：公共的，对全部的用户都生效。用户环境变量：用户私有的、自定义的个性化设置，只对该用户生效。
+按生存周期分类。永久环境变量：在环境变量脚本文件中配置，用户每次登录时会自动执行这些脚本，相当于永久生效。临时环境变量：使用时在Shell中临时定义，退出Shell后失效。
+
+3、Linux环境变量Linux环境变量也称之为Shell环境量变，以下划线和字母打头，由下划线、字母（区分大小写）和数字组成，习惯上使用大写字母，例如PATH、HOSTNAME、LANG等。
+常用的环境变量1、查看环境变量
+env命令
+echo命令
+
+2、常用的环境变量
+PATH：可执行程序的搜索目录，可执行程序包括Linux系统命令和用户的应用程序，PATH变量的具体用法本文后面的章节中有详细的介绍。
+LANG：Linux系统的语言、地区、字符集，LANG变量的具体用法本文后面的章节中有详细的介绍。
+HOSTNAME：服务器的主机名。
+SHELL：用户当前使用的 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/12/21/Nginx%20%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/" title="Nginx 压力测试"><img class="post-bg" src="https://s1.ax1x.com/2023/09/01/pP0qGrR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nginx 压力测试"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/21/Nginx%20%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/" title="Nginx 压力测试">Nginx 压力测试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-21T04:11:22.000Z" title="发表于 2022-12-21 12:11:22">2022-12-21</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-01T09:45:39.273Z" title="更新于 2023-09-01 17:45:39">2023-09-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">系统运维</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></span></div><div class="content">1.下载测试工具1[root@nginx-test ~]# yum install httpd-tools
+
+2.查看测试工具版本号1234[root@nginx-test ~]# ab -VThis is ApacheBench, Version 2.3 &lt;$Revision: 1430300 $&gt;Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/Licensed to The Apache Software Foundation, http://www.apache.org/
+
+3.压力接口测试123[root@nginx-test ~]# ab -n 2000 -c 2  https://nues.cn/-n 总的请求数-c 并发数
+
+4.相关参数123456789101112131415161718192021222324-n在测试会话中所执行的请求个数。默认时，仅执行一个请求。-c一次产生的请求个数。默认是一次一个。-t测试所进行的最大秒数。其内部隐含值是-n 50000 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/12/20/Grafana7.2.1%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85zabbix%E6%8F%92%E4%BB%B6%EF%BC%8C%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E6%BA%90%E6%89%BE%E4%B8%8D%E5%88%B0zabbix/" title="Grafana7.2.1版本安装zabbix插件，添加数据源找不到zabbix"><img class="post-bg" src="https://s1.ax1x.com/2023/09/01/pP0qJq1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Grafana7.2.1版本安装zabbix插件，添加数据源找不到zabbix"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/20/Grafana7.2.1%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85zabbix%E6%8F%92%E4%BB%B6%EF%BC%8C%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E6%BA%90%E6%89%BE%E4%B8%8D%E5%88%B0zabbix/" title="Grafana7.2.1版本安装zabbix插件，添加数据源找不到zabbix">Grafana7.2.1版本安装zabbix插件，添加数据源找不到zabbix</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-20T01:15:21.000Z" title="发表于 2022-12-20 09:15:21">2022-12-20</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-01T09:46:35.941Z" title="更新于 2023-09-01 17:46:35">2023-09-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">系统运维</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0/">监控平台</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0/Grafana/">Grafana</a></span></div><div class="content">报错场景Grafana7.2.1版本安装zabbix插件，添加数据源找不到zabbix
+解决方法12345678[root@prometheus ~]# vim /etc/grafana/grafana.ini在690行 加上[plugins];enable_alpha = false;app_tls_skip_verify_insecure = falseallow_loading_unsigned_plugins = alexanderzobnin-zabbix-datasource#添加这行
+
+重启服务
+1[root@prometheus ~]# systemctl restart grafana-server.service</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/12/19/GitLab%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="GitLab的备份与恢复"><img class="post-bg" src="https://z1.ax1x.com/2023/09/22/pPo3mfs.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GitLab的备份与恢复"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/19/GitLab%E7%9A%84%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D/" title="GitLab的备份与恢复">GitLab的备份与恢复</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-19T04:11:29.000Z" title="发表于 2022-12-19 12:11:29">2022-12-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-22T07:02:52.134Z" title="更新于 2023-09-22 15:02:52">2023-09-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ops/">Ops</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Ops/GitLab/">GitLab</a></span></div><div class="content">一、Gitlab的备份目录路径设置Gitlab的备份目录可以在Gitlab的配置文件中设置：
+1vim /etc/gitlab/gitlab.rb
+
+修改如下：
+1234gitlab_rails[&#x27;manage_backup_path&#x27;] = true        gitlab_rails[&#x27;backup_path&#x27;] = &quot;/data/gitlab/backups&quot;    //gitlab备份目录gitlab_rails[&#x27;backup_archive_permissions&#x27;] = 0644       //生成的备份文件权限gitlab_rails[&#x27;backup_keep_time&#x27;] = 604800               //默认备份保留天数为7天（这里是604800秒）
+
+创建备份目录
+12mkdir -p /data/gitlab/backupschown -R git.git /data/gitlab/backups
+
+最后使用下面命令重载gitlab配置文件， ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/12/19/%E4%B8%8D%E5%90%8C%E7%BD%91%E6%AE%B5%E9%80%9A%E8%BF%87%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E7%8E%B0%E4%BA%92%E9%80%9A/" title="不同网段通过静态路由实现互通"><img class="post-bg" src="https://s1.ax1x.com/2023/09/09/pP6zpkD.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="不同网段通过静态路由实现互通"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/19/%E4%B8%8D%E5%90%8C%E7%BD%91%E6%AE%B5%E9%80%9A%E8%BF%87%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E7%8E%B0%E4%BA%92%E9%80%9A/" title="不同网段通过静态路由实现互通">不同网段通过静态路由实现互通</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-19T03:15:30.000Z" title="发表于 2022-12-19 11:15:30">2022-12-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-09T08:14:11.813Z" title="更新于 2023-09-09 16:14:11">2023-09-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">网络技术</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/%E8%B7%AF%E7%94%B1%E4%BA%A4%E6%8D%A2/">路由交换</a></span></div><div class="content">前言静态路由有5个主要的参数：目的地址和掩码、出接口和下一跳、优先级。
+实验拓扑图[
+1、配置各接口所属VLAN配置SwitchA。SwitchB和SwitchC的配置与SwitchA类似。1234567891011&lt;HUAWEI&gt; system-view[HUAWEI] sysname SwitchA[SwitchA] vlan batch 10 30[SwitchA] interface gigabitethernet 0/0/1[SwitchA-GigabitEthernet0/0/1] port link-type trunk[SwitchA-GigabitEthernet0/0/1] port trunk allow-pass vlan 10[SwitchA-GigabitEthernet0/0/1] quit[SwitchA] interface gigabitethernet 0/0/2[SwitchA-GigabitEthernet0/0/2] port link-type access[SwitchA-GigabitEthernet0/0/2] port  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/12/19/MySQL-%E9%85%8D%E7%BD%AE%E5%AF%86%E7%A0%81%E7%AD%96%E7%95%A5%EF%BC%88validate_password%EF%BC%89%E6%8F%92%E4%BB%B6/" title="MySQL-配置密码策略（validate_password）插件"><img class="post-bg" src="https://s1.ax1x.com/2023/09/09/pPcSs2j.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL-配置密码策略（validate_password）插件"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/19/MySQL-%E9%85%8D%E7%BD%AE%E5%AF%86%E7%A0%81%E7%AD%96%E7%95%A5%EF%BC%88validate_password%EF%BC%89%E6%8F%92%E4%BB%B6/" title="MySQL-配置密码策略（validate_password）插件">MySQL-配置密码策略（validate_password）插件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-19T01:12:19.000Z" title="发表于 2022-12-19 09:12:19">2022-12-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-09T08:49:24.320Z" title="更新于 2023-09-09 16:49:24">2023-09-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a></span></div><div class="content">概述validate_password（密码插件）validate_password（密码插件）是MySQL5.6版本开始有的，部分版本默认是不开启的。作用：强制要求登入密码符合复杂性规范
+检查插件目录1mysql&gt; show variables like &#x27;plugin_dir&#x27;;
+
+下载第三方开源插件文件并上传到步骤1目录上1mysql5.7默认安装了密码安全检查插件（validate_password）
+
+配置文件中添加对象参数配置123456[mysqld]plugin-load-add=validate_password.soor plugin-load=validate_password.so# validate_password_policy=2validate-password=FORCE_PLUS_PERMANENT
+
+连接数据库并进行安装插件1mysql&gt; INSTALL PLUGIN validate_password SONAME &#x27;validate_password.so&#x27;;
+
+检查确认12345678910 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/12/18/Linux%20shell%E8%84%9A%E6%9C%AC%20%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5%E5%B7%A5%E5%85%B7%20shellcheck/" title="Linux shell脚本 静态检查工具 shellcheck"><img class="post-bg" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux shell脚本 静态检查工具 shellcheck"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/12/18/Linux%20shell%E8%84%9A%E6%9C%AC%20%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5%E5%B7%A5%E5%85%B7%20shellcheck/" title="Linux shell脚本 静态检查工具 shellcheck">Linux shell脚本 静态检查工具 shellcheck</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-18T02:15:30.000Z" title="发表于 2022-12-18 10:15:30">2022-12-18</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-01T09:57:44.758Z" title="更新于 2023-09-01 17:57:44">2023-09-01</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">系统运维</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/%E5%BA%94%E7%94%A8%E6%90%AD%E5%BB%BA/">应用搭建</a></span></div><div class="content">简介shellcheck 是一款实用的 shell脚本静态检查工具。
+
+首先，可以帮助你提前发现并修复简单的语法错误，节约时间。每次都需要运行才发现写错了一个小地方，确实非常浪费时间。
+其次，可以针对你当前不够完善不够健壮的写法，提供建议，帮助你提前绕开一些坑，避免等问题真的发生了才去调试处理。
+
+在其介绍中，目标是针对所有用户的，从初学者到高手，都用得上
+
+指出并澄清典型的初学者的语法问题，那通常会shell提供神秘的错误消息。
+指出并澄清典型的中级的语义问题，这些问题会导致shell出现奇怪且反直觉的行为。
+指出可能导致高级用户的脚本中，可能在未来某种情况下失败的陷阱。
+
+在网页上使用1非常简单，在网页 `https://www.shellcheck.net` 上，贴入你的脚本，运行检查即可
+
+在命令行中使用1下载后，在命令行中调用 `shellcheck yourscript` 即可
+
+集成到编辑器中(推荐)推荐将shellcheck直接集成到日常编辑器中，这样就可以直接在编辑器中查看ShellCheck建议，以最快速度发现并修复问题。
+
+Vim 通过 ALE, Neomake  ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/6/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#content-inner">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#content-inner">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#content-inner">10</a><a class="extend next" rel="next" href="/page/8/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0x01</div><div class="author-info__description">有人辞官归故里，有人星夜赶科场。 少年不知愁滋味，老来方知行路难。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">93</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/isslower" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dosbat666@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://dosbat.com/link" target="_blank" title="友链"><i class="fas fa-link"></i></a><a class="social-icon" href="https://dosbat.com/tags" target="_blank" title="便签"><i class="fab fa-tag"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/09/26/RHCSA%E8%AE%A4%E8%AF%81%E8%80%83%E8%AF%95-%E9%99%84%E5%8A%A0%E9%A2%98/" title="RHCSA认证考试-附加题"><img src="https://z1.ax1x.com/2023/09/22/pPoVYH1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RHCSA认证考试-附加题"/></a><div class="content"><a class="title" href="/2024/09/26/RHCSA%E8%AE%A4%E8%AF%81%E8%80%83%E8%AF%95-%E9%99%84%E5%8A%A0%E9%A2%98/" title="RHCSA认证考试-附加题">RHCSA认证考试-附加题</a><time datetime="2024-09-26T07:17:08.412Z" title="发表于 2024-09-26 15:17:08">2024-09-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/29/Cgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6/" title="Cgroups资源限制"><img src="https://s11.ax1x.com/2023/12/29/piLg7RA.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Cgroups资源限制"/></a><div class="content"><a class="title" href="/2023/12/29/Cgroups%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6/" title="Cgroups资源限制">Cgroups资源限制</a><time datetime="2023-12-29T07:15:29.000Z" title="发表于 2023-12-29 15:15:29">2023-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/21/%E5%AE%89%E5%85%A8%E5%9F%BA%E7%BA%BF-%E8%85%BE%E8%AE%AF%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86/" title="安全基线-腾讯安全标准"><img src="https://s11.ax1x.com/2023/09/01/pP0Lmyd.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="安全基线-腾讯安全标准"/></a><div class="content"><a class="title" href="/2023/12/21/%E5%AE%89%E5%85%A8%E5%9F%BA%E7%BA%BF-%E8%85%BE%E8%AE%AF%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86/" title="安全基线-腾讯安全标准">安全基线-腾讯安全标准</a><time datetime="2023-12-21T03:15:22.000Z" title="发表于 2023-12-21 11:15:22">2023-12-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/13/%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91Zabbix%206%20%20HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2/" title="源码编译Zabbix 6  HA高可用部署"><img src="https://z1.ax1x.com/2023/12/13/pifryfs.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="源码编译Zabbix 6  HA高可用部署"/></a><div class="content"><a class="title" href="/2023/12/13/%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91Zabbix%206%20%20HA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2/" title="源码编译Zabbix 6  HA高可用部署">源码编译Zabbix 6  HA高可用部署</a><time datetime="2023-12-13T09:15:21.000Z" title="发表于 2023-12-13 17:15:21">2023-12-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/13/Linux%E5%88%86%E5%8C%BA%E4%B9%8BEXT2,EXT3,EXT4,XFS/" title="Linux分区之EXT2,EXT3,EXT4,XFS"><img src="https://z1.ax1x.com/2023/12/13/pif0otA.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux分区之EXT2,EXT3,EXT4,XFS"/></a><div class="content"><a class="title" href="/2023/12/13/Linux%E5%88%86%E5%8C%BA%E4%B9%8BEXT2,EXT3,EXT4,XFS/" title="Linux分区之EXT2,EXT3,EXT4,XFS">Linux分区之EXT2,EXT3,EXT4,XFS</a><time datetime="2023-12-13T02:15:36.000Z" title="发表于 2023-12-13 10:15:36">2023-12-13</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ops/"><span class="card-category-list-name">Ops</span><span class="card-category-list-count">13</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ops/Ansible/"><span class="card-category-list-name">Ansible</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ops/Docker/"><span class="card-category-list-name">Docker</span><span class="card-category-list-count">8</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ops/Git/"><span class="card-category-list-name">Git</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ops/GitLab/"><span class="card-category-list-name">GitLab</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Ops/Kubernetes/"><span class="card-category-list-name">Kubernetes</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="card-category-list-name">数据库</span><span class="card-category-list-count">9</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MongoDB/"><span class="card-category-list-name">MongoDB</span><span class="card-category-list-count">1</span></a></li></ul></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/revoke/" style="font-size: 1.1em; color: #999">revoke</a> <a href="/tags/binlog2sql/" style="font-size: 1.1em; color: #999">binlog2sql</a> <a href="/tags/Zabbix/" style="font-size: 1.2em; color: #999da3">Zabbix</a> <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/" style="font-size: 1.1em; color: #999">面试题</a> <a href="/tags/EXT3/" style="font-size: 1.1em; color: #999">EXT3</a> <a href="/tags/PostgreSQL/" style="font-size: 1.1em; color: #999">PostgreSQL</a> <a href="/tags/XFS/" style="font-size: 1.2em; color: #999da3">XFS</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/" style="font-size: 1.1em; color: #999">学习计划</a> <a href="/tags/Nginx/" style="font-size: 1.4em; color: #99a5b6">Nginx</a> <a href="/tags/%E9%9B%86%E7%BE%A4/" style="font-size: 1.1em; color: #999">集群</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" style="font-size: 1.1em; color: #999">文件系统</a> <a href="/tags/Web/" style="font-size: 1.1em; color: #999">Web</a> <a href="/tags/rpm/" style="font-size: 1.1em; color: #999">rpm</a> <a href="/tags/Samba/" style="font-size: 1.1em; color: #999">Samba</a> <a href="/tags/for/" style="font-size: 1.2em; color: #999da3">for</a> <a href="/tags/Jar/" style="font-size: 1.1em; color: #999">Jar</a> <a href="/tags/Ansible/" style="font-size: 1.1em; color: #999">Ansible</a> <a href="/tags/Grafana/" style="font-size: 1.3em; color: #99a1ac">Grafana</a> <a href="/tags/RabbitMQ/" style="font-size: 1.1em; color: #999">RabbitMQ</a> <a href="/tags/Xargs/" style="font-size: 1.1em; color: #999">Xargs</a> <a href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" style="font-size: 1.1em; color: #999">防火墙</a> <a href="/tags/Java/" style="font-size: 1.1em; color: #999">Java</a> <a href="/tags/python/" style="font-size: 1.2em; color: #999da3">python</a> <a href="/tags/Tomcat/" style="font-size: 1.1em; color: #999">Tomcat</a> <a href="/tags/shellcheck/" style="font-size: 1.1em; color: #999">shellcheck</a> <a href="/tags/mysqldump/" style="font-size: 1.2em; color: #999da3">mysqldump</a> <a href="/tags/Django/" style="font-size: 1.1em; color: #999">Django</a> <a href="/tags/Nslookup/" style="font-size: 1.1em; color: #999">Nslookup</a> <a href="/tags/iptables/" style="font-size: 1.1em; color: #999">iptables</a> <a href="/tags/%E6%97%A5%E5%BF%97/" style="font-size: 1.1em; color: #999">日志</a> <a href="/tags/Cgroups/" style="font-size: 1.1em; color: #999">Cgroups</a> <a href="/tags/keepalived/" style="font-size: 1.1em; color: #999">keepalived</a> <a href="/tags/grant/" style="font-size: 1.1em; color: #999">grant</a> <a href="/tags/EXT4/" style="font-size: 1.1em; color: #999">EXT4</a> <a href="/tags/egrep/" style="font-size: 1.1em; color: #999">egrep</a> <a href="/tags/while/" style="font-size: 1.2em; color: #999da3">while</a> <a href="/tags/Jdk/" style="font-size: 1.1em; color: #999">Jdk</a> <a href="/tags/Harbor/" style="font-size: 1.1em; color: #999">Harbor</a> <a href="/tags/Docker/" style="font-size: 1.5em; color: #99a9bf">Docker</a> <a href="/tags/SFTP/" style="font-size: 1.1em; color: #999">SFTP</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/09/"><span class="card-archive-list-date">九月 2023</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/06/"><span class="card-archive-list-date">六月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/04/"><span class="card-archive-list-date">四月 2023</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">三月 2023</span><span class="card-archive-list-count">11</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">93</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-26T07:17:22.479Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 0x01</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
