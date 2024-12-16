@@ -35,37 +35,6 @@
     
     
     <entry>
-      <title>Ubuntu 24.04 上安装 Grafana</title>
-      <link href="/2024/12/11/Ubuntu%2024.04%20%E4%B8%8A%E5%AE%89%E8%A3%85%20Zabbix%207.0/"/>
-      <url>/2024/12/11/Ubuntu%2024.04%20%E4%B8%8A%E5%AE%89%E8%A3%85%20Zabbix%207.0/</url>
-      
-        <content type="html"><![CDATA[<h1 id="Grafana简述"><a href="#Grafana简述" class="headerlink" title="Grafana简述"></a>Grafana简述</h1><p>是一个监控仪表系统，由Grafana Labs公司开源的的一个系统监测 (System Monitoring) 工具。帮助用户简化监控的复杂度，用户只需要提供需要监控的数据，它就可以生成各种可视化仪表。同时它还支持报警功能，可以在系统出现问题时通知用户。并且Grafana不仅仅只支持Prometheus作为查询的数据库，它还支持如下：</p><ul><li>Prometheus </li><li>Graphite</li><li>OpenTSDB</li><li>InfluxDB</li><li>MySQL/PostgreSQL</li><li>Microsoft SQL Serve</li><li>等等</li></ul><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id=""><a href="#" class="headerlink" title=" "></a> </h3>]]></content>
-      
-      
-      <categories>
-          
-          <category> 系统运维 </category>
-          
-          <category> 监控平台 </category>
-          
-          <category> Grafana </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Grafana </tag>
-            
-            <tag> Ubuntu </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Docker加速器收集-国内</title>
       <link href="/2024/12/01/Docker%E5%8A%A0%E9%80%9F%E5%99%A8-%E5%9B%BD%E5%86%85/"/>
       <url>/2024/12/01/Docker%E5%8A%A0%E9%80%9F%E5%99%A8-%E5%9B%BD%E5%86%85/</url>
