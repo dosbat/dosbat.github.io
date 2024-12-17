@@ -56,33 +56,6 @@
     
     
     <entry>
-      <title>处理Centos7.9 wget yum 权限不足问题</title>
-      <link href="/2024/12/16/%E5%A4%84%E7%90%86Centos7.9%20wget%20yum%20%E6%9D%83%E9%99%90%E4%B8%8D%E8%B6%B3%E9%97%AE%E9%A2%98/"/>
-      <url>/2024/12/16/%E5%A4%84%E7%90%86Centos7.9%20wget%20yum%20%E6%9D%83%E9%99%90%E4%B8%8D%E8%B6%B3%E9%97%AE%E9%A2%98/</url>
-      
-        <content type="html"><![CDATA[<h2 id="报错场景"><a href="#报错场景" class="headerlink" title="报错场景"></a>报错场景</h2><p>​    </p><p><code>CentOS 8</code>中执行<code>命令</code>，出现报错：<code>Failed to set locale, defaulting to C.UTF-8</code></p><h2 id="错误原因"><a href="#错误原因" class="headerlink" title="错误原因"></a>错误原因</h2><ul><li>没有安装相应的语言包。</li><li>没有设置正确的语言环境。</li></ul><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><ul><li>设置语言环境需使用命令 locale</li><li><code>locale -a 命令，</code>查看目前系统已安装的语言包</li><li>安装中文语言包，命令<code>yum install glibc-langpack-zh</code></li><li><code>安装英文语言包，命令 dnf install glibc-langpack-en</code> 或 <code>dnf install langpacks-en glibc-all-langpacks -y</code></li></ul><h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a><strong>方法2</strong></h3><p><strong>设置正确的语言环境</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;export LC_ALL=en_US.UTF-8&quot; &gt;&gt; /etc/profile</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure><p>或使用命令<code>locale -gen en_US.UTF-8</code></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 系统运维 </category>
-          
-          <category> 错误日志 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> repo </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Ubuntu 24.04 上安装 Grafana</title>
       <link href="/2024/12/11/Ubuntu%2024.04%20%E4%B8%8A%E5%AE%89%E8%A3%85%20Grafana/"/>
       <url>/2024/12/11/Ubuntu%2024.04%20%E4%B8%8A%E5%AE%89%E8%A3%85%20Grafana/</url>
