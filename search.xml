@@ -31,6 +31,33 @@
     
     
     <entry>
+      <title>DHCP全局与接口模式配置差异解析</title>
+      <link href="/2025/01/19/DHCP%E5%85%A8%E5%B1%80%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE%E5%B7%AE%E5%BC%82%E8%A7%A3%E6%9E%90/"/>
+      <url>/2025/01/19/DHCP%E5%85%A8%E5%B1%80%E4%B8%8E%E6%8E%A5%E5%8F%A3%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE%E5%B7%AE%E5%BC%82%E8%A7%A3%E6%9E%90/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>在华为网络设备中，<code>dhcp select global</code> 和 <code>dhcp select interface</code> 是两种不同的 <code>DHCP</code> 服务模式，它们的配置差异源于 <strong>作用域</strong> 和 <strong>参数来源</strong> 的不同</p></blockquote><ul><li><h3 id="1-dhcp-select-global（全局地址池模式）"><a href="#1-dhcp-select-global（全局地址池模式）" class="headerlink" title="1. dhcp select global（全局地址池模式）"></a><strong>1. <code>dhcp select global</code>（全局地址池模式）</strong></h3><ul><li><p><strong>作用域</strong>：全局地址池独立于接口，可以被多个接口共享。</p></li><li><p><strong>参数来源</strong>：需要手动配置网关（<code>gateway-list</code>）和子网掩码（<code>network</code>）等参数，因为全局地址池本身不与任何物理接口绑定，无法自动继承接口的 IP 信息。</p></li><li><p><strong>配置逻辑</strong>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建全局地址池</span></span><br><span class="line">ip pool global-pool</span><br><span class="line">  gateway-list 192.168.1.1     <span class="comment"># 必须手动指定网关</span></span><br><span class="line">  network 192.168.1.0 mask 24   <span class="comment"># 必须手动指定子网和掩码</span></span><br><span class="line">  dns-list 8.8.8.8</span><br><span class="line"><span class="comment"># 在接口上启用全局地址池</span></span><br><span class="line">interface GigabitEthernet0/0/1</span><br><span class="line">  dhcp <span class="keyword">select</span> global            <span class="comment"># 引用全局地址池</span></span><br></pre></td></tr></table></figure><p><strong>为什么需要配置网关和掩码？</strong><br>全局地址池可能被多个接口共享，且不与特定接口绑定，因此必须显式定义客户端的网关和子网掩码，否则设备不知道如何分配网络参数。</p></li></ul><hr><h3 id="2-dhcp-select-interface（接口地址池模式）"><a href="#2-dhcp-select-interface（接口地址池模式）" class="headerlink" title="2. dhcp select interface（接口地址池模式）"></a><strong>2. <code>dhcp select interface</code>（接口地址池模式）</strong></h3><ul><li><p><strong>作用域</strong>：地址池直接绑定到特定接口，仅服务于该接口下的客户端。</p></li><li><p><strong>参数来源</strong>：<strong>自动继承接口的 IP 地址和子网掩码</strong>，无需手动配置网关和掩码。</p></li><li><p><strong>配置逻辑</strong>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface GigabitEthernet0/0/1</span><br><span class="line">  ip address 192.168.1.1 24     <span class="comment"># 接口的 IP 和掩码</span></span><br><span class="line">  dhcp <span class="keyword">select</span> interface         <span class="comment"># 启用接口地址池模式</span></span><br><span class="line">  dhcp server dns-list 8.8.8.8  <span class="comment"># 可选配置其他参数（如 DNS）</span></span><br></pre></td></tr></table></figure><p><strong>为什么不需要配置网关和掩码？</strong><br>接口地址池模式下，<code>DHCP</code> 服务器会自动将接口的 <code>IP</code> 地址（<code>192.168.1.1</code>）作为客户端的默认网关，并使用接口的子网掩码（<code>24</code>）分配 <code>IP</code> 地址。这种设计简化了配置，适用于单个接口独立提供 <code>DHCP</code> 服务的场景。</p></li></ul><hr><h3 id="关键区别总结"><a href="#关键区别总结" class="headerlink" title="关键区别总结"></a><strong>关键区别总结</strong></h3><p>| 特性               | <code>dhcp select global</code>             | <code>dhcp select interface</code>        |<br>| :————————- | :———————————————- | :——————————————- |<br>| <strong>作用域</strong>         | 全局，可被多个接口共享           | 仅绑定到单个接口               |<br>| <strong>网关和掩码来源</strong> | 手动配置（全局地址池独立于接口） | 自动继承接口的 IP 和掩码       |<br>| <strong>适用场景</strong>       | 复杂网络，多接口共享同一地址池   | 简单网络，单个接口独立分配地址 |<br>| <strong>配置复杂度</strong>     | 高（需定义地址池参数）           | 低（自动继承接口参数）         |</p><hr><h3 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a><strong>补充说明</strong></h3><ul><li><strong>网关的作用</strong>：无论是哪种模式，网关都是客户端访问外网的关键。全局地址池需要手动指定，而接口地址池隐式使用接口 <code>IP</code>。</li><li><strong>掩码的作用</strong>：子网掩码决定了客户端的 <code>IP</code> 地址范围和子网划分。全局地址池需显式定义，接口地址池则自动匹配接口配置。</li></ul><p>通过这种设计，华为设备实现了 <code>DHCP</code> 服务的灵活性和简化配置的平衡。</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络技术 </category>
+          
+          <category> 路由交换 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 配置 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>RustDesk自建远程服务器</title>
       <link href="/2025/01/16/RustDesk%E8%87%AA%E5%BB%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
       <url>/2025/01/16/RustDesk%E8%87%AA%E5%BB%BA%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
