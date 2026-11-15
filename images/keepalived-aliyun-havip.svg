@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#2563EB"/></marker>
+    <marker id="aro" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#EA580C"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="660" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">阿里云 ECS 上的正确姿势：HaVip + 单播</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">VPC 不支持广播/组播，照搬机房里的组播配置会直接双主（脑裂）</text>
+
+  <!-- VPC frame -->
+  <rect x="40" y="106" width="1120" height="410" rx="14" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="62" y="136" font-size="14" font-weight="700" fill="#1E40AF">专有网络 VPC · vSwitch 192.168.1.0/24</text>
+
+  <!-- EIP / client -->
+  <rect x="70" y="180" width="170" height="80" rx="10" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="155" y="212" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">公网入口</text>
+  <text x="155" y="236" font-size="12" fill="#64748B" text-anchor="middle">EIP / SLB → HaVip</text>
+
+  <!-- HaVip -->
+  <rect x="300" y="172" width="230" height="96" rx="10" fill="#FFF7ED" stroke="#EA580C" stroke-width="2.5"/>
+  <text x="415" y="204" font-size="14" font-weight="700" fill="#9A3412" text-anchor="middle">高可用虚拟 IP（HaVip）</text>
+  <text x="415" y="234" font-size="19" font-weight="700" fill="#EA580C" text-anchor="middle">192.168.1.100</text>
+  <text x="415" y="256" font-size="11" fill="#9A3412" text-anchor="middle">需绑定两台 ECS，单播通信</text>
+  <line x1="242" y1="220" x2="296" y2="220" stroke="#2563EB" stroke-width="2.5" marker-end="url(#ar)"/>
+
+  <!-- ECS A -->
+  <rect x="610" y="160" width="240" height="140" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5"/>
+  <text x="630" y="190" font-size="14" font-weight="700" fill="#1E40AF">ECS-A · 主</text>
+  <text x="630" y="216" font-size="12" fill="#334155">私网 IP：192.168.1.11</text>
+  <text x="630" y="238" font-size="12" fill="#334155">unicast_src_ip 192.168.1.11</text>
+  <text x="630" y="260" font-size="12" fill="#334155">unicast_peer 192.168.1.12</text>
+  <text x="630" y="286" font-size="11" fill="#2563EB">priority 110 · Nginx :80</text>
+
+  <!-- ECS B -->
+  <rect x="610" y="330" width="240" height="140" rx="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2.5"/>
+  <text x="630" y="360" font-size="14" font-weight="700" fill="#475569">ECS-B · 备</text>
+  <text x="630" y="386" font-size="12" fill="#334155">私网 IP：192.168.1.12</text>
+  <text x="630" y="408" font-size="12" fill="#334155">unicast_src_ip 192.168.1.12</text>
+  <text x="630" y="430" font-size="12" fill="#334155">unicast_peer 192.168.1.11</text>
+  <text x="630" y="456" font-size="11" fill="#64748B">priority 100 · Nginx :80</text>
+
+  <line x1="532" y1="208" x2="606" y2="216" stroke="#EA580C" stroke-width="2.5" marker-end="url(#aro)"/>
+  <line x1="532" y1="240" x2="606" y2="386" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ar)"/>
+
+  <!-- unicast arrow -->
+  <line x1="730" y1="300" x2="730" y2="330" stroke="#2563EB" stroke-width="2.5" stroke-dasharray="4 3"/>
+  <rect x="880" y="248" width="250" height="120" rx="10" fill="#DBEAFE" stroke="#60A5FA"/>
+  <text x="900" y="278" font-size="14" font-weight="700" fill="#1E40AF">心跳走单播</text>
+  <text x="900" y="304" font-size="12" fill="#1E3A8A">源 IP 必须用 ECS 私网 IP</text>
+  <text x="900" y="326" font-size="12" fill="#1E3A8A">绝不能填 HaVip 的地址</text>
+  <text x="900" y="352" font-size="12" fill="#1E3A8A">安全组放通 IP 协议 112</text>
+  <line x1="852" y1="290" x2="876" y2="290" stroke="#2563EB" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- warning box -->
+  <rect x="70" y="320" width="460" height="150" rx="10" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="2"/>
+  <text x="92" y="350" font-size="14" font-weight="700" fill="#B91C1C">照搬机房配置会踩的三个坑</text>
+  <text x="92" y="376" font-size="12" fill="#7F1D1D">1 · 默认组播 224.0.0.18 在 VPC 内不通 → 两台都选自己当主</text>
+  <text x="92" y="400" font-size="12" fill="#7F1D1D">2 · 配了 vrrp_strict 会禁用单播 peers，两个配置互相打架</text>
+  <text x="92" y="424" font-size="12" fill="#7F1D1D">3 · VIP 没绑 HaVip / 没绑 ECS，切过去交换机也不认</text>
+  <text x="92" y="452" font-size="11" fill="#B91C1C">官方建议 keepalived 1.2.15 及以上；发行版包一般满足</text>
+
+  <!-- footer -->
+  <rect x="40" y="540" width="1120" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="60" y="568" font-size="13" font-weight="700" fill="#0F172A">什么时候别自己搭</text>
+  <text x="60" y="592" font-size="12" fill="#475569">公有云上如果只是要给 Web 服务做高可用，优先用 CLB/SLB + 多可用区后端，健康检查、会话保持、带宽都能托管。</text>
+  <text x="60" y="614" font-size="12" fill="#475569">自建 keepalived 更适合：需要固定私网 IP 的中间件、有状态服务、或混合云里需要自己控制 VIP 归属的场景。</text>
+  <text x="60" y="632" font-size="11" fill="#94A3B8">EIP 绑在 HaVip 上时，持 VIP 的 ECS 主动访问公网，源 IP 是 HaVip 而不是 ECS 自身私网 IP。</text>
+</svg>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="ar-b" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#2563EB"/></marker>
+    <marker id="ar-o" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#EA580C"/></marker>
+    <marker id="ar-g" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#94A3B8"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="680" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">Keepalived + Nginx 双机热备拓扑</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">VIP 同一时刻只存在于 Master，故障时靠 VRRP 选举漂移，后端 upstream 两台都在线</text>
+
+  <!-- client -->
+  <rect x="40" y="272" width="160" height="96" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="120" y="308" font-size="16" font-weight="700" fill="#0F172A" text-anchor="middle">客户端</text>
+  <text x="120" y="334" font-size="13" fill="#64748B" text-anchor="middle">浏览器 / 调用方</text>
+  <text x="120" y="354" font-size="12" fill="#94A3B8" text-anchor="middle">只访问 VIP</text>
+
+  <!-- VIP -->
+  <rect x="250" y="262" width="240" height="116" rx="12" fill="#FFF7ED" stroke="#EA580C" stroke-width="2.5"/>
+  <text x="370" y="296" font-size="15" font-weight="700" fill="#9A3412" text-anchor="middle">虚拟 IP（VIP）</text>
+  <text x="370" y="328" font-size="21" font-weight="700" fill="#EA580C" text-anchor="middle">192.168.1.100</text>
+  <text x="370" y="356" font-size="12" fill="#9A3412" text-anchor="middle">DNS / 入口只指向它</text>
+
+  <!-- arrows client -> VIP -->
+  <line x1="202" y1="320" x2="246" y2="320" stroke="#2563EB" stroke-width="2.5" marker-end="url(#ar-b)"/>
+
+  <!-- Master -->
+  <rect x="560" y="130" width="300" height="180" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5"/>
+  <rect x="560" y="130" width="300" height="36" rx="12" fill="#2563EB"/>
+  <rect x="560" y="150" width="300" height="16" fill="#2563EB"/>
+  <text x="580" y="155" font-size="15" font-weight="700" fill="#FFFFFF">节点 A · MASTER</text>
+  <text x="580" y="196" font-size="13" fill="#1E3A8A">eth0：192.168.1.11</text>
+  <text x="580" y="222" font-size="13" fill="#1E3A8A">priority 110 · advert_int 1</text>
+  <text x="580" y="248" font-size="13" fill="#1E3A8A">Nginx：0.0.0.0:80</text>
+  <text x="580" y="274" font-size="13" fill="#1E3A8A">track_script chk_nginx</text>
+  <rect x="576" y="284" width="150" height="20" rx="10" fill="#FED7AA"/>
+  <text x="651" y="298" font-size="12" font-weight="700" fill="#9A3412" text-anchor="middle">当前持有 VIP</text>
+
+  <!-- Backup -->
+  <rect x="560" y="390" width="300" height="180" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2.5"/>
+  <rect x="560" y="390" width="300" height="36" rx="12" fill="#64748B"/>
+  <rect x="560" y="410" width="300" height="16" fill="#64748B"/>
+  <text x="580" y="415" font-size="15" font-weight="700" fill="#FFFFFF">节点 B · BACKUP</text>
+  <text x="580" y="456" font-size="13" fill="#475569">eth0：192.168.1.12</text>
+  <text x="580" y="482" font-size="13" fill="#475569">priority 100 · advert_int 1</text>
+  <text x="580" y="508" font-size="13" fill="#475569">Nginx：0.0.0.0:80</text>
+  <text x="580" y="534" font-size="13" fill="#475569">持续监听 VRRP 通告</text>
+  <rect x="576" y="544" width="150" height="20" rx="10" fill="#E2E8F0"/>
+  <text x="651" y="558" font-size="12" font-weight="700" fill="#475569" text-anchor="middle">热备待命</text>
+
+  <!-- VIP arrows -->
+  <line x1="492" y1="300" x2="556" y2="212" stroke="#EA580C" stroke-width="3" marker-end="url(#ar-o)"/>
+  <text x="424" y="232" font-size="12" font-weight="700" fill="#EA580C">实：当前流量</text>
+  <line x1="492" y1="340" x2="556" y2="452" stroke="#94A3B8" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#ar-g)"/>
+  <text x="400" y="430" font-size="12" fill="#64748B">虚：漂移后的备用路径</text>
+
+  <!-- VRRP heartbeat -->
+  <line x1="675" y1="312" x2="675" y2="388" stroke="#2563EB" stroke-width="2.5" stroke-dasharray="6 5"/>
+  <path d="M675,312 l-5,9 l5,-3 l5,3 z" fill="#2563EB"/>
+  <path d="M675,388 l-5,-9 l5,3 l5,-3 z" fill="#2563EB"/>
+  <rect x="696" y="326" width="152" height="48" rx="8" fill="#DBEAFE"/>
+  <text x="772" y="346" font-size="12" font-weight="700" fill="#1E40AF" text-anchor="middle">VRRP 通告</text>
+  <text x="772" y="364" font-size="11" fill="#1E40AF" text-anchor="middle">协议 112 · 每秒 1 次</text>
+
+  <!-- upstream -->
+  <rect x="910" y="240" width="250" height="240" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="1035" y="270" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">后端 upstream</text>
+  <rect x="932" y="292" width="206" height="62" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1035" y="318" font-size="14" font-weight="700" fill="#047857" text-anchor="middle">app-01 : 8080</text>
+  <text x="1035" y="340" font-size="11" fill="#059669" text-anchor="middle">健康检查 max_fails=3</text>
+  <rect x="932" y="370" width="206" height="62" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1035" y="396" font-size="14" font-weight="700" fill="#047857" text-anchor="middle">app-02 : 8080</text>
+  <text x="1035" y="418" font-size="11" fill="#059669" text-anchor="middle">健康检查 max_fails=3</text>
+  <line x1="862" y1="220" x2="906" y2="310" stroke="#2563EB" stroke-width="2.5" marker-end="url(#ar-b)"/>
+  <line x1="862" y1="480" x2="906" y2="402" stroke="#2563EB" stroke-width="2.5" marker-end="url(#ar-b)"/>
+  <text x="1035" y="462" font-size="11" fill="#94A3B8" text-anchor="middle">两节点 upstream 配置必须一致</text>
+
+  <!-- footer note -->
+  <rect x="40" y="600" width="1120" height="56" rx="10" fill="#EFF6FF" stroke="#BFDBFE"/>
+  <text x="60" y="624" font-size="13" font-weight="700" fill="#1E40AF">关键点</text>
+  <text x="122" y="624" font-size="13" fill="#1E3A8A">漂移的是「IP 地址 + 免费 ARP」，不是服务；Nginx 必须监听 0.0.0.0，只绑本机物理 IP 时 VIP 上访问不通。</text>
+  <text x="122" y="644" font-size="12" fill="#64748B">keepalived 只解决入口单点，后端应用仍靠 Nginx upstream 做负载均衡，两层要分开看。</text>
+</svg>

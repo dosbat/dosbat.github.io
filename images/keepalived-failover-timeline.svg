@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#94A3B8"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="660" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">一次 VIP 漂移到底发生了什么</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">以「节点 A 上 Nginx 进程挂掉」为例，机器没死，只有服务异常 —— 这也是生产里最常见的情况</text>
+
+  <!-- timeline axis -->
+  <line x1="60" y1="130" x2="1140" y2="130" stroke="#CBD5E1" stroke-width="2" marker-end="url(#ar)"/>
+  <g font-size="13" font-weight="700" fill="#475569" text-anchor="middle">
+    <circle cx="150" cy="130" r="6" fill="#10B981"/><text x="150" y="118">t0</text>
+    <circle cx="372" cy="130" r="6" fill="#EF4444"/><text x="372" y="118">t1</text>
+    <circle cx="594" cy="130" r="6" fill="#F59E0B"/><text x="594" y="118">t2</text>
+    <circle cx="816" cy="130" r="6" fill="#EA580C"/><text x="816" y="118">t3</text>
+    <circle cx="1038" cy="130" r="6" fill="#10B981"/><text x="1038" y="118">t4</text>
+  </g>
+
+  <!-- cards -->
+  <g>
+    <rect x="52" y="164" width="196" height="230" rx="12" fill="#FFFFFF" stroke="#10B981" stroke-width="2"/>
+    <rect x="52" y="164" width="196" height="38" rx="12" fill="#10B981"/><rect x="52" y="186" width="196" height="16" fill="#10B981"/>
+    <text x="150" y="190" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">正常服务</text>
+    <text x="68" y="230" font-size="12" fill="#334155">A 持有 VIP，优先级 110</text>
+    <text x="68" y="254" font-size="12" fill="#334155">每秒发一次 VRRP 通告</text>
+    <text x="68" y="278" font-size="12" fill="#334155">B 收到后保持 BACKUP</text>
+    <text x="68" y="302" font-size="12" fill="#334155">客户端走 VIP 到 A</text>
+    <text x="68" y="340" font-size="11" fill="#94A3B8">chk_nginx 返回 0</text>
+    <text x="68" y="362" font-size="11" fill="#94A3B8">有效优先级 = 110</text>
+  </g>
+  <g>
+    <rect x="274" y="164" width="196" height="230" rx="12" fill="#FFFFFF" stroke="#EF4444" stroke-width="2"/>
+    <rect x="274" y="164" width="196" height="38" rx="12" fill="#EF4444"/><rect x="274" y="186" width="196" height="16" fill="#EF4444"/>
+    <text x="372" y="190" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">服务异常</text>
+    <text x="290" y="230" font-size="12" fill="#334155">Nginx 进程退出或僵死</text>
+    <text x="290" y="254" font-size="12" fill="#334155">VIP 仍在 A 上</text>
+    <text x="290" y="278" font-size="12" fill="#334155">请求开始 502 / 拒连</text>
+    <text x="290" y="302" font-size="12" fill="#334155">机器没宕，通告照发</text>
+    <text x="290" y="340" font-size="11" fill="#EF4444">只看机器存活会漏掉这一步</text>
+    <text x="290" y="362" font-size="11" fill="#94A3B8">所以必须 track_script</text>
+  </g>
+  <g>
+    <rect x="496" y="164" width="196" height="230" rx="12" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2"/>
+    <rect x="496" y="164" width="196" height="38" rx="12" fill="#F59E0B"/><rect x="496" y="186" width="196" height="16" fill="#F59E0B"/>
+    <text x="594" y="190" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">脚本降权</text>
+    <text x="512" y="230" font-size="12" fill="#334155">chk 每 2s 探一次</text>
+    <text x="512" y="254" font-size="12" fill="#334155">连续失败 2 次（fall 2）</text>
+    <text x="512" y="278" font-size="12" fill="#334155">weight -20 生效</text>
+    <text x="512" y="302" font-size="12" fill="#334155">A 有效优先级降到 90</text>
+    <text x="512" y="340" font-size="12" font-weight="700" fill="#B45309">90 &lt; B 的 100</text>
+    <text x="512" y="362" font-size="11" fill="#94A3B8">这一步决定能不能切</text>
+  </g>
+  <g>
+    <rect x="718" y="164" width="196" height="230" rx="12" fill="#FFFFFF" stroke="#EA580C" stroke-width="2"/>
+    <rect x="718" y="164" width="196" height="38" rx="12" fill="#EA580C"/><rect x="718" y="186" width="196" height="16" fill="#EA580C"/>
+    <text x="816" y="190" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">备机接管</text>
+    <text x="734" y="230" font-size="12" fill="#334155">B 收到低优先级通告</text>
+    <text x="734" y="254" font-size="12" fill="#334155">或超时未收到通告</text>
+    <text x="734" y="278" font-size="12" fill="#334155">进入 MASTER 状态</text>
+    <text x="734" y="302" font-size="12" fill="#334155">把 VIP 加到本机网卡</text>
+    <text x="734" y="340" font-size="11" fill="#EA580C">切换耗时约 3~5s</text>
+    <text x="734" y="362" font-size="11" fill="#94A3B8">3×advert_int + skew_time</text>
+  </g>
+  <g>
+    <rect x="940" y="164" width="196" height="230" rx="12" fill="#FFFFFF" stroke="#10B981" stroke-width="2"/>
+    <rect x="940" y="164" width="196" height="38" rx="12" fill="#10B981"/><rect x="940" y="186" width="196" height="16" fill="#10B981"/>
+    <text x="1038" y="190" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">流量收敛</text>
+    <text x="956" y="230" font-size="12" fill="#334155">B 发送免费 ARP（GARP）</text>
+    <text x="956" y="254" font-size="12" fill="#334155">交换机刷新 MAC 表</text>
+    <text x="956" y="278" font-size="12" fill="#334155">客户端 VIP 不变、DNS 不变</text>
+    <text x="956" y="302" font-size="12" fill="#334155">请求落到 B 的 Nginx</text>
+    <text x="956" y="340" font-size="11" fill="#10B981">长连接会断，短连接无感</text>
+    <text x="956" y="362" font-size="11" fill="#94A3B8">GARP 被限速会导致黑洞</text>
+  </g>
+
+  <!-- owner bar -->
+  <text x="60" y="436" font-size="13" font-weight="700" fill="#475569">VIP 归属</text>
+  <rect x="60" y="450" width="700" height="44" rx="8" fill="#DBEAFE"/>
+  <text x="410" y="478" font-size="14" font-weight="700" fill="#1E40AF" text-anchor="middle">节点 A（MASTER）</text>
+  <rect x="760" y="450" width="376" height="44" rx="8" fill="#FFEDD5"/>
+  <text x="948" y="478" font-size="14" font-weight="700" fill="#9A3412" text-anchor="middle">节点 B（新 MASTER）</text>
+  <line x1="760" y1="440" x2="760" y2="504" stroke="#EA580C" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="768" y="516" font-size="12" fill="#EA580C">切换点</text>
+
+  <!-- bottom notes -->
+  <rect x="40" y="540" width="1120" height="96" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="60" y="568" font-size="13" font-weight="700" fill="#0F172A">恢复阶段（容易忽略）</text>
+  <text x="60" y="592" font-size="12" fill="#475569">A 上 Nginx 修好后，chk 连续成功 2 次（rise 2）优先级回到 110；默认抢占模式会立刻回切，长连接再断一次。</text>
+  <text x="60" y="616" font-size="12" fill="#475569">生产建议两台都设 nopreempt + state BACKUP：A 恢复后安静当备机，把回切放到维护窗口手动做，切换次数直接减半。</text>
+</svg>
