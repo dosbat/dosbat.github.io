@@ -13,13 +13,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 应用搭建 </category>
-          
-          <category> Docker </category>
-          
-          <category> 中间件 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -34,13 +30,13 @@
             
             <tag> Ubuntu </tag>
             
-            <tag> Redis </tag>
-            
             <tag> 服务器初始化 </tag>
             
             <tag> docker-compose </tag>
             
             <tag> SpringBoot </tag>
+            
+            <tag> Redis </tag>
             
         </tags>
       
@@ -58,9 +54,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 故障排查 </category>
           
       </categories>
       
@@ -89,9 +85,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
           
-          <category> 考试认证 </category>
+          <category> 认证备考 </category>
           
       </categories>
       
@@ -172,7 +168,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
+          
+          <category> 学习笔记 </category>
           
       </categories>
       
@@ -278,9 +276,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 网络技术 </category>
           
-          <category> 应用搭建 </category>
+          <category> 网络应用 </category>
           
       </categories>
       
@@ -305,9 +303,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -332,9 +330,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -386,7 +384,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
+          
+          <category> 学习笔记 </category>
           
       </categories>
       
@@ -411,9 +411,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 错误日志 </category>
+          <category> 故障排查 </category>
           
       </categories>
       
@@ -438,7 +438,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
+          
+          <category> 面试题库 </category>
           
       </categories>
       
@@ -465,7 +467,7 @@
           
           <category> 网络技术 </category>
           
-          <category> 路由交换 </category>
+          <category> 协议与基础 </category>
           
       </categories>
       
@@ -490,11 +492,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 监控平台 </category>
-          
-          <category> Grafana </category>
+          <category> 监控告警 </category>
           
       </categories>
       
@@ -521,7 +521,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -548,7 +548,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
+          
+          <category> 工具资源 </category>
           
       </categories>
       
@@ -573,9 +575,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
           
-          <category> 考试认证 </category>
+          <category> 认证备考 </category>
           
       </categories>
       
@@ -600,9 +602,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
           
-          <category> 考试认证 </category>
+          <category> 认证备考 </category>
           
       </categories>
       
@@ -627,9 +629,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 网络技术 </category>
           
-          <category> 软件分享 </category>
+          <category> 网络应用 </category>
           
       </categories>
       
@@ -654,7 +656,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
+          
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -679,9 +683,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 安全运维 </category>
+          <category> 安全加固 </category>
           
       </categories>
       
@@ -706,11 +710,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 监控平台 </category>
-          
-          <category> Zabbix </category>
+          <category> 监控告警 </category>
           
       </categories>
       
@@ -737,9 +739,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 安全运维 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -772,9 +774,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 安全运维 </category>
+          <category> 安全加固 </category>
           
       </categories>
       
@@ -799,9 +801,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 容器与自动化 </category>
           
-          <category> 应用搭建 </category>
+          <category> Docker </category>
           
       </categories>
       
@@ -826,7 +828,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Kubernetes </category>
           
@@ -882,9 +884,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 命令与 Shell </category>
           
       </categories>
       
@@ -909,9 +911,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> PostgreSQL </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -936,9 +938,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 安全运维 </category>
+          <category> 安全加固 </category>
           
       </categories>
       
@@ -963,7 +965,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -990,9 +992,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> MySQL </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -1017,9 +1019,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> MongoDB </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -1044,7 +1046,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -1071,7 +1073,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -1100,11 +1102,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 监控平台 </category>
-          
-          <category> Grafana </category>
+          <category> 监控告警 </category>
           
       </categories>
       
@@ -1129,11 +1129,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 监控平台 </category>
-          
-          <category> Grafana </category>
+          <category> 监控告警 </category>
           
       </categories>
       
@@ -1158,9 +1156,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -1185,9 +1183,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 错误日志 </category>
+          <category> 故障排查 </category>
           
       </categories>
       
@@ -1212,9 +1210,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -1239,11 +1237,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 监控平台 </category>
-          
-          <category> Grafana </category>
+          <category> 监控告警 </category>
           
       </categories>
       
@@ -1270,7 +1266,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
+          
+          <category> 学习笔记 </category>
           
       </categories>
       
@@ -1322,9 +1320,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 编程开发 </category>
           
-          <category> 应用搭建 </category>
+          <category> Java 生态 </category>
           
       </categories>
       
@@ -1353,7 +1351,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
+          
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -1378,7 +1378,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -1407,9 +1407,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -1434,7 +1434,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
+          
+          <category> 学习笔记 </category>
           
       </categories>
       
@@ -1459,9 +1461,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 安全运维 </category>
+          <category> 安全加固 </category>
           
       </categories>
       
@@ -1486,9 +1488,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -1542,9 +1544,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> 高可用 </category>
           
       </categories>
       
@@ -1575,7 +1577,7 @@
           
           <category> 编程开发 </category>
           
-          <category> Shell </category>
+          <category> Shell 脚本 </category>
           
       </categories>
       
@@ -1602,7 +1604,7 @@
           
           <category> 编程开发 </category>
           
-          <category> Shell </category>
+          <category> Shell 脚本 </category>
           
       </categories>
       
@@ -1629,7 +1631,7 @@
           
           <category> 编程开发 </category>
           
-          <category> Shell </category>
+          <category> Shell 脚本 </category>
           
       </categories>
       
@@ -1654,9 +1656,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -1681,9 +1683,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
           
-          <category> 考试认证 </category>
+          <category> 认证备考 </category>
           
       </categories>
       
@@ -1708,9 +1710,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 安全加固 </category>
           
       </categories>
       
@@ -1735,9 +1737,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
           
-          <category> 考试认证 </category>
+          <category> 认证备考 </category>
           
       </categories>
       
@@ -1762,9 +1764,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 网络技术 </category>
           
-          <category> 软件分享 </category>
+          <category> 网络应用 </category>
           
       </categories>
       
@@ -1789,9 +1791,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 应用搭建 </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -1816,7 +1818,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -1843,9 +1845,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> MySQL </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -1872,9 +1874,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -1899,9 +1901,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> MySQL </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -1930,9 +1932,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> MySQL </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -1959,9 +1961,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
           
-          <category> 阅读笔记 </category>
+          <category> 学习笔记 </category>
           
       </categories>
       
@@ -1988,9 +1990,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> MySQL </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -2017,9 +2019,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 应用搭建 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -2046,11 +2048,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 监控平台 </category>
-          
-          <category> Grafana </category>
+          <category> 监控告警 </category>
           
       </categories>
       
@@ -2075,9 +2075,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux命令 </category>
+          <category> 命令与 Shell </category>
           
       </categories>
       
@@ -2102,9 +2102,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux命令 </category>
+          <category> 命令与 Shell </category>
           
       </categories>
       
@@ -2129,9 +2129,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux命令 </category>
+          <category> 命令与 Shell </category>
           
       </categories>
       
@@ -2156,9 +2156,9 @@
       
       <categories>
           
-          <category> 资源共享 </category>
+          <category> 资料汇编 </category>
           
-          <category> 面试题 </category>
+          <category> 面试题库 </category>
           
       </categories>
       
@@ -2183,7 +2183,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -2212,7 +2212,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Kubernetes </category>
           
@@ -2239,11 +2239,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 监控平台 </category>
-          
-          <category> Prometheus </category>
+          <category> 监控告警 </category>
           
       </categories>
       
@@ -2268,9 +2266,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -2295,7 +2293,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -2322,9 +2320,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 错误日志 </category>
+          <category> 故障排查 </category>
           
       </categories>
       
@@ -2349,9 +2347,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -2376,9 +2374,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -2403,11 +2401,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 监控平台 </category>
-          
-          <category> Grafana </category>
+          <category> 监控告警 </category>
           
       </categories>
       
@@ -2434,9 +2430,9 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
-          <category> GitLab </category>
+          <category> CI/CD 与 Git </category>
           
       </categories>
       
@@ -2488,9 +2484,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> MySQL </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -2515,9 +2511,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 编程开发 </category>
           
-          <category> 应用搭建 </category>
+          <category> Shell 脚本 </category>
           
       </categories>
       
@@ -2571,9 +2567,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 编程开发 </category>
           
-          <category> 应用搭建 </category>
+          <category> Java 生态 </category>
           
       </categories>
       
@@ -2606,9 +2602,9 @@
       
       <categories>
           
-          <category> 数据库 </category>
+          <category> 服务与中间件 </category>
           
-          <category> Redis </category>
+          <category> 数据库 </category>
           
       </categories>
       
@@ -2633,9 +2629,9 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
-          <category> Ansible </category>
+          <category> 自动化运维 </category>
           
       </categories>
       
@@ -2660,9 +2656,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 中间件 </category>
+          <category> 高可用 </category>
           
       </categories>
       
@@ -2714,9 +2710,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux命令 </category>
+          <category> 命令与 Shell </category>
           
       </categories>
       
@@ -2741,9 +2737,9 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
-          <category> Git </category>
+          <category> CI/CD 与 Git </category>
           
       </categories>
       
@@ -2768,9 +2764,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -2797,9 +2793,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 服务与中间件 </category>
           
-          <category> 应用搭建 </category>
+          <category> Web 服务 </category>
           
       </categories>
       
@@ -2824,9 +2820,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux命令 </category>
+          <category> 命令与 Shell </category>
           
       </categories>
       
@@ -2851,9 +2847,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 命令与 Shell </category>
           
       </categories>
       
@@ -2878,9 +2874,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 应用搭建 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -2905,9 +2901,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 命令与 Shell </category>
           
       </categories>
       
@@ -2926,7 +2922,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
+          
+          <category> 系统管理 </category>
           
       </categories>
       
@@ -2951,9 +2949,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> 网络技术 </category>
           
-          <category> 应用搭建 </category>
+          <category> 网络应用 </category>
           
       </categories>
       
@@ -2978,9 +2976,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 故障排查 </category>
           
       </categories>
       
@@ -3007,7 +3005,7 @@
           
           <category> 编程开发 </category>
           
-          <category> Shell </category>
+          <category> Shell 脚本 </category>
           
       </categories>
       
@@ -3034,7 +3032,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
+          
+          <category> 安全加固 </category>
           
       </categories>
       
@@ -3061,7 +3061,7 @@
           
           <category> 编程开发 </category>
           
-          <category> Shell </category>
+          <category> Shell 脚本 </category>
           
       </categories>
       
@@ -3088,9 +3088,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> 错误日志 </category>
+          <category> 故障排查 </category>
           
       </categories>
       
@@ -3115,7 +3115,7 @@
       
       <categories>
           
-          <category> Ops </category>
+          <category> 容器与自动化 </category>
           
           <category> Docker </category>
           
@@ -3142,9 +3142,9 @@
       
       <categories>
           
-          <category> 系统运维 </category>
+          <category> Linux 系统 </category>
           
-          <category> Linux基础 </category>
+          <category> 系统管理 </category>
           
       </categories>
       
