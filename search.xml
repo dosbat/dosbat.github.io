@@ -4,6 +4,188 @@
   
     
     <entry>
+      <title>RHCSA认证考试-附加题</title>
+      <link href="/2026/11/15/RHCSA%E8%AE%A4%E8%AF%81%E8%80%83%E8%AF%95-%E9%99%84%E5%8A%A0%E9%A2%98/"/>
+      <url>/2026/11/15/RHCSA%E8%AE%A4%E8%AF%81%E8%80%83%E8%AF%95-%E9%99%84%E5%8A%A0%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h3 id="创建归档文件"><a href="#创建归档文件" class="headerlink" title="创建归档文件"></a>创建归档文件</h3><p>创建一个名为 <code>/root/backup.tar.bz2</code> 的 <code>tar</code> 存档，其应包含 <code>/usr/local</code> 的内容。该 <code>tar</code> 存档必须使用<code>bzip2</code> 进行压缩。</p><h4 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# tar jcvf /root/backup.tar.bz2 /usr/local/</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line">[root@mars ~]# file backup.tar.bz2</span><br><span class="line"></span><br><span class="line">backup.tar.bz2: bzip2 compressed data, block size = 900k</span><br></pre></td></tr></table></figure><h3 id="设置sudo免密"><a href="#设置sudo免密" class="headerlink" title="设置sudo免密"></a>设置sudo免密</h3><p>允许<code>sysmgrs</code>组所有成员使用<code>sudo</code>时不需要密码</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# vim /etc/sudoers</span><br><span class="line"></span><br><span class="line">110 <span class="comment"># %wheel ALL=(ALL) NOPASSWD: ALL</span></span><br><span class="line"></span><br><span class="line">111 %sysmgrs ALL=(ALL) NOPASSWD: ALL</span><br><span class="line"></span><br><span class="line">[root@mars ~]# su - natasha</span><br><span class="line"></span><br><span class="line">[natasha@mars ~]$ <span class="built_in">touch</span> /test1</span><br><span class="line"></span><br><span class="line"><span class="built_in">touch</span>: cannot <span class="built_in">touch</span> <span class="string">&#x27;/test1&#x27;</span>: Permission denied</span><br><span class="line"></span><br><span class="line">[natasha@mars ~]$ <span class="built_in">sudo</span> <span class="built_in">touch</span> /test</span><br><span class="line"></span><br><span class="line">[natasha@mars ~]$ <span class="built_in">exit</span></span><br></pre></td></tr></table></figure><h3 id="配置创建新用户的密码测试"><a href="#配置创建新用户的密码测试" class="headerlink" title="配置创建新用户的密码测试"></a>配置创建新用户的密码测试</h3><p>创建新用户时，默认密码策略为<code>20</code>天后，密码会过期</p><h4 id="解题-1"><a href="#解题-1" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# grep MAX /etc/login.defs</span><br><span class="line"></span><br><span class="line">\# PASS_MAX_DAYS Maximum number of days a password may be used.</span><br><span class="line"></span><br><span class="line">PASS_MAX_DAYS 99999</span><br><span class="line"></span><br><span class="line">UID_MAX 60000</span><br><span class="line"></span><br><span class="line">SYS_UID_MAX 999</span><br><span class="line"></span><br><span class="line">GID_MAX 60000</span><br><span class="line"></span><br><span class="line">SYS_GID_MAX 999</span><br><span class="line"></span><br><span class="line">[root@mars ~]# vim /etc/login.defs</span><br><span class="line"></span><br><span class="line">PASS_MAX_DAYS 20</span><br></pre></td></tr></table></figure><h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ul><li>本题主要靠密码策略修改是编辑 <code>/etc/login.defs</code></li></ul><h3 id="创建shell脚本"><a href="#创建shell脚本" class="headerlink" title="创建shell脚本"></a>创建shell脚本</h3><ul><li><p>创建一个名为 <code>myshell</code> 的脚本</p></li><li><p>该脚本放置在 <code>/usr/local/bin</code> 下</p></li><li><p>该脚本用于查找 /usr 下所有大小在<code>50K~10m</code> 之间且具有修改组 <code>ID</code>权限的文件，将这些文件放置于<code>/root/myfiles</code>下</p></li></ul><h4 id="解题-2"><a href="#解题-2" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# <span class="built_in">mkdir</span> /root/myfiles</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">cat</span> myshell.sh</span><br><span class="line"></span><br><span class="line">\#!/bin/bash</span><br><span class="line"></span><br><span class="line">find /usr -<span class="built_in">type</span> f -and -size -10M -and -size +50k -and -size -10M -and -perm</span><br><span class="line"></span><br><span class="line">-2000 -<span class="built_in">exec</span> <span class="built_in">cp</span> -a &#123;&#125; /root/myfiles \;</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">cp</span> myshell.sh /usr/local/bin/</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">chmod</span> +x /usr/local/bin/myshell.sh</span><br><span class="line"></span><br><span class="line">[root@mars ~]# sh /usr/local/bin/myshell.sh</span><br><span class="line"></span><br><span class="line">[root@mars ~]# ll /root/myfiles/</span><br><span class="line"></span><br><span class="line">total 464</span><br><span class="line"></span><br><span class="line">-r-xr-sr-x. 1 root ssh_keys 474528 Nov 26 2018 ssh-keysign</span><br></pre></td></tr></table></figure><h3 id="欢迎语"><a href="#欢迎语" class="headerlink" title="欢迎语"></a>欢迎语</h3><p>登录到普通用户后提示一句欢迎语<code>&#39;hello word !&#39;</code>或者用户在登陆前显示欢迎语提示:</p><h4 id="解题-3"><a href="#解题-3" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# <span class="built_in">echo</span> <span class="string">&#x27;hello world&#x27;</span> &gt;&gt; /etc/motd</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">echo</span> <span class="string">&#x27;hello world&#x27;</span> &gt;&gt; /etc/issue</span><br><span class="line"></span><br><span class="line"><span class="comment">##登录测试</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="设置用户默认创建文件UMASK"><a href="#设置用户默认创建文件UMASK" class="headerlink" title="设置用户默认创建文件UMASK"></a>设置用户默认创建文件UMASK</h3><p>用户<code>natasha</code>默认创建文件权限为<code>r--r--r--</code>默认创建的目录为<code>r-xr-xr-x</code></p><h4 id="解题-4"><a href="#解题-4" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# su - natasha</span><br><span class="line"></span><br><span class="line">把<span class="built_in">umask</span>写进用户家目录下的bashrc</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;umask 222&#x27;</span>&gt;&gt;.bashrc</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">source</span> .bashrc</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">umask</span></span><br><span class="line">0222</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">touch</span> test1</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">mkdir</span> test2</span><br><span class="line">[natasha@mars ~]$ ll</span><br><span class="line">total 0</span><br><span class="line">-r--r--r--. 1 natasha natasha 0 Dec 21 03:10 test1</span><br><span class="line">dr-xr-xr-x. 2 natasha natasha 6 Dec 21 03:10 test2</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">exit</span></span><br><span class="line"><span class="comment">##umask</span></span><br><span class="line"><span class="comment">#umask是屏蔽的意思，权限的数值取反</span></span><br><span class="line"><span class="comment">#222 对应目录的权限是555，对应文件的权限是444 （文件默认不给可执行权限）</span></span><br></pre></td></tr></table></figure><h4 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h4><ul><li><p><code>umask</code>是屏蔽的意思，权限的数值取反</p></li><li><p><code>222</code> 对应目录的权限是<code>555</code>，对应文件的权限是<code>444</code> （<code>文件默认不给可执行权限</code>）</p></li></ul><h3 id="生成环境变量"><a href="#生成环境变量" class="headerlink" title="生成环境变量"></a>生成环境变量</h3><ul><li><p>生成一个环境变量<code>rhcsa</code>，用户在使用这个变量时输出一句话<code>&quot;This is RHCSA!&quot;</code></p></li><li><p>自定义一个命令<code>rhce</code>，用户在使用这个变量时输出一句话<code>&quot;This is RHCE!&quot;</code></p></li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">1) 自定义变量</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用export生成环境变量，并写进用户家目录下的bashrc</span></span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">echo</span> <span class="string">&#x27;export rhcsa=&quot;echo This is RHCSA!&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">source</span> .bashrc</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">echo</span> <span class="variable">$rhcsa</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> This is RHCSA!</span><br><span class="line"></span><br><span class="line">2) 自定义命令</span><br><span class="line"></span><br><span class="line">[root@mars ~]# vim /usr/local/bin/rhce</span><br><span class="line"></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This is RHCE!&quot;</span></span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">chmod</span> +x /usr/local/bin/rhce</span><br><span class="line"></span><br><span class="line">[root@mars ~]# rhce</span><br><span class="line"></span><br><span class="line">This is RHCE!</span><br></pre></td></tr></table></figure><h3 id="配置容器使其自动启动"><a href="#配置容器使其自动启动" class="headerlink" title="配置容器使其自动启动"></a>配置容器使其自动启动</h3><ul><li><p>利用注册表服务器上的 <code>rsyslog</code> 镜像，创建一个名为 <code>journal-server</code> 的容器</p></li><li><p>面向 <code>tom</code>用户，配置一个 <code>systemd</code> 服务</p></li><li><p>该服务命名为 <code>container-journal-server</code> ，并在系统重启时自动启动，无需干预</p></li></ul><h4 id="解题-5"><a href="#解题-5" class="headerlink" title="解题"></a>解题</h4><h3 id="为容器配置持久存储"><a href="#为容器配置持久存储" class="headerlink" title="为容器配置持久存储"></a>为容器配置持久存储</h3><p>通过以下方式扩展上一个任务的服务：</p><p>配置主机系统的 <code>journald</code> 日志以在系统重启后保留数据，并重新启动日志记录服务</p><p>将主机 <code>/var/log/journal</code> 目录下任何以 <code>*.journal</code> 的文件复制到 <code>/home/tom/container_logfile</code> 中</p><p>将服务配置为在启动时自动将 <code>/home/tom/container_logfile</code> 挂载到容器中的 <code>/var/log/journal 下</code></p><h4 id="解题-6"><a href="#解题-6" class="headerlink" title="解题"></a>解题</h4>]]></content>
+      
+      
+      <categories>
+          
+          <category> 资料汇编 </category>
+          
+          <category> 认证备考 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 考试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>弱电机房布线验收清单</title>
+      <link href="/2026/11/15/%E5%BC%B1%E7%94%B5%E6%9C%BA%E6%88%BF%E5%B8%83%E7%BA%BF%E9%AA%8C%E6%94%B6%E6%B8%85%E5%8D%95/"/>
+      <url>/2026/11/15/%E5%BC%B1%E7%94%B5%E6%9C%BA%E6%88%BF%E5%B8%83%E7%BA%BF%E9%AA%8C%E6%94%B6%E6%B8%85%E5%8D%95/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、机柜与安装"><a href="#一、机柜与安装" class="headerlink" title="一、机柜与安装"></a>一、机柜与安装</h2><ul><li>机柜垂直度、固定与抗震加固，前后门开合无干涉</li><li>柜内设备 U 位排布合理，配线架、交换机、理线器分区</li><li>强弱电分开走线，桥架标识清晰</li><li>柜内预留扩容 U 位与电源插座余量</li></ul><h2 id="二、线缆与标识"><a href="#二、线缆与标识" class="headerlink" title="二、线缆与标识"></a>二、线缆与标识</h2><ul><li>双绞线永久链路测试报告齐全（长度、衰减、近端串扰等）</li><li>光纤链路损耗测试记录，熔接与跳纤盘留规范</li><li>标签统一格式：机柜 - 配线架 - 端口 - 用途，两端一致</li><li>线缆弯曲半径达标，扎带不过紧，无裸露接头</li></ul><h2 id="三、电源与接地"><a href="#三、电源与接地" class="headerlink" title="三、电源与接地"></a>三、电源与接地</h2><ul><li>UPS 容量与后备时间实测，放电测试记录</li><li>机柜 PDU 双路供电核对，插头防脱</li><li>等电位联结与接地电阻测试报告</li><li>防雷器（SPD）状态指示正常</li></ul><h2 id="四、动环监控点位"><a href="#四、动环监控点位" class="headerlink" title="四、动环监控点位"></a>四、动环监控点位</h2><div class="table-container"><table><thead><tr><th>类别</th><th>常见点位</th></tr></thead><tbody><tr><td>环境</td><td>温湿度、水浸、烟感</td></tr><tr><td>供配电</td><td>市电状态、UPS 状态、配电柜电量</td></tr><tr><td>安防</td><td>门禁、摄像机、入侵报警</td></tr><tr><td>告警输出</td><td>声光、短信/平台推送，逐点联动测试</td></tr></tbody></table></div><p>监控不只是「装了摄像头」，逐点做告警联动测试才是验收重点。</p><h2 id="五、文档与实测"><a href="#五、文档与实测" class="headerlink" title="五、文档与实测"></a>五、文档与实测</h2><ul><li>竣工图纸、点位表、IP 地址表、设备清单与序列号</li><li>端口对应表与配置备份文件</li><li>监控录像留存天数按码率反算并实测覆盖周期</li><li>运维账号、密码与告警接收人清单交接</li></ul><blockquote><p>验收留痕比验收本身更重要：图纸、测试报告、配置备份三样不齐，后期排障基本靠猜。</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 弱电与电气智能化 </category>
+          
+          <category> 布线机房与集成 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 速查 </tag>
+            
+            <tag> 综合布线 </tag>
+            
+            <tag> 验收 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>4-20mA 与 0-10V 选型速查</title>
+      <link href="/2026/11/15/4-20mA%E4%B8%8E0-10V%E9%80%89%E5%9E%8B%E9%80%9F%E6%9F%A5/"/>
+      <url>/2026/11/15/4-20mA%E4%B8%8E0-10V%E9%80%89%E5%9E%8B%E9%80%9F%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="结论先给"><a href="#结论先给" class="headerlink" title="结论先给"></a>结论先给</h2><ul><li><strong>走线远、干扰大、需要断线诊断</strong> → 4-20mA</li><li><strong>柜内短距离、环境干净、PLC 模块只有电压输入</strong> → 0-10V</li></ul><h2 id="对比表"><a href="#对比表" class="headerlink" title="对比表"></a>对比表</h2><div class="table-container"><table><thead><tr><th>对比项</th><th>4-20mA 电流环</th><th>0-10V 电压</th></tr></thead><tbody><tr><td>抗干扰</td><td>强，受地电位差与电磁耦合影响小</td><td>弱，长线容易拾取干扰</td></tr><tr><td>传输距离</td><td>可达数百米，线阻影响小</td><td>宜短距，线阻分压带来偏差</td></tr><tr><td>断线识别</td><td>有，低于 4 mA 即判断断线（活零点）</td><td>难，0 V 与真实零位区分不开</td></tr><tr><td>供电与线制</td><td>常见两线制回路供电，省线</td><td>多为三线制，需独立电源</td></tr><tr><td>接收模块</td><td>AI 电流输入模块</td><td>AI 电压输入模块</td></tr><tr><td>典型场景</td><td>工艺过程、变频器车间、无人值守</td><td>柜内、设备面板、楼宇自控</td></tr></tbody></table></div><h2 id="原理一句话"><a href="#原理一句话" class="headerlink" title="原理一句话"></a>原理一句话</h2><p>电流环里传感器控制的是回路电流，线缆电阻串在回路中，只要供电电压够、回路不饱和，读数基本不随线长变化；电压信号接收端是高阻输入，长线更像一根天线，变频器、接触器动作耦合进来的干扰会直接叠加到 10 V 量程上。4 mA 的「活零点」还顺带解决了断线诊断问题。</p><h2 id="现场接线要点"><a href="#现场接线要点" class="headerlink" title="现场接线要点"></a>现场接线要点</h2><ol><li>信号线用屏蔽线，<strong>屏蔽层单端接地</strong>，别两端都接，否则形成地环流。</li><li>信号线不与动力电缆、变频器输出线平行长距离敷设，必须交叉时尽量垂直。</li><li>读数规律性跳动，先查屏蔽接地与地电位差，再怀疑传感器本身。</li><li>两线制要核算回路总负载（电缆电阻 + 采集模块输入电阻）与最低工作电压。</li><li><strong>订货阶段就确认 AI 模块类型</strong>，电流模块与电压模块不能混用。</li><li>关键工艺联锁、安全相关回路不推荐 0-10V：既缺断线诊断，也扛不住干扰。</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 弱电与电气智能化 </category>
+          
+          <category> 工业控制与仪表 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 速查 </tag>
+            
+            <tag> 模拟量 </tag>
+            
+            <tag> PLC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>综自与远动规约速查</title>
+      <link href="/2026/11/15/%E7%BB%BC%E8%87%AA%E4%B8%8E%E8%BF%9C%E5%8A%A8%E8%A7%84%E7%BA%A6%E9%80%9F%E6%9F%A5/"/>
+      <url>/2026/11/15/%E7%BB%BC%E8%87%AA%E4%B8%8E%E8%BF%9C%E5%8A%A8%E8%A7%84%E7%BA%A6%E9%80%9F%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一张表看清定位"><a href="#一张表看清定位" class="headerlink" title="一张表看清定位"></a>一张表看清定位</h2><div class="table-container"><table><thead><tr><th>规约</th><th>主要用途</th><th>传输方式</th><th>数据模型</th></tr></thead><tbody><tr><td>Modbus RTU / TCP</td><td>电表、直流屏、温控器等辅助设备采集</td><td>RS-485 或以太网，主从轮询</td><td>寄存器 / 线圈，扁平地址</td></tr><tr><td>IEC 60870-5-103</td><td>微机保护装置与站控层通信</td><td>串口或光纤，问答式</td><td>功能码 + 信息体地址（ASDU）</td></tr><tr><td>IEC 60870-5-104</td><td>变电站与调度主站远动通信</td><td>TCP/IP 以太网</td><td>103 的 ASDU 网络扩展，四遥</td></tr><tr><td>IEC 61850</td><td>智能变电站全站通信</td><td>以太网，MMS / GOOSE / SV</td><td>面向对象（LD / LN / DA），SCL 自描述</td></tr></tbody></table></div><h2 id="按层记，不会混"><a href="#按层记，不会混" class="headerlink" title="按层记，不会混"></a>按层记，不会混</h2><ul><li><strong>设备层</strong>：多功能电表、直流屏、温控器 → 多为 Modbus RTU/TCP 或 DL/T 645。</li><li><strong>间隔层 → 站控层</strong>：保护动作信号、故障录波、定值管理 → 103（存量站大量使用）。</li><li><strong>站 → 调度</strong>：遥测、遥信、遥控、遥调 → 104，国内调度主流。</li><li><strong>智能变电站全站</strong>：IED 互操作、GOOSE 快速跳闸、SV 采样值 → 61850，新建站趋势。</li></ul><p>实际项目常见的是<strong>混合组网</strong>：站控层 61850、调度侧 104、辅助设备 Modbus，中间靠通信管理机做规约转换。改造站尤其明显 —— 老装置只有 103 或厂家私有规约，电表走 645，直流屏走 Modbus。通信管理机的串口/网口数量必须按现场实际点表配，不能只按新设备的规约配。</p><h2 id="真正花时间的不是规约，是点表"><a href="#真正花时间的不是规约，是点表" class="headerlink" title="真正花时间的不是规约，是点表"></a>真正花时间的不是规约，是点表</h2><p>同一套 103 规约，不同厂家对「遥信点号 0x01 代表什么」的定义可能不一样。工程上一定要逐点核对：后台显示的「1 号主变高压侧开关」是否真的对应那台开关。跳过这步，投运后就可能出现遥控合了 A 开关、后台却显示 B 开关变位这类严重问题。</p><blockquote><p>选型速记：简单采集 Modbus，保护接入 103，远动上送 104，新建智能站 61850。安全与实时性要求高的场合，别用轮询协议凑合。</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 弱电与电气智能化 </category>
+          
+          <category> 电力自动化与综自 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 速查 </tag>
+            
+            <tag> 综自屏 </tag>
+            
+            <tag> 规约 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>低压柜型区别速查</title>
+      <link href="/2026/11/15/%E4%BD%8E%E5%8E%8B%E6%9F%9C%E5%9E%8B%E5%8C%BA%E5%88%AB%E9%80%9F%E6%9F%A5/"/>
+      <url>/2026/11/15/%E4%BD%8E%E5%8E%8B%E6%9F%9C%E5%9E%8B%E5%8C%BA%E5%88%AB%E9%80%9F%E6%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="根本分界：固定式还是抽出式"><a href="#根本分界：固定式还是抽出式" class="headerlink" title="根本分界：固定式还是抽出式"></a>根本分界：固定式还是抽出式</h2><p>其他差异都是次要的，第一刀先切在这里 —— 检修时能不能只抽出故障回路、而不中断整段供电。</p><div class="table-container"><table><thead><tr><th>型号</th><th>结构</th><th>定位</th><th>典型场景</th></tr></thead><tbody><tr><td>GGD</td><td>固定式</td><td>结构简单、成本最低，检修需整段停电</td><td>小型工厂、民用建筑、变电站辅助配电</td></tr><tr><td>GCK</td><td>抽出式</td><td>早期抽屉柜，兼顾 PC 与 MCC，性价比高</td><td>中小型工厂动力配电与电机控制</td></tr><tr><td>GCS</td><td>抽出式</td><td>国产升级抽屉柜，柜体强度与分断能力更强</td><td>大型工业、数据中心、石化冶金</td></tr><tr><td>MNS</td><td>抽出式</td><td>模块化设计，回路密度高，部分方案可双面操作</td><td>国际项目、机场医院、扩展性要求高的场合</td></tr></tbody></table></div><p>GGD 与后三者最本质的区别就是<strong>固定式 vs 抽出式</strong>，直接决定了运维方式：GGD 故障率低、造价低，但改造和带电检修能力弱；抽出式贵在抽屉导轨、二次接插件和联锁机构，换来的是不停电更换功能单元。</p><h2 id="选型四问"><a href="#选型四问" class="headerlink" title="选型四问"></a>选型四问</h2><ol><li><strong>能安排停电检修吗？</strong> 能 → GGD 省钱；不能（连续生产线、数据中心、医院）→ 抽出式。</li><li><strong>主母线计算电流多大？</strong> 决定柜型档位和母排规格，接近上限时别硬压低配。</li><li><strong>电机回路多不多？</strong> 超过十来台就该考虑 MCC 方案，用普通配电柜硬凑会让控制接线和后期扩容都很痛苦。</li><li><strong>要不要无功补偿？</strong> 需要就单独配补偿柜，别混在出线柜里算。</li></ol><h2 id="柜体工艺验收要点"><a href="#柜体工艺验收要点" class="headerlink" title="柜体工艺验收要点"></a>柜体工艺验收要点</h2><p>防护等级（IP）与项目环境是否匹配、母排规格与搭接处理、接地连续性、二次端子编号与线号一致性、柜间联络与联锁、抽屉互换性与机械联锁可靠性、标识铭牌与图纸一致性。</p><blockquote><p>额定电流、分断能力、模数（E=20/25 mm）等参数在不同厂家样本里差异较大，做方案以项目规范书和厂家最新样本为准，不要照抄网络对照表。</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 弱电与电气智能化 </category>
+          
+          <category> 低压成套与配电 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 速查 </tag>
+            
+            <tag> 低压成套 </tag>
+            
+            <tag> 柜体 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>视频监控存储容量速算</title>
+      <link href="/2026/11/15/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E5%AD%98%E5%82%A8%E5%AE%B9%E9%87%8F%E9%80%9F%E7%AE%97/"/>
+      <url>/2026/11/15/%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7%E5%AD%98%E5%82%A8%E5%AE%B9%E9%87%8F%E9%80%9F%E7%AE%97/</url>
+      
+        <content type="html"><![CDATA[<h2 id="核心公式"><a href="#核心公式" class="headerlink" title="核心公式"></a>核心公式</h2><p>容量（GB）≈ 码率（Mbps）× 3600 × 每天录像小时数 × 留存天数 × 路数 ÷ 8 ÷ 1024</p><p>连续录 24 小时可以记一个速算值：<strong>1 Mbps ≈ 10.6 GB / 天 / 路</strong>（按 1024 换算；按十进制约 10.8 GB）。</p><div class="table-container"><table><thead><tr><th>单路平均码率</th><th style="text-align:right">单路每天</th><th style="text-align:right">单路 30 天</th><th style="text-align:right">16 路 30 天</th></tr></thead><tbody><tr><td>2 Mbps</td><td style="text-align:right">21 GB</td><td style="text-align:right">633 GB</td><td style="text-align:right">9.9 TB</td></tr><tr><td>4 Mbps</td><td style="text-align:right">42 GB</td><td style="text-align:right">1.24 TB</td><td style="text-align:right">19.8 TB</td></tr><tr><td>8 Mbps</td><td style="text-align:right">84 GB</td><td style="text-align:right">2.47 TB</td><td style="text-align:right">39.6 TB</td></tr></tbody></table></div><p>上表为理论值，实际配置再留 20% 余量。例：16 路 4 Mbps、留存 30 天 → 约 19.8 TB × 1.2 ≈ 24 TB，考虑 RAID 与热备盘后按盘位反推硬盘数量。</p><h2 id="六个容易踩的坑"><a href="#六个容易踩的坑" class="headerlink" title="六个容易踩的坑"></a>六个容易踩的坑</h2><ol><li><strong>分辨率不等于码率</strong>。同样 4K，编码格式、帧率、场景复杂度不同，码率能差好几倍。以摄像机配置值或实测码流为准，别按分辨率拍脑袋。</li><li><strong>编码格式影响巨大</strong>。同清晰度下 H.265 比 H.264 省约一半，H.265+ / Smart 编码更省，但动态画面会回涨。</li><li><strong>移动侦测别直接套折扣</strong>。树叶、车流、夜间噪点都可能让录像接近全天，先实测几天占空比再定容量。</li><li><strong>核对 NVR 接入带宽</strong>。标称「64 路」但接入带宽只有 200 Mbps 的机器，实际跑不满路数，需满足 路数 × 主码率。</li><li><strong>标称容量不是可用容量</strong>。格式化、系统分区、RAID 校验盘与热备盘都要扣掉。</li><li><strong>用监控专用盘</strong>。7×24 连续写入场景，普通桌面盘寿命明显缩短。</li></ol><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>顺序是：先定留存天数与码率 → 算总容量 → 反推盘位和 RAID 级别 → 最后核对 NVR 接入带宽与解码能力。反过来先买硬盘再算天数，基本都会不够。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 弱电与电气智能化 </category>
+          
+          <category> 安全防范与监控 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 速查 </tag>
+            
+            <tag> 视频监控 </tag>
+            
+            <tag> NVR </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Ubuntu 24.04 服务器初始化实战：磁盘、Swap、Docker 与 Nginx 容器化部署</title>
       <link href="/2026/11/08/Ubuntu%2024.04%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%9E%E6%88%98%EF%BC%9A%E7%A3%81%E7%9B%98%E3%80%81Swap%E3%80%81Docker%20%E4%B8%8E%20Nginx%20%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
       <url>/2026/11/08/Ubuntu%2024.04%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%9E%E6%88%98%EF%BC%9A%E7%A3%81%E7%9B%98%E3%80%81Swap%E3%80%81Docker%20%E4%B8%8E%20Nginx%20%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2/</url>
@@ -68,33 +250,6 @@
             <tag> 排查方法论 </tag>
             
             <tag> 应急处理 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>RHCSA认证考试-附加题</title>
-      <link href="/2026/07/09/RHCSA%E8%AE%A4%E8%AF%81%E8%80%83%E8%AF%95-%E9%99%84%E5%8A%A0%E9%A2%98/"/>
-      <url>/2026/07/09/RHCSA%E8%AE%A4%E8%AF%81%E8%80%83%E8%AF%95-%E9%99%84%E5%8A%A0%E9%A2%98/</url>
-      
-        <content type="html"><![CDATA[<h3 id="创建归档文件"><a href="#创建归档文件" class="headerlink" title="创建归档文件"></a>创建归档文件</h3><p>创建一个名为 <code>/root/backup.tar.bz2</code> 的 <code>tar</code> 存档，其应包含 <code>/usr/local</code> 的内容。该 <code>tar</code> 存档必须使用<code>bzip2</code> 进行压缩。</p><h4 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# tar jcvf /root/backup.tar.bz2 /usr/local/</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line">[root@mars ~]# file backup.tar.bz2</span><br><span class="line"></span><br><span class="line">backup.tar.bz2: bzip2 compressed data, block size = 900k</span><br></pre></td></tr></table></figure><h3 id="设置sudo免密"><a href="#设置sudo免密" class="headerlink" title="设置sudo免密"></a>设置sudo免密</h3><p>允许<code>sysmgrs</code>组所有成员使用<code>sudo</code>时不需要密码</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# vim /etc/sudoers</span><br><span class="line"></span><br><span class="line">110 <span class="comment"># %wheel ALL=(ALL) NOPASSWD: ALL</span></span><br><span class="line"></span><br><span class="line">111 %sysmgrs ALL=(ALL) NOPASSWD: ALL</span><br><span class="line"></span><br><span class="line">[root@mars ~]# su - natasha</span><br><span class="line"></span><br><span class="line">[natasha@mars ~]$ <span class="built_in">touch</span> /test1</span><br><span class="line"></span><br><span class="line"><span class="built_in">touch</span>: cannot <span class="built_in">touch</span> <span class="string">&#x27;/test1&#x27;</span>: Permission denied</span><br><span class="line"></span><br><span class="line">[natasha@mars ~]$ <span class="built_in">sudo</span> <span class="built_in">touch</span> /test</span><br><span class="line"></span><br><span class="line">[natasha@mars ~]$ <span class="built_in">exit</span></span><br></pre></td></tr></table></figure><h3 id="配置创建新用户的密码测试"><a href="#配置创建新用户的密码测试" class="headerlink" title="配置创建新用户的密码测试"></a>配置创建新用户的密码测试</h3><p>创建新用户时，默认密码策略为<code>20</code>天后，密码会过期</p><h4 id="解题-1"><a href="#解题-1" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# grep MAX /etc/login.defs</span><br><span class="line"></span><br><span class="line">\# PASS_MAX_DAYS Maximum number of days a password may be used.</span><br><span class="line"></span><br><span class="line">PASS_MAX_DAYS 99999</span><br><span class="line"></span><br><span class="line">UID_MAX 60000</span><br><span class="line"></span><br><span class="line">SYS_UID_MAX 999</span><br><span class="line"></span><br><span class="line">GID_MAX 60000</span><br><span class="line"></span><br><span class="line">SYS_GID_MAX 999</span><br><span class="line"></span><br><span class="line">[root@mars ~]# vim /etc/login.defs</span><br><span class="line"></span><br><span class="line">PASS_MAX_DAYS 20</span><br></pre></td></tr></table></figure><h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ul><li>本题主要靠密码策略修改是编辑 <code>/etc/login.defs</code></li></ul><h3 id="创建shell脚本"><a href="#创建shell脚本" class="headerlink" title="创建shell脚本"></a>创建shell脚本</h3><ul><li><p>创建一个名为 <code>myshell</code> 的脚本</p></li><li><p>该脚本放置在 <code>/usr/local/bin</code> 下</p></li><li><p>该脚本用于查找 /usr 下所有大小在<code>50K~10m</code> 之间且具有修改组 <code>ID</code>权限的文件，将这些文件放置于<code>/root/myfiles</code>下</p></li></ul><h4 id="解题-2"><a href="#解题-2" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# <span class="built_in">mkdir</span> /root/myfiles</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">cat</span> myshell.sh</span><br><span class="line"></span><br><span class="line">\#!/bin/bash</span><br><span class="line"></span><br><span class="line">find /usr -<span class="built_in">type</span> f -and -size -10M -and -size +50k -and -size -10M -and -perm</span><br><span class="line"></span><br><span class="line">-2000 -<span class="built_in">exec</span> <span class="built_in">cp</span> -a &#123;&#125; /root/myfiles \;</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">cp</span> myshell.sh /usr/local/bin/</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">chmod</span> +x /usr/local/bin/myshell.sh</span><br><span class="line"></span><br><span class="line">[root@mars ~]# sh /usr/local/bin/myshell.sh</span><br><span class="line"></span><br><span class="line">[root@mars ~]# ll /root/myfiles/</span><br><span class="line"></span><br><span class="line">total 464</span><br><span class="line"></span><br><span class="line">-r-xr-sr-x. 1 root ssh_keys 474528 Nov 26 2018 ssh-keysign</span><br></pre></td></tr></table></figure><h3 id="欢迎语"><a href="#欢迎语" class="headerlink" title="欢迎语"></a>欢迎语</h3><p>登录到普通用户后提示一句欢迎语<code>&#39;hello word !&#39;</code>或者用户在登陆前显示欢迎语提示:</p><h4 id="解题-3"><a href="#解题-3" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# <span class="built_in">echo</span> <span class="string">&#x27;hello world&#x27;</span> &gt;&gt; /etc/motd</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">echo</span> <span class="string">&#x27;hello world&#x27;</span> &gt;&gt; /etc/issue</span><br><span class="line"></span><br><span class="line"><span class="comment">##登录测试</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="设置用户默认创建文件UMASK"><a href="#设置用户默认创建文件UMASK" class="headerlink" title="设置用户默认创建文件UMASK"></a>设置用户默认创建文件UMASK</h3><p>用户<code>natasha</code>默认创建文件权限为<code>r--r--r--</code>默认创建的目录为<code>r-xr-xr-x</code></p><h4 id="解题-4"><a href="#解题-4" class="headerlink" title="解题"></a>解题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@mars ~]# su - natasha</span><br><span class="line"></span><br><span class="line">把<span class="built_in">umask</span>写进用户家目录下的bashrc</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;umask 222&#x27;</span>&gt;&gt;.bashrc</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">source</span> .bashrc</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">umask</span></span><br><span class="line">0222</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">touch</span> test1</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">mkdir</span> test2</span><br><span class="line">[natasha@mars ~]$ ll</span><br><span class="line">total 0</span><br><span class="line">-r--r--r--. 1 natasha natasha 0 Dec 21 03:10 test1</span><br><span class="line">dr-xr-xr-x. 2 natasha natasha 6 Dec 21 03:10 test2</span><br><span class="line">[natasha@mars ~]$ <span class="built_in">exit</span></span><br><span class="line"><span class="comment">##umask</span></span><br><span class="line"><span class="comment">#umask是屏蔽的意思，权限的数值取反</span></span><br><span class="line"><span class="comment">#222 对应目录的权限是555，对应文件的权限是444 （文件默认不给可执行权限）</span></span><br></pre></td></tr></table></figure><h4 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h4><ul><li><p><code>umask</code>是屏蔽的意思，权限的数值取反</p></li><li><p><code>222</code> 对应目录的权限是<code>555</code>，对应文件的权限是<code>444</code> （<code>文件默认不给可执行权限</code>）</p></li></ul><h3 id="生成环境变量"><a href="#生成环境变量" class="headerlink" title="生成环境变量"></a>生成环境变量</h3><ul><li><p>生成一个环境变量<code>rhcsa</code>，用户在使用这个变量时输出一句话<code>&quot;This is RHCSA!&quot;</code></p></li><li><p>自定义一个命令<code>rhce</code>，用户在使用这个变量时输出一句话<code>&quot;This is RHCE!&quot;</code></p></li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">1) 自定义变量</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用export生成环境变量，并写进用户家目录下的bashrc</span></span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">echo</span> <span class="string">&#x27;export rhcsa=&quot;echo This is RHCSA!&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">source</span> .bashrc</span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">echo</span> <span class="variable">$rhcsa</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> This is RHCSA!</span><br><span class="line"></span><br><span class="line">2) 自定义命令</span><br><span class="line"></span><br><span class="line">[root@mars ~]# vim /usr/local/bin/rhce</span><br><span class="line"></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;This is RHCE!&quot;</span></span><br><span class="line"></span><br><span class="line">[root@mars ~]# <span class="built_in">chmod</span> +x /usr/local/bin/rhce</span><br><span class="line"></span><br><span class="line">[root@mars ~]# rhce</span><br><span class="line"></span><br><span class="line">This is RHCE!</span><br></pre></td></tr></table></figure><h3 id="配置容器使其自动启动"><a href="#配置容器使其自动启动" class="headerlink" title="配置容器使其自动启动"></a>配置容器使其自动启动</h3><ul><li><p>利用注册表服务器上的 <code>rsyslog</code> 镜像，创建一个名为 <code>journal-server</code> 的容器</p></li><li><p>面向 <code>tom</code>用户，配置一个 <code>systemd</code> 服务</p></li><li><p>该服务命名为 <code>container-journal-server</code> ，并在系统重启时自动启动，无需干预</p></li></ul><h4 id="解题-5"><a href="#解题-5" class="headerlink" title="解题"></a>解题</h4><h3 id="为容器配置持久存储"><a href="#为容器配置持久存储" class="headerlink" title="为容器配置持久存储"></a>为容器配置持久存储</h3><p>通过以下方式扩展上一个任务的服务：</p><p>配置主机系统的 <code>journald</code> 日志以在系统重启后保留数据，并重新启动日志记录服务</p><p>将主机 <code>/var/log/journal</code> 目录下任何以 <code>*.journal</code> 的文件复制到 <code>/home/tom/container_logfile</code> 中</p><p>将服务配置为在启动时自动将 <code>/home/tom/container_logfile</code> 挂载到容器中的 <code>/var/log/journal 下</code></p><h4 id="解题-6"><a href="#解题-6" class="headerlink" title="解题"></a>解题</h4>]]></content>
-      
-      
-      <categories>
-          
-          <category> 资料汇编 </category>
-          
-          <category> 认证备考 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 考试 </tag>
             
         </tags>
       
