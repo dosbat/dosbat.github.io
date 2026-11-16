@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#2563EB"/></marker>
+    <marker id="ar2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#10B981"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="660" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">zone 匹配：从具体到默认，第一个命中就用它</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">来源 IP 绑定 &gt; 网卡绑定 &gt; 默认 zone；target 决定未匹配流量的最终去向</text>
+
+  <!-- 左侧匹配流程 -->
+  <rect x="40" y="112" width="480" height="66" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="62" y="140" font-size="14" font-weight="700" fill="#1E40AF">入站数据包到达本机</text>
+  <text x="62" y="162" font-size="11" fill="#475569">先判断用哪个 zone，再按该 zone 的规则处理</text>
+  <line x1="280" y1="180" x2="280" y2="202" stroke="#2563EB" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="40" y="204" width="480" height="66" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="62" y="232" font-size="14" font-weight="700" fill="#0F172A">① 来源 IP 是否已绑定 zone？</text>
+  <text x="62" y="254" font-size="11" fill="#047857">是 → 用该 zone（如把内网绑到 trusted）</text>
+  <line x1="280" y1="272" x2="280" y2="294" stroke="#2563EB" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="40" y="296" width="480" height="66" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="62" y="324" font-size="14" font-weight="700" fill="#0F172A">② 否 → 入站网卡是否绑定 zone？</text>
+  <text x="62" y="346" font-size="11" fill="#047857">是 → 用网卡所属 zone（NetworkManager 设置）</text>
+  <line x1="280" y1="364" x2="280" y2="386" stroke="#2563EB" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="40" y="388" width="480" height="66" rx="10" fill="#F1F5F9" stroke="#94A3B8" stroke-width="2"/>
+  <text x="62" y="416" font-size="14" font-weight="700" fill="#334155">③ 都没有 → 用默认 zone</text>
+  <text x="62" y="438" font-size="11" fill="#475569">firewall-cmd --get-default-zone（通常是 public）</text>
+
+  <!-- 右侧 target 表 -->
+  <text x="560" y="130" font-size="16" font-weight="700" fill="#0F172A">zone target：未匹配流量怎么处理</text>
+  <rect x="560" y="146" width="600" height="40" fill="#1E40AF" rx="8"/>
+  <text x="580" y="172" font-size="13" font-weight="700" fill="#FFFFFF">target</text>
+  <text x="760" y="172" font-size="13" font-weight="700" fill="#FFFFFF">行为</text>
+  <text x="920" y="172" font-size="13" font-weight="700" fill="#FFFFFF">典型场景</text>
+  <g font-size="12" fill="#334155">
+    <rect x="560" y="188" width="600" height="52" fill="#ECFDF5"/>
+    <text x="580" y="220" font-weight="700" fill="#047857">accept</text>
+    <text x="760" y="220">放行未匹配流量</text>
+    <text x="920" y="220">trusted 默认，可信网段</text>
+    <rect x="560" y="242" width="600" height="52" fill="#FFFFFF"/>
+    <text x="580" y="274" font-weight="700" fill="#EA580C">reject</text>
+    <text x="760" y="274">拒绝并回应</text>
+    <text x="920" y="274">内网，客户端快速失败</text>
+    <rect x="560" y="296" width="600" height="52" fill="#FEF2F2"/>
+    <text x="580" y="328" font-weight="700" fill="#DC2626">drop</text>
+    <text x="760" y="328">静默丢弃</text>
+    <text x="920" y="328">公网加固，隐藏服务</text>
+  </g>
+  <rect x="560" y="360" width="600" height="82" rx="8" fill="#F1F5F9" stroke="#E2E8F0"/>
+  <text x="580" y="388" font-size="12" fill="#0F172A">firewall-cmd --permanent --zone=public --set-target=drop</text>
+  <text x="580" y="414" font-size="11" fill="#64748B">firewall-cmd --permanent --zone=trusted --add-source=10.20.0.0/16</text>
+  <text x="580" y="432" font-size="11" fill="#64748B">改完记得 firewall-cmd --reload</text>
+
+  <!-- 警示 -->
+  <rect x="40" y="492" width="1120" height="76" rx="10" fill="#FEF2F2" stroke="#FECACA"/>
+  <text x="60" y="522" font-size="14" font-weight="700" fill="#B91C1C">⚠ 把 public 的 target 改成 drop 之前，必须先确认 SSH 已经放行</text>
+  <text x="60" y="548" font-size="12" fill="#7F1D1D">否则一条 reload 就把自己锁在外面。先 --add-service=ssh 临时放行，再改 target，最后才 --reload。</text>
+
+  <rect x="40" y="582" width="1120" height="60" rx="10" fill="#ECFDF5" stroke="#A7F3D0"/>
+  <text x="60" y="610" font-size="12" font-weight="700" fill="#047857">用 --reload，别用 --complete-reload</text>
+  <text x="60" y="630" font-size="11" fill="#065F46">后者会清空 conntrack 连接跟踪表，现存的 SSH 会话可能直接卡死；--reload 是平滑重载，已建立的连接不断。</text>
+</svg>

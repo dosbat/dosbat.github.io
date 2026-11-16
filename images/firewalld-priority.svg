@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#64748B"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="620" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">priority 决定先后：首条匹配即终止</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">数值越小越先执行；负值抢在 firewalld 基础规则之前，正值排在其后</text>
+
+  <line x1="60" y1="170" x2="1140" y2="170" stroke="#94A3B8" stroke-width="3" marker-end="url(#ar)"/>
+  <text x="60" y="152" font-size="12" fill="#64748B">先执行</text>
+  <text x="1080" y="152" font-size="12" fill="#64748B">后执行</text>
+
+  <rect x="40" y="212" width="350" height="196" rx="12" fill="#FFF7ED" stroke="#FDBA74" stroke-width="2"/>
+  <text x="60" y="246" font-size="15" font-weight="700" fill="#9A3412">负值 priority −32768 ~ −1</text>
+  <line x1="60" y1="262" x2="370" y2="262" stroke="#FED7AA"/>
+  <text x="60" y="292" font-size="12" fill="#475569">在 firewalld 基础规则之前执行</text>
+  <text x="60" y="320" font-size="12" fill="#475569">适合：黑名单优先、特殊拒绝</text>
+  <text x="60" y="348" font-size="12" fill="#475569">例：priority="-10" 的 drop</text>
+  <text x="60" y="382" font-size="11" fill="#C2410C">即使 zone 放行了 http，也先被丢弃</text>
+
+  <rect x="410" y="212" width="350" height="196" rx="12" fill="#EFF6FF" stroke="#93C5FD" stroke-width="2"/>
+  <text x="430" y="246" font-size="15" font-weight="700" fill="#1E40AF">默认 priority = 0</text>
+  <line x1="430" y1="262" x2="740" y2="262" stroke="#BFDBFE"/>
+  <text x="430" y="292" font-size="12" fill="#475569">按动作分链：log → deny → allow</text>
+  <text x="430" y="320" font-size="12" fill="#475569">适合：常规放行、普通富规则</text>
+  <text x="430" y="348" font-size="12" fill="#475569">例：--add-service=http</text>
+  <text x="430" y="382" font-size="11" fill="#1D4ED8">不写 priority 就是这一档</text>
+
+  <rect x="780" y="212" width="380" height="196" rx="12" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="2"/>
+  <text x="800" y="246" font-size="15" font-weight="700" fill="#047857">正值 priority 1 ~ 32767</text>
+  <line x1="800" y1="262" x2="1140" y2="262" stroke="#A7F3D0"/>
+  <text x="800" y="292" font-size="12" fill="#475569">在 firewalld 基础规则之后执行</text>
+  <text x="800" y="320" font-size="12" fill="#475569">适合：兜底规则、后置处理</text>
+  <text x="800" y="348" font-size="12" fill="#475569">同优先级顺序未定义，别依赖</text>
+  <text x="800" y="382" font-size="11" fill="#047857">范围 −32768 到 32767</text>
+
+  <rect x="40" y="438" width="1120" height="152" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="60" y="470" font-size="15" font-weight="700" fill="#0F172A">为什么黑名单要用负 priority？</text>
+  <rect x="60" y="488" width="520" height="80" rx="8" fill="#FEF2F2"/>
+  <text x="80" y="516" font-size="13" font-weight="700" fill="#DC2626">✗ 默认优先级</text>
+  <text x="80" y="542" font-size="12" fill="#7F1D1D">http 放行可能先命中，恶意 IP 照样能访问 80</text>
+  <rect x="620" y="488" width="520" height="80" rx="8" fill="#ECFDF5"/>
+  <text x="640" y="516" font-size="13" font-weight="700" fill="#047857">✓ priority="-10"</text>
+  <text x="640" y="542" font-size="12" fill="#065F46">黑名单先执行，连接被丢弃并记日志</text>
+</svg>
