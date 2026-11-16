@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#2563EB"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="660" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">纠删码：对象切成数据 + 奇偶分片，跨盘分布</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">N（纠删集大小）= K（数据分片）+ M（奇偶分片）；能坏 M 块盘，读写各需至少 K 块健康盘</text>
+
+  <!-- left: object splitting -->
+  <rect x="40" y="112" width="250" height="80" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="60" y="142" font-size="14" font-weight="700" fill="#1E40AF">一个对象 a.jpg</text>
+  <text x="60" y="168" font-size="12" fill="#475569">例：EC:8，16 块盘组成一个纠删集</text>
+  <line x1="165" y1="194" x2="165" y2="216" stroke="#2563EB" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="40" y="218" width="250" height="130" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="60" y="246" font-size="13" font-weight="700" fill="#0F172A">按对象名哈希选纠删集</text>
+  <text x="60" y="272" font-size="11" fill="#475569">同一对象永远落在同一组盘</text>
+  <text x="60" y="296" font-size="11" fill="#475569">切分为 8 数据块 + 8 奇偶块</text>
+  <text x="60" y="320" font-size="11" fill="#475569">Reed-Solomon 算法</text>
+  <text x="60" y="340" font-size="11" fill="#64748B">xl.meta 随分片写入，自描述</text>
+
+  <!-- middle: 16 drives -->
+  <text x="330" y="118" font-size="16" font-weight="700" fill="#0F172A">16 块盘（4 节点 × 4 盘）· 每块盘一个分片</text>
+  <g font-size="11" text-anchor="middle">
+    <!-- data shards -->
+    <rect x="330" y="136" width="100" height="56" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="380" y="160" font-size="13" font-weight="700" fill="#1E40AF">D1</text><text x="380" y="180" fill="#475569">数据</text>
+    <rect x="442" y="136" width="100" height="56" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="492" y="160" font-size="13" font-weight="700" fill="#1E40AF">D2</text><text x="492" y="180" fill="#475569">数据</text>
+    <rect x="554" y="136" width="100" height="56" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="604" y="160" font-size="13" font-weight="700" fill="#1E40AF">D3</text><text x="604" y="180" fill="#475569">数据</text>
+    <rect x="666" y="136" width="100" height="56" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="716" y="160" font-size="13" font-weight="700" fill="#1E40AF">D4</text><text x="716" y="180" fill="#475569">数据</text>
+    <rect x="778" y="136" width="100" height="56" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="828" y="160" font-size="13" font-weight="700" fill="#1E40AF">D5</text><text x="828" y="180" fill="#475569">数据</text>
+    <rect x="890" y="136" width="100" height="56" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="940" y="160" font-size="13" font-weight="700" fill="#1E40AF">D6</text><text x="940" y="180" fill="#475569">数据</text>
+    <rect x="1002" y="136" width="100" height="56" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="1052" y="160" font-size="13" font-weight="700" fill="#1E40AF">D7</text><text x="1052" y="180" fill="#475569">数据</text>
+    <rect x="330" y="204" width="100" height="56" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="380" y="228" font-size="13" font-weight="700" fill="#1E40AF">D8</text><text x="380" y="248" fill="#475569">数据</text>
+    <!-- parity shards -->
+    <rect x="442" y="204" width="100" height="56" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="492" y="228" font-size="13" font-weight="700" fill="#9D174D">P1</text><text x="492" y="248" fill="#475569">奇偶</text>
+    <rect x="554" y="204" width="100" height="56" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="604" y="228" font-size="13" font-weight="700" fill="#9D174D">P2</text><text x="604" y="248" fill="#475569">奇偶</text>
+    <rect x="666" y="204" width="100" height="56" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="716" y="228" font-size="13" font-weight="700" fill="#9D174D">P3</text><text x="716" y="248" fill="#475569">奇偶</text>
+    <rect x="778" y="204" width="100" height="56" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="828" y="228" font-size="13" font-weight="700" fill="#9D174D">P4</text><text x="828" y="248" fill="#475569">奇偶</text>
+    <rect x="890" y="204" width="100" height="56" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="940" y="228" font-size="13" font-weight="700" fill="#9D174D">P5</text><text x="940" y="248" fill="#475569">奇偶</text>
+    <rect x="1002" y="204" width="100" height="56" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="1052" y="228" font-size="13" font-weight="700" fill="#9D174D">P6</text><text x="1052" y="248" fill="#475569">奇偶</text>
+    <rect x="330" y="272" width="100" height="56" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="380" y="296" font-size="13" font-weight="700" fill="#9D174D">P7</text><text x="380" y="316" fill="#475569">奇偶</text>
+    <rect x="442" y="272" width="100" height="56" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="492" y="296" font-size="13" font-weight="700" fill="#9D174D">P8</text><text x="492" y="316" fill="#475569">奇偶</text>
+  </g>
+
+  <!-- bottom: arithmetic -->
+  <rect x="40" y="352" width="540" height="180" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="60" y="382" font-size="15" font-weight="700" fill="#0F172A">容量与容错怎么算（16 盘 × 10TB）</text>
+  <text x="60" y="412" font-size="13" fill="#475569">原始容量：16 × 10TB = 160TB</text>
+  <text x="60" y="438" font-size="13" fill="#475569">EC:8 → 8 数据 + 8 奇偶，利用率 50%</text>
+  <text x="60" y="464" font-size="13" font-weight="700" fill="#1E40AF">可用容量约 80TB</text>
+  <text x="60" y="492" font-size="13" fill="#DC2626">最多可坏 8 块盘仍可读</text>
+  <text x="60" y="518" font-size="12" fill="#64748B">读取/写入仲裁：至少 K=8 块健康盘</text>
+
+  <rect x="600" y="352" width="560" height="180" rx="10" fill="#FFFBEB" stroke="#FDE68A" stroke-width="2"/>
+  <text x="620" y="382" font-size="15" font-weight="700" fill="#92400E">三个容易翻车的点</text>
+  <text x="620" y="412" font-size="12" fill="#78350F">① 单节点单盘没有纠删码，删盘即丢数据</text>
+  <text x="620" y="440" font-size="12" fill="#78350F">② 混用不同容量盘 → 全部按最小盘计算</text>
+  <text x="620" y="468" font-size="12" fill="#78350F">③ 纠删集在初始化时定死，之后不能改</text>
+  <text x="620" y="500" font-size="12" fill="#78350F">④ 用 XFS + JBOD 直挂，别垫 RAID / LVM</text>
+  <text x="620" y="522" font-size="11" fill="#B45309">生产建议 4 节点起步、盘同型号同容量</text>
+</svg>

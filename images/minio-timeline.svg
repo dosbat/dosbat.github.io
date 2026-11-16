@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="660" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">MinIO 社区版关键时间线（2021 → 2026）</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">许可证没变（仍是 AGPLv3），变的是「维护与分发」：镜像停发、仓库归档、已知 CVE 不再修复</text>
+
+  <!-- timeline axis -->
+  <line x1="120" y1="200" x2="1120" y2="200" stroke="#CBD5E1" stroke-width="4"/>
+
+  <!-- 2021 -->
+  <circle cx="150" cy="200" r="9" fill="#2563EB"/>
+  <rect x="60" y="106" width="200" height="80" rx="10" fill="#EFF6FF" stroke="#93C5FD" stroke-width="2"/>
+  <text x="76" y="134" font-size="14" font-weight="700" fill="#1E40AF">2021 · 换许可证</text>
+  <text x="76" y="158" font-size="11" fill="#475569">Apache 2.0 → AGPLv3</text>
+  <text x="76" y="176" font-size="11" fill="#475569">SDK 仍 Apache 2.0</text>
+  <line x1="150" y1="186" x2="150" y2="200" stroke="#93C5FD" stroke-width="2"/>
+
+  <!-- 2025-05 -->
+  <circle cx="360" cy="200" r="9" fill="#EA580C"/>
+  <rect x="250" y="222" width="220" height="86" rx="10" fill="#FFF7ED" stroke="#FDBA74" stroke-width="2"/>
+  <text x="266" y="250" font-size="14" font-weight="700" fill="#9A3412">2025-05 · 控制台缩减</text>
+  <text x="266" y="274" font-size="11" fill="#475569">内置管理控制台弃用</text>
+  <text x="266" y="292" font-size="11" fill="#475569">LDAP/OIDC 登录移出社区版</text>
+  <line x1="360" y1="200" x2="360" y2="222" stroke="#FDBA74" stroke-width="2"/>
+
+  <!-- 2025-09/10 -->
+  <circle cx="580" cy="200" r="9" fill="#DC2626"/>
+  <rect x="470" y="106" width="230" height="80" rx="10" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="2"/>
+  <text x="486" y="134" font-size="14" font-weight="700" fill="#B91C1C">2025-09 / 10 · 停发</text>
+  <text x="486" y="158" font-size="11" fill="#475569">09-07 最后带二进制的版本</text>
+  <text x="486" y="176" font-size="11" fill="#475569">10-15 安全修复仅源码</text>
+  <line x1="580" y1="186" x2="580" y2="200" stroke="#FCA5A5" stroke-width="2"/>
+
+  <!-- 2025-12 -->
+  <circle cx="790" cy="200" r="9" fill="#7C3AED"/>
+  <rect x="680" y="222" width="220" height="86" rx="10" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="2"/>
+  <text x="696" y="250" font-size="14" font-weight="700" fill="#5B21B6">2025-12 · 维护模式</text>
+  <text x="696" y="274" font-size="11" fill="#475569">12-03 README 加维护模式</text>
+  <text x="696" y="292" font-size="11" fill="#475569">12-23 推出 AIStor Free</text>
+  <line x1="790" y1="200" x2="790" y2="222" stroke="#C4B5FD" stroke-width="2"/>
+
+  <!-- 2026 -->
+  <circle cx="1000" cy="200" r="9" fill="#DC2626"/>
+  <rect x="890" y="106" width="250" height="80" rx="10" fill="#FEE2E2" stroke="#DC2626" stroke-width="2"/>
+  <text x="906" y="134" font-size="14" font-weight="700" fill="#991B1B">2026 · 归档</text>
+  <text x="906" y="158" font-size="11" fill="#7F1D1D">02-12 不再维护 / 04-25 归档</text>
+  <text x="906" y="176" font-size="11" fill="#7F1D1D">dl.min.io 410 · Hub 镜像下架</text>
+  <line x1="1000" y1="186" x2="1000" y2="200" stroke="#DC2626" stroke-width="2"/>
+
+  <!-- 现实卡片 -->
+  <text x="40" y="360" font-size="17" font-weight="700" fill="#0F172A">现在还在运行的集群，风险在哪</text>
+  <rect x="40" y="376" width="540" height="150" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="60" y="406" font-size="13" font-weight="700" fill="#B91C1C">安全公告只修在 AIStor</text>
+  <text x="60" y="432" font-size="12" fill="#475569">CVE-2026-41145 签名绕过 · 未认证写入</text>
+  <text x="60" y="456" font-size="12" fill="#475569">CVE-2026-40344 Snowball 缺签名校验</text>
+  <text x="60" y="480" font-size="12" fill="#475569">CVE-2026-42600 多节点路径穿越（root 可读宿主机）</text>
+  <text x="60" y="510" font-size="11" fill="#94A3B8">开源仓库自 2025-11 起无任何代码变更</text>
+
+  <rect x="600" y="376" width="560" height="150" rx="10" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="2"/>
+  <text x="620" y="406" font-size="13" font-weight="700" fill="#047857">三种现实选择</text>
+  <text x="620" y="434" font-size="12" fill="#475569">① 继续自建：自己盯 CVE、自己构建和打补丁</text>
+  <text x="620" y="460" font-size="12" fill="#475569">② 换 Silo fork：最小改动的社区维护分支</text>
+  <text x="620" y="486" font-size="12" fill="#475569">③ 换活跃引擎：Garage / RustFS / SeaweedFS / Ceph</text>
+  <text x="620" y="512" font-size="11" fill="#64748B">生产项目优先看这一节，别再照旧教程部署</text>
+
+  <rect x="40" y="548" width="1120" height="88" rx="10" fill="#FFFBEB" stroke="#FDE68A"/>
+  <text x="60" y="580" font-size="14" font-weight="700" fill="#92400E">唯一还能直接用的官方相关镜像</text>
+  <text x="60" y="608" font-size="13" fill="#78350F">quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z —— 冻结版本，适合本地开发与测试；固定 tag，别用 latest。</text>
+  <text x="60" y="628" font-size="11" fill="#B45309">Docker Hub 的 minio/minio 与 minio/mc 已显示 object not found，不要再尝试。</text>
+</svg>

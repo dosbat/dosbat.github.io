@@ -1,0 +1,693 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型 | DOS/BAT</title><meta name="author" content="0x01"><meta name="copyright" content="0x01"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从单机到分布式搞懂 MinIO 部署，覆盖二进制、Docker、Compose、分布式与 K8s 五种方式，mc&#x2F;SDK&#x2F;Nginx&#x2F;rclone 四类接入，并说清 2026 社区版归档后的镜像、安全与替代方案。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型">
+<meta property="og:url" content="https://dosbat.com/w4lbdbp0/index.html">
+<meta property="og:site_name" content="DOS&#x2F;BAT">
+<meta property="og:description" content="从单机到分布式搞懂 MinIO 部署，覆盖二进制、Docker、Compose、分布式与 K8s 五种方式，mc&#x2F;SDK&#x2F;Nginx&#x2F;rclone 四类接入，并说清 2026 社区版归档后的镜像、安全与替代方案。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dosbat.com/images/minio-deployment-modes.png">
+<meta property="article:published_time" content="2026-11-16T13:50:00.000Z">
+<meta property="article:modified_time" content="2026-11-16T13:51:51.383Z">
+<meta property="article:author" content="0x01">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="MinIO">
+<meta property="article:tag" content="对象存储">
+<meta property="article:tag" content="S3">
+<meta property="article:tag" content="运维">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dosbat.com/images/minio-deployment-modes.png"><link rel="shortcut icon" href="https://s1.ax1x.com/2023/09/09/pP62Apj.png"><link rel="canonical" href="https://dosbat.com/w4lbdbp0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 0x01","link":"链接: ","source":"来源: DOS/BAT","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-16 21:51:51'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><span id="fps"></span><link rel="stylesheet" href="/css/readPercent.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">121</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">113</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-globe"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/"><i class="fa-fw fas fa-bolt"></i><span> 弱电</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-warehouse"></i><span> 收藏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-server"></i><span> 网站</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/linux/hot.html"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-address-card"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%B5%84%E6%96%99%E6%B1%87%E7%BC%96/"><i class="fa-fw fas fa-soap"></i><span> 资料汇编</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/minio-deployment-modes.png')"><nav id="nav"><span id="blog-info"><a href="/" title="DOS/BAT"><span class="site-name">DOS/BAT</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-globe"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/"><i class="fa-fw fas fa-bolt"></i><span> 弱电</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-warehouse"></i><span> 收藏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-server"></i><span> 网站</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/linux/hot.html"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-address-card"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%B5%84%E6%96%99%E6%B1%87%E7%BC%96/"><i class="fa-fw fas fa-soap"></i><span> 资料汇编</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-16T13:50:00.000Z" title="发表于 2026-11-16 21:50:00">2026-11-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-16T13:51:51.383Z" title="更新于 2026-11-16 21:51:51">2026-11-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%8D%E5%8A%A1%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/">服务与中间件</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%8D%E5%8A%A1%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>搜索「MinIO 教程」，出来的几乎全是 <code>docker run minio/minio</code> 那一套。但如果你在 2026 年照着做，第一步就会卡住：<strong>Docker Hub 上的 <code>minio/minio</code> 已经拉不到了，dl.min.io 的社区版下载地址返回 410。</strong></p>
+<p>这篇先把「现在到底还能用什么」讲清楚，再给五种部署方式和四类接入方法。命令都能直接复制，但不照搬——每一步标明了适用场景和坑。</p>
+</blockquote>
+<h2 id="零、先看现状：2026-年的-MinIO-到底怎么了"><a href="#零、先看现状：2026-年的-MinIO-到底怎么了" class="headerlink" title="零、先看现状：2026 年的 MinIO 到底怎么了"></a>零、先看现状：2026 年的 MinIO 到底怎么了</h2><p>这是写在任何部署步骤之前的<strong>必读节</strong>。MinIO 的社区版（Community Edition）没有换许可证，代码仍是 AGPLv3、仍可阅读和自行构建；变的是<strong>维护和分发</strong>：官方不再发布二进制、不再发镜像，仓库归档只读。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2021-04/05</td>
+<td>服务端与客户端从 Apache 2.0 改为 <strong>AGPLv3</strong>（SDK 仍 Apache 2.0）</td>
+</tr>
+<tr>
+<td>2025-05-24</td>
+<td><code>RELEASE.2025-05-24...</code> 弃用内置管理控制台，改为独立的 object-browser；UI 的 LDAP/OIDC 登录从社区版移除</td>
+</tr>
+<tr>
+<td>2025-09-07</td>
+<td><code>RELEASE.2025-09-07...</code> <strong>最后一个带预编译二进制/包的版本</strong></td>
+</tr>
+<tr>
+<td>2025-10-15</td>
+<td><code>RELEASE.2025-10-15...</code> 源码版安全更新（修 CVE-2025-62506 权限提升），<strong>无二进制产物</strong></td>
+</tr>
+<tr>
+<td>2025-12-03</td>
+<td>README 加入「维护模式」说明</td>
+</tr>
+<tr>
+<td>2025-12-23</td>
+<td>推出商业产品 <strong>AIStor Free / Enterprise Lite</strong></td>
+</tr>
+<tr>
+<td>2026-02-12</td>
+<td>README 改为「THIS REPOSITORY IS NO LONGER MAINTAINED」</td>
+</tr>
+<tr>
+<td>2026-04-25</td>
+<td><code>minio/minio</code> GitHub 仓库<strong>归档只读</strong></td>
+</tr>
+<tr>
+<td>2026-07-14</td>
+<td><code>minio/mc</code> 客户端仓库也归档</td>
+</tr>
+<tr>
+<td>2026 下半年</td>
+<td><code>dl.min.io</code> 社区版地址返回 <strong>410 Gone</strong>；Docker Hub 上 <code>minio/minio</code>、<code>minio/mc</code> 显示 object not found</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="/images/minio-timeline.png" alt="MinIO 社区版关键时间线"></p>
+<blockquote>
+<p>说明：本文写作时（2026-11）社区版已归档。若你在更早或更晚的时间点阅读，请以 MinIO 官方仓库 README 与实际可拉取的镜像为准。</p>
+</blockquote>
+<p><strong>安全现实</strong>（这条最要紧）：自 2026 年 1 月起，归档仓库陆续发布了多个安全公告，包括签名绕过导致的未认证写入（CVE-2026-41145）、Snowball 自动解压缺少签名校验（CVE-2026-40344）、SSE 元数据注入（CVE-2026-34204）、S3 Select 内存耗尽 DoS（CVE-2026-39414）、多节点路径穿越（CVE-2026-42600，以 root 运行时可读取宿主机文件）。这些修复只进入商业版 AIStor，<strong>开源仓库自 2025 年 11 月起没有任何代码变更</strong>。</p>
+<p><strong>一句话结论</strong>：</p>
+<ul>
+<li>已有集群还能继续跑，但它是一个<strong>冻结且带已知漏洞</strong>的组件，风险由你自己承担；</li>
+<li>新项目<strong>不要</strong>再基于社区版做生产，先看本文最后一节的替代方案；</li>
+<li>如果只是本地开发、CI、临时对象存储，用固定 tag 的旧镜像仍可应付，但要绑 localhost、不暴露公网。</li>
+</ul>
+<hr>
+<h2 id="一、部署前的统一准备"><a href="#一、部署前的统一准备" class="headerlink" title="一、部署前的统一准备"></a>一、部署前的统一准备</h2><p>不管选哪种方式，下面这些先定好，后面少返工。</p>
+<h3 id="1-1-两个端口别搞混"><a href="#1-1-两个端口别搞混" class="headerlink" title="1.1 两个端口别搞混"></a>1.1 两个端口别搞混</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>端口</th>
+<th>作用</th>
+<th>谁访问</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>9000</strong></td>
+<td>S3 API</td>
+<td>应用程序、mc 客户端、SDK</td>
+</tr>
+<tr>
+<td><strong>9001</strong></td>
+<td>Web 控制台</td>
+<td>人，浏览器管理</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>把 S3 客户端指向 9001 会得到一堆看不懂的报错，这是新手第一大坑。</p>
+<h3 id="1-2-凭据规则"><a href="#1-2-凭据规则" class="headerlink" title="1.2 凭据规则"></a>1.2 凭据规则</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MINIO_ROOT_USER=admin          <span class="comment"># 至少 3 字符</span></span><br><span class="line">MINIO_ROOT_PASSWORD=...        <span class="comment"># 至少 8 字符，生产用 32 位以上随机串</span></span><br></pre></td></tr></table></figure>
+<p>生成强密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -<span class="built_in">base64</span> 32</span><br></pre></td></tr></table></figure>
+<p><strong>永远不要把 <code>minioadmin/minioadmin</code> 带进任何非实验环境</strong>。写进 <code>.env</code> 文件并 <code>chmod 600</code>。</p>
+<h3 id="1-3-镜像怎么选（关键）"><a href="#1-3-镜像怎么选（关键）" class="headerlink" title="1.3 镜像怎么选（关键）"></a>1.3 镜像怎么选（关键）</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>来源</th>
+<th>状态</th>
+<th>适用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>minio/minio</code>（Docker Hub）</td>
+<td>已失效，拉不到</td>
+<td>不用再试</td>
+</tr>
+<tr>
+<td><code>quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z</code></td>
+<td>历史镜像仍可拉取</td>
+<td>本地开发、测试；<strong>固定 tag，别用 latest</strong></td>
+</tr>
+<tr>
+<td><code>quay.io/minio/minio:latest</code></td>
+<td>仍可拉取，但指向冻结快照</td>
+<td>同上，但不如固定 tag 明确</td>
+</tr>
+<tr>
+<td>源码自构建</td>
+<td><code>go install github.com/minio/minio@latest</code> 或从归档仓库构建</td>
+<td>需要自己跟进 CVE</td>
+</tr>
+<tr>
+<td><code>pgsty/minio</code>（Silo fork）</td>
+<td>社区维护分支，重建二进制与镜像、恢复控制台、跟进安全修复</td>
+<td>想低成本留在 MinIO 生态</td>
+</tr>
+<tr>
+<td>AIStor Free / Enterprise</td>
+<td>商业产品，免费版仅单节点</td>
+<td>生产、需要支持</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>本文示例统一用 <code>quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z</code> 这个<strong>已知可拉取的冻结版本</strong>，并明确标注：生产请换成本节表格里更适合你的选项。</p>
+<h3 id="1-4-数据目录与文件系统"><a href="#1-4-数据目录与文件系统" class="headerlink" title="1.4 数据目录与文件系统"></a>1.4 数据目录与文件系统</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /opt/minio/data /opt/minio/config</span><br></pre></td></tr></table></figure>
+<p>生产建议：</p>
+<ul>
+<li>用 <strong>XFS</strong> 格式的本地盘，JBOD 直挂，<strong>不要</strong>在下面垫 RAID / LVM；MinIO 自己做纠删码，RAID 只会增加复杂度并放大重建时间。</li>
+<li>单机多盘用 <code>/data1 /data2 ...</code> 这样分开挂载，别把一个分区的子目录当多盘。</li>
+<li>所有盘容量尽量一致——MinIO 会把每块盘的可用容量<strong>拉平到最小盘</strong>。</li>
+</ul>
+<h3 id="1-5-纠删码：决定你能坏几块盘"><a href="#1-5-纠删码：决定你能坏几块盘" class="headerlink" title="1.5 纠删码：决定你能坏几块盘"></a>1.5 纠删码：决定你能坏几块盘</h3><p>MinIO 把一个对象切成 <strong>数据分片 K</strong> 和 <strong>奇偶分片 M</strong>，写进一个纠删集（N = K + M）。读写仲裁：</p>
+<ul>
+<li><strong>读取</strong>：至少 K 块健康盘；</li>
+<li><strong>写入</strong>：至少 K 块在线盘（不同版本策略略有差异，按 <code>N/2 + 1</code> 估算更保守）；</li>
+<li>最多可容忍 <strong>M 块盘故障</strong>而不丢数据。</li>
+</ul>
+<p>以 4 节点 × 4 盘 = 16 盘、默认 EC:8（8 数据 + 8 奇偶）为例：原始 160 TB（16×10TB），可用约 80 TB，利用率 50%，最多坏 8 块盘仍可读。</p>
+<p><img src="/images/minio-erasure-coding.png" alt="纠删码分片与读写仲裁"></p>
+<blockquote>
+<p>单盘单节点（本文部署方式 1/2/3）<strong>没有纠删码、没有冗余</strong>，删盘即丢数据。只适合开发和测试。</p>
+</blockquote>
+<hr>
+<h2 id="二、部署方式-1：源码二进制-systemd"><a href="#二、部署方式-1：源码二进制-systemd" class="headerlink" title="二、部署方式 1：源码二进制 + systemd"></a>二、部署方式 1：源码二进制 + systemd</h2><p>适合：想跑原生进程、不用 Docker、愿意自己构建。因为官方已停发二进制，<strong>必须自行构建</strong>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Go 1.21+ 环境</span></span><br><span class="line">go install github.com/minio/minio@latest</span><br><span class="line"><span class="comment"># 产物通常在 ~/go/bin/minio</span></span><br><span class="line">install -m 0755 ~/go/bin/minio /usr/local/bin/minio</span><br><span class="line">minio --version</span><br></pre></td></tr></table></figure>
+<p>配置 systemd：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/systemd/system/minio.service</span></span><br><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=MinIO Object Storage</span><br><span class="line"><span class="attr">After</span>=network-<span class="literal">on</span>line.target</span><br><span class="line"><span class="attr">Wants</span>=network-<span class="literal">on</span>line.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">User</span>=minio</span><br><span class="line"><span class="attr">Group</span>=minio</span><br><span class="line"><span class="attr">EnvironmentFile</span>=/etc/default/minio</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/bin/minio server /opt/minio/data --console-address <span class="string">&quot;:9001&quot;</span></span><br><span class="line"><span class="attr">Restart</span>=always</span><br><span class="line"><span class="attr">LimitNOFILE</span>=<span class="number">65536</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">useradd -r -s /sbin/nologin minio</span><br><span class="line"><span class="built_in">chown</span> -R minio:minio /opt/minio</span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/default/minio &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">MINIO_ROOT_USER=admin</span><br><span class="line">MINIO_ROOT_PASSWORD=换成你生成的强密码</span><br><span class="line">EOF</span><br><span class="line"><span class="built_in">chmod</span> 600 /etc/default/minio</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl <span class="built_in">enable</span> --now minio</span><br><span class="line">journalctl -u minio -f</span><br></pre></td></tr></table></figure>
+<p>注意 <code>go install ...@latest</code> 拉的是<strong>归档仓库的最后一个提交</strong>，不会有任何新修复——把它当作「冻结核」，CVE 要自己盯。</p>
+<hr>
+<h2 id="三、部署方式-2：Docker-run-单机（最快）"><a href="#三、部署方式-2：Docker-run-单机（最快）" class="headerlink" title="三、部署方式 2：Docker run 单机（最快）"></a>三、部署方式 2：Docker run 单机（最快）</h2><p>适合：本机开发、临时验证。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name minio \</span><br><span class="line">  -p 127.0.0.1:9000:9000 \</span><br><span class="line">  -p 127.0.0.1:9001:9001 \</span><br><span class="line">  -e MINIO_ROOT_USER=admin \</span><br><span class="line">  -e MINIO_ROOT_PASSWORD=<span class="string">&#x27;换成强密码&#x27;</span> \</span><br><span class="line">  -v /opt/minio/data:/data \</span><br><span class="line">  quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z \</span><br><span class="line">  server /data --console-address <span class="string">&quot;:9001&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>为什么绑定 <code>127.0.0.1</code></strong>：Docker 会自己写 iptables 规则，<code>-p 9000:9000</code> 会把端口发布到所有网卡，<strong>绕过 ufw/firewalld</strong>。你在防火墙里关了 9000，容器端口照样能从外网访问——这和你上一篇 firewalld 里 <code>DOCKER-USER</code> 链是同一个问题。要公网访问，正确做法是绑本地 + 反向代理，而不是直接 <code>-p 9000:9000</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f minio</span><br><span class="line">curl -s http://127.0.0.1:9000/minio/health/live -w <span class="string">&#x27;%&#123;http_code&#125;\n&#x27;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="四、部署方式-3：Docker-Compose-单机（推荐用于本地-内网）"><a href="#四、部署方式-3：Docker-Compose-单机（推荐用于本地-内网）" class="headerlink" title="四、部署方式 3：Docker Compose 单机（推荐用于本地/内网）"></a>四、部署方式 3：Docker Compose 单机（推荐用于本地/内网）</h2><p>这是最省心的单机形态：配置集中、健康检查、重启策略齐全。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /opt/minio/compose.yaml</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">minio:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">minio</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">env_file:</span> <span class="string">.env</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">server</span> <span class="string">/data</span> <span class="string">--console-address</span> <span class="string">&quot;:9001&quot;</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:9000:9000&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:9001:9001&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./config:/root/.minio</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&quot;CMD&quot;</span>, <span class="string">&quot;curl&quot;</span>, <span class="string">&quot;-f&quot;</span>, <span class="string">&quot;http://127.0.0.1:9000/minio/health/live&quot;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /opt/minio/.env</span></span><br><span class="line">MINIO_ROOT_USER=admin</span><br><span class="line">MINIO_ROOT_PASSWORD=换成32位以上随机密码</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 600 .<span class="built_in">env</span></span><br><span class="line">docker compose up -d</span><br><span class="line">docker compose ps</span><br><span class="line">docker compose logs --<span class="built_in">tail</span>=100 minio</span><br></pre></td></tr></table></figure>
+<p>几个细节：</p>
+<ul>
+<li><code>config</code> 目录挂载出来，证书和部分配置才能跨容器重建保留；</li>
+<li>健康检查用 <code>curl</code>（镜像内置），<code>mc ready local</code> 在部分版本里不可用；</li>
+<li>端口仍绑 localhost，公网入口交给 Nginx/Caddy，见第八节；</li>
+<li>想加入你已有的 Docker 网络（比如 <code>app-net</code>），加一段 <code>networks:</code>，让同网容器用服务名 <code>minio:9000</code> 互访。</li>
+</ul>
+<hr>
+<h2 id="五、部署方式-4：分布式-4-节点（生产形态）"><a href="#五、部署方式-4：分布式-4-节点（生产形态）" class="headerlink" title="五、部署方式 4：分布式 4 节点（生产形态）"></a>五、部署方式 4：分布式 4 节点（生产形态）</h2><p>适合：需要真正冗余的生产集群。<strong>最少 4 个驱动器</strong>，官方生产建议 4 个节点起步、同构配置。</p>
+<p>拓扑：4 节点 × 每节点 4 盘 = 16 盘，组成一个纠删集，默认 EC:8。</p>
+<p>五种方式一览——本地形态（1/2/3）与生产形态（4/5）的差别主要在冗余和暴露面：</p>
+<p><img src="/images/minio-deployment-modes.png" alt="五种部署方式对比"></p>
+<p>前置条件：</p>
+<ul>
+<li>4 台机器时间同步（chrony/NTP），时钟漂移会导致签名校验失败；</li>
+<li>节点间 9000 端口互通，主机名能解析（写 hosts 或用 DNS）；</li>
+<li>每节点 4 块 XFS 盘，挂载为 <code>/data1</code> ~ <code>/data4</code>；</li>
+<li>凭据四节点完全一致。</li>
+</ul>
+<p>每个节点上写同样的 Compose（以 <code>minio1</code> 为例，其余节点把 <code>hostname</code> 与 IP 对应改好）：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">minio:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">minio</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">minio1</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">env_file:</span> <span class="string">.env</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">server</span> <span class="string">http://minio&#123;1...4&#125;/data&#123;1...4&#125;</span> <span class="string">--console-address</span> <span class="string">&quot;:9001&quot;</span></span><br><span class="line">    <span class="attr">extra_hosts:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;minio1:10.0.0.11&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;minio2:10.0.0.12&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;minio3:10.0.0.13&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;minio4:10.0.0.14&quot;</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9000:9000&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9001:9001&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data1:/data1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data2:/data2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data3:/data3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data4:/data4</span></span><br></pre></td></tr></table></figure>
+<p><code>&#123;1...4&#125;</code> 是 MinIO 的椭圆展开语法（三个点），必须写全，不能用 <code>&#123;1..4&#125;</code>。四台都启动后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mc <span class="built_in">alias</span> <span class="built_in">set</span> myminio http://10.0.0.11:9000 admin <span class="string">&#x27;你的密码&#x27;</span></span><br><span class="line">mc admin info myminio     <span class="comment"># 应看到 4 在线、16 块盘</span></span><br></pre></td></tr></table></figure>
+<p>生产注意：</p>
+<ul>
+<li>节点增减要按官方扩容流程做，<strong>不要</strong>直接改 <code>&#123;1...4&#125;</code> 范围；</li>
+<li>混用不同容量盘会按最小盘计算，别拿 1TB 和 10TB 混布；</li>
+<li>控制台和 API 前面都要挂 TLS 终止，SDK 用 HTTPS 端点；</li>
+<li>分布式 + 冻结镜像 = 已知 CVE 无修复，生产务必评估 Silo fork / AIStor / 其他引擎（见第十一节）。</li>
+</ul>
+<hr>
+<h2 id="六、部署方式-5：Kubernetes（Helm-Operator）"><a href="#六、部署方式-5：Kubernetes（Helm-Operator）" class="headerlink" title="六、部署方式 5：Kubernetes（Helm / Operator）"></a>六、部署方式 5：Kubernetes（Helm / Operator）</h2><p>适合：已在 K8s 上运行、有存储运维经验。</p>
+<p>需要提醒：<code>minio/operator</code> 仓库同样在 2026 年归档，Helm Chart 也不再有新版本。以下流程仍可跑，但你要接受「无人维护」这个前提。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Helm 方式（社区 chart，单节点示例）</span></span><br><span class="line">helm repo add minio https://charts.min.io/</span><br><span class="line">helm install minio minio/minio \</span><br><span class="line">  --namespace minio --create-namespace \</span><br><span class="line">  --<span class="built_in">set</span> mode=standalone \</span><br><span class="line">  --<span class="built_in">set</span> rootUser=admin \</span><br><span class="line">  --<span class="built_in">set</span> rootPassword=<span class="string">&#x27;换成强密码&#x27;</span> \</span><br><span class="line">  --<span class="built_in">set</span> persistence.size=50Gi</span><br></pre></td></tr></table></figure>
+<p>分布式模式用 <code>--set mode=distributed --set replicas=4</code>，并配置每个 Pod 的 PVC。生产建议：</p>
+<ul>
+<li>用 <strong>StatefulSet + 本地 PV</strong> 或专门的 CSI 驱动，避免网络存储的额外延迟；</li>
+<li>资源限制要留足（MinIO 对内存和网络敏感）；</li>
+<li>Ingress 暴露时同样区分 API 与 Console 两个域名；</li>
+<li>更稳妥的路线是改用仍在维护的 S3 引擎的官方 Operator。</li>
+</ul>
+<hr>
+<h2 id="七、接入方式一：mc-命令行客户端"><a href="#七、接入方式一：mc-命令行客户端" class="headerlink" title="七、接入方式一：mc 命令行客户端"></a>七、接入方式一：mc 命令行客户端</h2><p><code>mc</code> 是管理 MinIO 的核心工具（2025-05 之后，用户/策略/生命周期管理都靠它，控制台只剩对象浏览）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载（社区版历史地址若 410，可从 AIStor 地址或 Silo fork 获取）</span></span><br><span class="line">curl -L https://dl.min.io/aistor/mc/release/linux-amd64/mc -o /usr/local/bin/mc</span><br><span class="line"><span class="built_in">chmod</span> +x /usr/local/bin/mc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配别名：注意用 API 端口 9000，不是 9001</span></span><br><span class="line">mc <span class="built_in">alias</span> <span class="built_in">set</span> myminio http://127.0.0.1:9000 admin <span class="string">&#x27;你的密码&#x27;</span></span><br><span class="line">mc admin info myminio</span><br><span class="line"></span><br><span class="line"><span class="comment"># 日常操作</span></span><br><span class="line">mc mb myminio/uploads                          <span class="comment"># 建桶</span></span><br><span class="line">mc <span class="built_in">ls</span> myminio                                  <span class="comment"># 列桶</span></span><br><span class="line">mc <span class="built_in">cp</span> ./a.jpg myminio/uploads/                 <span class="comment"># 上传</span></span><br><span class="line">mc <span class="built_in">cp</span> --recursive ./photos/ myminio/uploads/   <span class="comment"># 传目录</span></span><br><span class="line">mc <span class="built_in">cp</span> myminio/uploads/a.jpg ./                 <span class="comment"># 下载</span></span><br><span class="line">mc <span class="built_in">rm</span> myminio/uploads/a.jpg                    <span class="comment"># 删除</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 权限：设为公共读（注意新版命令是 anonymous，不是 policy）</span></span><br><span class="line">mc anonymous <span class="built_in">set</span> download myminio/uploads</span><br><span class="line">mc anonymous <span class="built_in">set</span> none myminio/uploads</span><br><span class="line"></span><br><span class="line"><span class="comment"># 限时分享链接</span></span><br><span class="line">mc share download --expire 24h myminio/uploads/a.jpg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 版本控制与生命周期</span></span><br><span class="line">mc version <span class="built_in">enable</span> myminio/uploads</span><br><span class="line">mc ilm add --expiry-days 30 myminio/uploads</span><br><span class="line"></span><br><span class="line"><span class="comment"># 镜像备份</span></span><br><span class="line">mc mirror myminio/uploads ./backup/uploads</span><br></pre></td></tr></table></figure>
+<p>常见报错：</p>
+<ul>
+<li><code>AccessDenied</code>：检查 alias 用的 key 权限、桶策略；</li>
+<li><code>The specified bucket does not exist</code>：桶名拼写或 alias 指错端点；</li>
+<li>设置了公共读但访问 403：如果前面有 Nginx，检查 <code>proxy_set_header Host</code> 是否被改写，签名校验依赖 Host。</li>
+</ul>
+<hr>
+<h2 id="八、接入方式二：S3-SDK（Python-Java）"><a href="#八、接入方式二：S3-SDK（Python-Java）" class="headerlink" title="八、接入方式二：S3 SDK（Python / Java）"></a>八、接入方式二：S3 SDK（Python / Java）</h2><p>MinIO 兼容 S3 API，SDK 几乎不用改逻辑，只要换 endpoint 并打开 <strong>path-style</strong>。</p>
+<h3 id="8-1-Python-boto3"><a href="#8-1-Python-boto3" class="headerlink" title="8.1 Python boto3"></a>8.1 Python boto3</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> boto3</span><br><span class="line"><span class="keyword">from</span> botocore.client <span class="keyword">import</span> Config</span><br><span class="line"></span><br><span class="line">s3 = boto3.client(</span><br><span class="line">    <span class="string">&quot;s3&quot;</span>,</span><br><span class="line">    endpoint_url=<span class="string">&quot;https://s3.example.com&quot;</span>,   <span class="comment"># API 域名，指向 9000</span></span><br><span class="line">    aws_access_key_id=<span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    aws_secret_access_key=<span class="string">&quot;你的密码&quot;</span>,</span><br><span class="line">    region_name=<span class="string">&quot;us-east-1&quot;</span>,                 <span class="comment"># MinIO 忽略，但必填</span></span><br><span class="line">    config=Config(</span><br><span class="line">        signature_version=<span class="string">&quot;s3v4&quot;</span>,</span><br><span class="line">        s3=&#123;<span class="string">&quot;addressing_style&quot;</span>: <span class="string">&quot;path&quot;</span>&#125;,     <span class="comment"># 关键：MinIO 默认不支持虚拟主机桶名</span></span><br><span class="line">    ),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">s3.create_bucket(Bucket=<span class="string">&quot;uploads&quot;</span>)</span><br><span class="line">s3.upload_file(<span class="string">&quot;./a.jpg&quot;</span>, <span class="string">&quot;uploads&quot;</span>, <span class="string">&quot;a.jpg&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预签名下载链接（1 小时有效，不暴露密钥）</span></span><br><span class="line">url = s3.generate_presigned_url(</span><br><span class="line">    <span class="string">&quot;get_object&quot;</span>,</span><br><span class="line">    Params=&#123;<span class="string">&quot;Bucket&quot;</span>: <span class="string">&quot;uploads&quot;</span>, <span class="string">&quot;Key&quot;</span>: <span class="string">&quot;a.jpg&quot;</span>&#125;,</span><br><span class="line">    ExpiresIn=<span class="number">3600</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="8-2-Java-Spring-Boot"><a href="#8-2-Java-Spring-Boot" class="headerlink" title="8.2 Java Spring Boot"></a>8.2 Java Spring Boot</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pom.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.minio<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>minio<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>8.5.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application.yml</span></span><br><span class="line"><span class="attr">minio:</span></span><br><span class="line">  <span class="attr">endpoint:</span> <span class="string">https://s3.example.com</span></span><br><span class="line">  <span class="attr">access-key:</span> <span class="string">admin</span></span><br><span class="line">  <span class="attr">secret-key:</span> <span class="string">你的密码</span></span><br><span class="line">  <span class="attr">bucket:</span> <span class="string">uploads</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MinioConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;minio.endpoint&#125;&quot;)</span> String endpoint;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;minio.access-key&#125;&quot;)</span> String accessKey;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;minio.secret-key&#125;&quot;)</span> String secretKey;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> MinioClient <span class="title function_">minioClient</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> MinioClient.builder()</span><br><span class="line">                .endpoint(endpoint)</span><br><span class="line">                .credentials(accessKey, secretKey)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上传示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">minioClient.putObject(PutObjectArgs.builder()</span><br><span class="line">        .bucket(<span class="string">&quot;uploads&quot;</span>)</span><br><span class="line">        .object(<span class="string">&quot;2026/a.jpg&quot;</span>)</span><br><span class="line">        .stream(inputStream, inputStream.available(), -<span class="number">1</span>)</span><br><span class="line">        .contentType(<span class="string">&quot;image/jpeg&quot;</span>)</span><br><span class="line">        .build());</span><br></pre></td></tr></table></figure>
+<p>要点：</p>
+<ul>
+<li><code>endpoint</code> 填 <strong>API 地址</strong>，不要带 bucket 名；</li>
+<li>老版本 SDK 需要 <code>secure(false)</code> / HTTP 明确指定，HTTPS 反代后改成 true；</li>
+<li>分片上传大文件用 <code>uploadObject</code> + 大文件参数，单对象上限 5TB、单次 PUT 上限 5GB。</li>
+</ul>
+<h3 id="8-3-接入方式对照"><a href="#8-3-接入方式对照" class="headerlink" title="8.3 接入方式对照"></a>8.3 接入方式对照</h3><p><img src="/images/minio-access-methods.png" alt="四类接入方式与端点关系"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>适合</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mc</td>
+<td>管理、运维、批处理</td>
+<td>用 9000，命令已改为 <code>mc anonymous</code></td>
+</tr>
+<tr>
+<td>boto3 / AWS SDK</td>
+<td>应用上传下载</td>
+<td>path-style 必开</td>
+</tr>
+<tr>
+<td>Spring Boot Minio SDK</td>
+<td>Java 业务集成</td>
+<td>版本 8.5.x，注意流式上传</td>
+</tr>
+<tr>
+<td>rclone</td>
+<td>备份、挂载为本地盘</td>
+<td><code>provider=MinIO</code>，填 endpoint 与 key</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="九、接入方式三：Nginx-反代-HTTPS"><a href="#九、接入方式三：Nginx-反代-HTTPS" class="headerlink" title="九、接入方式三：Nginx 反代 + HTTPS"></a>九、接入方式三：Nginx 反代 + HTTPS</h2><p>公网访问不要直接暴露 9000/9001，用反代做 TLS 终止和域名分离。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># S3 API：s3.example.com → 9000</span></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> s3.example.com;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/ssl/wildcard.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/ssl/wildcard.key;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">0</span>;              <span class="comment"># 关键：Nginx 默认 1MB，大文件会 413</span></span><br><span class="line">    <span class="attribute">proxy_request_buffering</span> <span class="literal">off</span>;         <span class="comment"># 大对象流式上传，不落磁盘</span></span><br><span class="line">    <span class="attribute">proxy_buffering</span> <span class="literal">off</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">       <span class="attribute">proxy_pass</span> http://127.0.0.1:9000;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;             <span class="comment"># 签名校验依赖原始 Host</span></span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_connect_timeout</span> <span class="number">300s</span>;</span><br><span class="line">        <span class="attribute">proxy_read_timeout</span> <span class="number">300s</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Console：minio.example.com → 9001</span></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl http2;</span><br><span class="line">    <span class="attribute">server_name</span> minio.example.com;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>     /etc/ssl/wildcard.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/ssl/wildcard.key;</span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">0</span>;</span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:9001;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>三个必踩的坑：</p>
+<ol>
+<li><strong><code>client_max_body_size</code> 不调大，上传超过 1MB 就 413</strong>；</li>
+<li><strong>Host 头必须透传原始值</strong>，改成 <code>$host</code> 都可能破坏签名（带端口时尤其）；</li>
+<li><strong>API 和 Console 用两个域名</strong>，不要靠路径区分——MinIO 的签名和重定向都基于完整 URL。</li>
+</ol>
+<p>改完验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -t &amp;&amp; systemctl reload nginx</span><br><span class="line">curl -I https://s3.example.com/minio/health/live</span><br></pre></td></tr></table></figure>
+<h3 id="9-1-接入方式四：rclone-挂载与备份"><a href="#9-1-接入方式四：rclone-挂载与备份" class="headerlink" title="9.1 接入方式四：rclone 挂载与备份"></a>9.1 接入方式四：rclone 挂载与备份</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置 remote，provider 选 MinIO / S3 Compatible</span></span><br><span class="line">rclone config</span><br><span class="line"><span class="comment"># 常用参数</span></span><br><span class="line">rclone <span class="built_in">ls</span> minio:uploads</span><br><span class="line">rclone copy ./local minio:uploads --progress</span><br><span class="line">rclone mount minio:uploads /mnt/minio --vfs-cache-mode writes</span><br></pre></td></tr></table></figure>
+<p>备份脚本里更稳的做法是 <code>rclone sync</code> + <code>--backup-dir</code> 保留删除历史，避免误删不可逆。</p>
+<hr>
+<h2 id="十、排障清单"><a href="#十、排障清单" class="headerlink" title="十、排障清单"></a>十、排障清单</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>优先怀疑</th>
+<th>验证命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker pull minio/minio</code> 失败</td>
+<td>镜像已从 Docker Hub 下架</td>
+<td>换 <code>quay.io/minio/minio:&lt;固定tag&gt;</code></td>
+</tr>
+<tr>
+<td>下载 mc 返回 410</td>
+<td>社区版下载地址失效</td>
+<td>换 AIStor 地址或 Silo fork</td>
+</tr>
+<tr>
+<td>客户端报奇怪 XML 错误</td>
+<td>指到了 9001 控制台端口</td>
+<td>改成 9000</td>
+</tr>
+<tr>
+<td>SDK 报 <code>NoSuchBucket</code> 但桶存在</td>
+<td>缺 path-style</td>
+<td><code>addressing_style=&quot;path&quot;</code></td>
+</tr>
+<tr>
+<td>上传大文件 413</td>
+<td>Nginx <code>client_max_body_size</code> 默认 1MB</td>
+<td>设为 0 或足够大</td>
+</tr>
+<tr>
+<td>签名不一致 <code>SignatureDoesNotMatch</code></td>
+<td>Host 头被改写 / 时钟漂移</td>
+<td>检查反代 <code>Host</code>、同步 NTP</td>
+</tr>
+<tr>
+<td>防火墙关了端口仍可访问</td>
+<td>Docker 发布端口绕过防火墙</td>
+<td>绑 <code>127.0.0.1</code> 或写 <code>DOCKER-USER</code> 链</td>
+</tr>
+<tr>
+<td>分布式节点起不来</td>
+<td><code>&#123;1...4&#125;</code> 写成 <code>&#123;1..4&#125;</code></td>
+<td>三个点，且主机解析要通</td>
+</tr>
+<tr>
+<td>写入报仲裁不足</td>
+<td>在线盘少于 K</td>
+<td><code>mc admin info</code> 看在线盘数</td>
+</tr>
+<tr>
+<td>混盘后容量变小</td>
+<td>按最小盘拉平</td>
+<td>换同容量盘</td>
+</tr>
+<tr>
+<td>控制台空白 / 功能少</td>
+<td>2025-05 后社区版控制台缩减</td>
+<td>用 mc 管理用户与策略</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>健康检查探针：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -s http://127.0.0.1:9000/minio/health/live -w <span class="string">&#x27;%&#123;http_code&#125;\n&#x27;</span>   <span class="comment"># 存活</span></span><br><span class="line">curl -s http://127.0.0.1:9000/minio/health/ready -w <span class="string">&#x27;%&#123;http_code&#125;\n&#x27;</span>  <span class="comment"># 就绪（分布式依赖仲裁）</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="十一、社区版归档后的替代方案"><a href="#十一、社区版归档后的替代方案" class="headerlink" title="十一、社区版归档后的替代方案"></a>十一、社区版归档后的替代方案</h2><p>这是新项目必须做的选择题。没有一个是完全 drop-in 的替代，选型前务必用你应用<strong>实际用到的 S3 特性</strong>（分段上传、预签名 URL、版本控制、批量删除）做验证。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>许可</th>
+<th>状态</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Silo</strong>（原 pgsty/minio）</td>
+<td>AGPLv3</td>
+<td>社区 fork，重建二进制与镜像、恢复控制台、跟进安全修复</td>
+<td>想最小改动留在 MinIO 生态</td>
+</tr>
+<tr>
+<td><strong>AIStor Free</strong></td>
+<td>专有（免费）</td>
+<td>官方当前产品，仅单节点、禁止再分发</td>
+<td>开发、测试、单机备份</td>
+</tr>
+<tr>
+<td><strong>AIStor Enterprise</strong></td>
+<td>商业订阅</td>
+<td>分布式、有支持与修复</td>
+<td>生产、要厂商兜底</td>
+</tr>
+<tr>
+<td><strong>RustFS</strong></td>
+<td>Apache 2.0</td>
+<td>2026-09 发布 1.0，类 MinIO 分布式模型</td>
+<td>多节点，先测 S3 兼容性</td>
+</tr>
+<tr>
+<td><strong>Garage</strong></td>
+<td>AGPLv3</td>
+<td>活跃维护，轻量</td>
+<td>小规模、异地多站点</td>
+</tr>
+<tr>
+<td><strong>SeaweedFS</strong></td>
+<td>Apache 2.0</td>
+<td>成熟（2015 起）</td>
+<td>海量小对象、多协议</td>
+</tr>
+<tr>
+<td><strong>Ceph RGW</strong></td>
+<td>LGPL</td>
+<td>企业级参考实现</td>
+<td>大规模、严格 S3 语义</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>迁移路径（无论选哪个）：</p>
+<ol>
+<li>盘点桶、策略、用户、生命周期、版本控制规则——目标端不一定都有对应物；</li>
+<li>用 <code>rclone sync</code> 或 <code>mc mirror</code> 搬数据；</li>
+<li>用应用的真实 S3 调用跑一遍兼容性测试；</li>
+<li>新旧端点并存一段时间，旧集群先只读、别急着下线；</li>
+<li>确认新集群稳定运行一个维护周期后再切流量。</li>
+</ol>
+<p><img src="/images/minio-alternatives.png" alt="替代方案决策路径"></p>
+<hr>
+<h2 id="十二、一页速查"><a href="#十二、一页速查" class="headerlink" title="十二、一页速查"></a>十二、一页速查</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 镜像（固定 tag，别用 latest）</span></span><br><span class="line">quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z</span><br><span class="line"></span><br><span class="line"><span class="comment"># 单机 Compose 关键片段</span></span><br><span class="line"><span class="built_in">command</span>: server /data --console-address <span class="string">&quot;:9001&quot;</span></span><br><span class="line">ports:</span><br><span class="line">  - <span class="string">&quot;127.0.0.1:9000:9000&quot;</span>    <span class="comment"># API</span></span><br><span class="line">  - <span class="string">&quot;127.0.0.1:9001:9001&quot;</span>    <span class="comment"># Console</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分布式（4 节点 × 4 盘，三个点！）</span></span><br><span class="line"><span class="built_in">command</span>: server http://minio&#123;1...4&#125;/data&#123;1...4&#125; --console-address <span class="string">&quot;:9001&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mc</span></span><br><span class="line">mc <span class="built_in">alias</span> <span class="built_in">set</span> myminio http://IP:9000 admin <span class="string">&#x27;密码&#x27;</span></span><br><span class="line">mc mb myminio/uploads</span><br><span class="line">mc <span class="built_in">cp</span> ./a.jpg myminio/uploads/</span><br><span class="line">mc anonymous <span class="built_in">set</span> download myminio/uploads</span><br><span class="line">mc admin info myminio</span><br><span class="line">mc mirror myminio/uploads ./backup/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 健康检查</span></span><br><span class="line">curl -s http://127.0.0.1:9000/minio/health/live -w <span class="string">&#x27;%&#123;http_code&#125;\n&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># boto3 必开</span></span><br><span class="line">s3=&#123;<span class="string">&quot;addressing_style&quot;</span>: <span class="string">&quot;path&quot;</span>&#125;   <span class="comment"># 或 s3ForcePathStyle=true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Nginx 必改</span></span><br><span class="line">client_max_body_size 0;</span><br><span class="line">proxy_set_header Host <span class="variable">$http_host</span>;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li><strong>先认清现状</strong>：社区版归档、无官方二进制与镜像、已知 CVE 无修复；新生产项目优先评估替代方案。</li>
+<li><strong>五种部署</strong>：二进制/systemd（自构建）、Docker run、Compose（本地推荐）、4 节点分布式（生产形态）、K8s Helm/Operator；本地一律绑 localhost + 反代。</li>
+<li><strong>端口记牢</strong>：9000 给程序和 mc，9001 给人看控制台。</li>
+<li><strong>四类接入</strong>：mc 管运维、SDK 做业务、Nginx 做 TLS 与域名、rclone 做备份；SDK 记住 path-style，Nginx 记住 body 大小和 Host 头。</li>
+<li><strong>纠删码算清账</strong>：N=K+M，能坏 M 块盘，混盘按最小盘算——容量和冗余都要提前算好，不是「加上盘就变多」。</li>
+</ol>
+<p>最后一句实在话：对象存储是那种「平时最不想被想起、出事最要命」的基础设施。2026 年这个时间点，选一个<strong>上游还活着</strong>的引擎，比省下那点迁移成本更重要。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://dosbat.com">0x01</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://dosbat.com/w4lbdbp0/">https://dosbat.com/w4lbdbp0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://dosbat.com" target="_blank">DOS/BAT</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/MinIO/">MinIO</a><a class="post-meta__tags" href="/tags/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8/">对象存储</a><a class="post-meta__tags" href="/tags/S3/">S3</a><a class="post-meta__tags" href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></div><div class="post_share"><div class="social-share" data-image="/images/minio-deployment-modes.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口"><img class="cover" src="/images/firewalld-decision.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux 通过 Firewalld 服务限制 IP 和端口</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/5oomphc4/" title="CentOS7 环境变量详解"><img class="cover" src="https://s21.ax1x.com/2024/10/17/pANxMVg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-21</div><div class="title">CentOS7 环境变量详解</div></div></a></div><div><a href="/0q9z9zec/" title="Centos 7搭建 Docker 环境"><img class="cover" src="https://s21.ax1x.com/2024/10/17/pANxV2t.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-11</div><div class="title">Centos 7搭建 Docker 环境</div></div></a></div><div><a href="/1l3cjofg/" title="Docker加速器收集-国内"><img class="cover" src="https://s21.ax1x.com/2024/10/19/pAUTILd.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="title">Docker加速器收集-国内</div></div></a></div><div><a href="/j6q5pl25/" title="Docker 备忘录"><img class="cover" src="https://s21.ax1x.com/2024/10/17/pANxV2t.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-01</div><div class="title">Docker 备忘录</div></div></a></div><div><a href="/zlwfl73r/" title="Docker搭建DNS服务器"><img class="cover" src="https://s21.ax1x.com/2024/10/16/pANeftP.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-20</div><div class="title">Docker搭建DNS服务器</div></div></a></div><div><a href="/7iil4clw/" title="Docker环境搭建"><img class="cover" src="https://s21.ax1x.com/2024/10/26/pAwvGE8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-01</div><div class="title">Docker环境搭建</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0x01</div><div class="author-info__description">有人辞官归故里，有人星夜赶科场。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">121</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">113</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/dosbat"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/isslower" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dosbat666@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://dosbat.com/link" target="_blank" title="收藏"><i class="fas fa-server"></i></a><a class="social-icon" href="https://dosbat.com/tags" target="_blank" title="便签"><i class="fab fa-tags"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><div><strong><a href="https://dosbat.com">☕日常学习，分享记录📃</a></strong></div><div><strong><a href="mailto:dosbat666@gmail.com">👨‍🌾联系我吧🙋</a></strong></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%B6%E3%80%81%E5%85%88%E7%9C%8B%E7%8E%B0%E7%8A%B6%EF%BC%9A2026-%E5%B9%B4%E7%9A%84-MinIO-%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E4%BA%86"><span class="toc-number">1.</span> <span class="toc-text">零、先看现状：2026 年的 MinIO 到底怎么了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%83%A8%E7%BD%B2%E5%89%8D%E7%9A%84%E7%BB%9F%E4%B8%80%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">一、部署前的统一准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%A4%E4%B8%AA%E7%AB%AF%E5%8F%A3%E5%88%AB%E6%90%9E%E6%B7%B7"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 两个端口别搞混</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%87%AD%E6%8D%AE%E8%A7%84%E5%88%99"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 凭据规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E9%95%9C%E5%83%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%88%E5%85%B3%E9%94%AE%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 镜像怎么选（关键）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.4.</span> <span class="toc-text">1.4 数据目录与文件系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E7%BA%A0%E5%88%A0%E7%A0%81%EF%BC%9A%E5%86%B3%E5%AE%9A%E4%BD%A0%E8%83%BD%E5%9D%8F%E5%87%A0%E5%9D%97%E7%9B%98"><span class="toc-number">2.5.</span> <span class="toc-text">1.5 纠删码：决定你能坏几块盘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F-1%EF%BC%9A%E6%BA%90%E7%A0%81%E4%BA%8C%E8%BF%9B%E5%88%B6-systemd"><span class="toc-number">3.</span> <span class="toc-text">二、部署方式 1：源码二进制 + systemd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F-2%EF%BC%9ADocker-run-%E5%8D%95%E6%9C%BA%EF%BC%88%E6%9C%80%E5%BF%AB%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">三、部署方式 2：Docker run 单机（最快）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F-3%EF%BC%9ADocker-Compose-%E5%8D%95%E6%9C%BA%EF%BC%88%E6%8E%A8%E8%8D%90%E7%94%A8%E4%BA%8E%E6%9C%AC%E5%9C%B0-%E5%86%85%E7%BD%91%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">四、部署方式 3：Docker Compose 单机（推荐用于本地&#x2F;内网）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F-4%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-4-%E8%8A%82%E7%82%B9%EF%BC%88%E7%94%9F%E4%BA%A7%E5%BD%A2%E6%80%81%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">五、部署方式 4：分布式 4 节点（生产形态）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F-5%EF%BC%9AKubernetes%EF%BC%88Helm-Operator%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">六、部署方式 5：Kubernetes（Helm &#x2F; Operator）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9Amc-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">8.</span> <span class="toc-text">七、接入方式一：mc 命令行客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9AS3-SDK%EF%BC%88Python-Java%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">八、接入方式二：S3 SDK（Python &#x2F; Java）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-Python-boto3"><span class="toc-number">9.1.</span> <span class="toc-text">8.1 Python boto3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-Java-Spring-Boot"><span class="toc-number">9.2.</span> <span class="toc-text">8.2 Java Spring Boot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F%E5%AF%B9%E7%85%A7"><span class="toc-number">9.3.</span> <span class="toc-text">8.3 接入方式对照</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9ANginx-%E5%8F%8D%E4%BB%A3-HTTPS"><span class="toc-number">10.</span> <span class="toc-text">九、接入方式三：Nginx 反代 + HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F%E5%9B%9B%EF%BC%9Arclone-%E6%8C%82%E8%BD%BD%E4%B8%8E%E5%A4%87%E4%BB%BD"><span class="toc-number">10.1.</span> <span class="toc-text">9.1 接入方式四：rclone 挂载与备份</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%8E%92%E9%9A%9C%E6%B8%85%E5%8D%95"><span class="toc-number">11.</span> <span class="toc-text">十、排障清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E7%A4%BE%E5%8C%BA%E7%89%88%E5%BD%92%E6%A1%A3%E5%90%8E%E7%9A%84%E6%9B%BF%E4%BB%A3%E6%96%B9%E6%A1%88"><span class="toc-number">12.</span> <span class="toc-text">十一、社区版归档后的替代方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E4%B8%80%E9%A1%B5%E9%80%9F%E6%9F%A5"><span class="toc-number">13.</span> <span class="toc-text">十二、一页速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">14.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"><img src="/images/minio-deployment-modes.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"/></a><div class="content"><a class="title" href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型">MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型</a><time datetime="2026-11-16T13:50:00.000Z" title="发表于 2026-11-16 21:50:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口"><img src="/images/firewalld-decision.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 通过 Firewalld 服务限制 IP 和端口"/></a><div class="content"><a class="title" href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口">Linux 通过 Firewalld 服务限制 IP 和端口</a><time datetime="2026-11-16T13:10:00.000Z" title="发表于 2026-11-16 21:10:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/3gri66tg/" title="RHCSA认证考试-附加题"><img src="https://s21.ax1x.com/2024/10/16/pANJXND.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RHCSA认证考试-附加题"/></a><div class="content"><a class="title" href="/3gri66tg/" title="RHCSA认证考试-附加题">RHCSA认证考试-附加题</a><time datetime="2026-11-15T13:13:15.028Z" title="发表于 2026-11-15 21:13:15">2026-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/85mtkczb/" title="弱电机房布线验收清单"><img src="https://s21.ax1x.com/2024/10/16/pANJXND.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="弱电机房布线验收清单"/></a><div class="content"><a class="title" href="/85mtkczb/" title="弱电机房布线验收清单">弱电机房布线验收清单</a><time datetime="2026-11-15T13:08:00.000Z" title="发表于 2026-11-15 21:08:00">2026-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/ymxxz2gj/" title="4-20mA 与 0-10V 选型速查"><img src="https://s21.ax1x.com/2024/10/16/pANJqHK.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="4-20mA 与 0-10V 选型速查"/></a><div class="content"><a class="title" href="/ymxxz2gj/" title="4-20mA 与 0-10V 选型速查">4-20mA 与 0-10V 选型速查</a><time datetime="2026-11-15T13:06:00.000Z" title="发表于 2026-11-15 21:06:00">2026-11-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 0x01</div><div class="footer_custom_text"><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"><span id="percent">0<span>%</span></span></i></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const el = document.getElementById("waline-wrap"); //这里是你的评论div#id
+  var idPath = el.getAttribute('comment_id');
+  if (!idPath) {
+    idPath = decodeURI(window.location.pathname);
+  }
+  const initWaline = (Fn) => {
+    const waline = Fn(Object.assign({
+      el: '#waline-wrap',         //这里是你的评论div#id，跟上面的el中定义的值一致
+      serverURL: 'https://waline.dosbat.com/',  //主题配置文件中配置的服务地址
+      search: false,              //关闭表情查找 不大好用
+      emoji: [
+        'https://unpkg.com/@waline/emojis@1.1.0/bilibili',
+        'https://unpkg.com/@waline/emojis@1.1.0/qq',
+      ],
+      reaction: true,              // 开启反应，可以点击按钮对文章进行评价
+      pageview: false,  // 主题配置文件中配置的浏览量统计
+      dark: 'html[data-theme="dark"]',           
+      path: window.location.pathname,            
+      comment: false,      // 主题配置文件中配置的评论数统计
+      imageUploader: (file) => {
+          if (!file) {  
+            throw new Error('No file provided');  
+          }  
+          let formData = new FormData();
+          let headers = new Headers();
+          formData.append('file', file);
+          formData.append('album_id', 1234); //去不的相册id，id可进入相册页面用F12查看
+          headers.set('Authorization', 'Bearer xxxxxxxxxxxxx');   // 记得改自己的token，去不给的token是1234|xxxx，前面的数字和竖杠不需要，加上Bearer 变成Bearer xxxxx才能认证通过
+          headers.set('Accept', 'application/json');
+          return fetch('https://7bu.top/api/v1/upload', {    // 去不图床的API就是此链接，如果你用的其他图床就改成其他的
+            method: 'POST',
+            headers: headers,
+            body: formData,
+            mode: 'cors',
+          })
+            .then((resp) => resp.json())
+            .then((resp) => resp.data.links.url);
+        },
+    }, {"requiredMeta":["nick","mail"],"locale":{"placeholder":"昵称和邮箱为必填项，为了您能及时收到相关回复的邮件通知，请确保邮箱的正确性！"}}))
+
+    const destroyWaline = () => {
+      waline.destroy()
+    }
+
+    btf.addGlobalFn('pjax', destroyWaline, 'destroyWaline')
+  }
+
+  const loadWaline = async () => {
+    if (initFn) initWaline(initFn)
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/@waline/client@3.1.2/dist/waline.min.css')
+      const { init } = await import('https://cdn.jsdelivr.net/npm/@waline/client@3.1.2/dist/waline.min.js')
+      initFn = init || Waline.init
+      initWaline(initFn)
+      window.walineFn = initFn
+    }
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async src="/js/fps.js"></script><script defer data-pjax src="/js/readPercent.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/Linux-系统/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐧 Linux 系统<br>(33)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/服务与中间件/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚙️ 服务与中间件<br>(30)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/容器与自动化/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐳 容器与自动化<br>(15)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/网络技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🌐 网络技术<br>(14)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/资料汇编/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 资料汇编<br>(13)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/编程开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 编程开发<br>(11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/弱电与电气智能化/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚡ 弱电与电气智能化<br>(5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item" style="visibility: hidden"></div><a class="magnet_link_more"  href="https://dosbat.com/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(25% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #69e8f2}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/zisgiumi/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/19/pAUTLJf.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-09</span><a class="blog-slider__title" href="/zisgiumi/" alt="">腾讯云TCP运维题库-单选题</a><div class="blog-slider__text">腾讯云TCP运维题库-第一部分</div><a class="blog-slider__button" href="/zisgiumi/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/3h328hon/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANeWkt.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-09</span><a class="blog-slider__title" href="/3h328hon/" alt="">腾讯云TCP运维题库-多选题</a><div class="blog-slider__text">腾讯云TCP运维题库-多选题</div><a class="blog-slider__button" href="/3h328hon/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/nwi200ri/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANJXND.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-02-15</span><a class="blog-slider__title" href="/nwi200ri/" alt="">RHCSA认证考试-第一台机器</a><div class="blog-slider__text">RHCSA认证考试-第一台机器</div><a class="blog-slider__button" href="/nwi200ri/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/3gri66tg/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANJXND.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-11-15</span><a class="blog-slider__title" href="/3gri66tg/" alt="">RHCSA认证考试-附加题</a><div class="blog-slider__text">RHCSA认证考试附加题</div><a class="blog-slider__button" href="/3gri66tg/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/zzo8b94p/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/17/pANxZxP.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-02-20</span><a class="blog-slider__title" href="/zzo8b94p/" alt="">RHCSA认证考试-第二台机器</a><div class="blog-slider__text">RHCSA认证考试-第二台机器</div><a class="blog-slider__button" href="/zzo8b94p/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/p62piz46/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/26/pAwvJUS.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-12-09</span><a class="blog-slider__title" href="/p62piz46/" alt="">Git常用命令大全</a><div class="blog-slider__text">Git是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。</div><a class="blog-slider__button" href="/p62piz46/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/0hh955pk/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANe5p8.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-16</span><a class="blog-slider__title" href="/0hh955pk/" alt="">提问的智慧</a><div class="blog-slider__text">你所提技术问题的解答的好坏, 很大程度上取决于你提问的方式与此问题的难度。本指南将教你如何正确地提问以获得你满意的答案。</div><a class="blog-slider__button" href="/0hh955pk/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/j6q5pl25/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/17/pANxV2t.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-01</span><a class="blog-slider__title" href="/j6q5pl25/" alt="">Docker 备忘录</a><div class="blog-slider__text">Docker是一个用于开发、传送和运行应用程序的开放平台。Docker 使您能够将应用程序与基础设施分开，以便您可以快速交付软件。使用 Docker，您可以像管理应用程序一样管理基础设施。通过利用 Docker 的快速交付、测试和部署代码的方法，您可以显着减少编写代码和在生产中运行代码之间的延迟。在这篇文章中，我将提到我们需要或大多数用例的 docker 命令。</div><a class="blog-slider__button" href="/j6q5pl25/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --></body></html>

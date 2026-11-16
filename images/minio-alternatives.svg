@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#64748B"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="680" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">2026 年怎么选：S3 兼容引擎决策路径</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">没有完全 drop-in 的替代：先用应用真实用到的 S3 特性做兼容性测试，再迁移</text>
+
+  <!-- start -->
+  <rect x="440" y="106" width="320" height="66" rx="10" fill="#1E40AF"/>
+  <text x="600" y="134" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">你的场景是什么？</text>
+  <text x="600" y="156" font-size="11" fill="#BFDBFE" text-anchor="middle">已有集群 / 新项目 / 要商业支持</text>
+
+  <line x1="520" y1="174" x2="220" y2="222" stroke="#64748B" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="600" y1="174" x2="600" y2="222" stroke="#64748B" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="680" y1="174" x2="980" y2="222" stroke="#64748B" stroke-width="2" marker-end="url(#ar)"/>
+
+  <!-- branch 1 -->
+  <rect x="40" y="224" width="340" height="72" rx="10" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="60" y="252" font-size="14" font-weight="700" fill="#1E40AF">已有 MinIO 集群，想最小改动</text>
+  <text x="60" y="278" font-size="11" fill="#475569">→ Silo fork（原 pgsty/minio）：重建镜像、恢复控制台</text>
+  <rect x="40" y="310" width="340" height="70" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="60" y="338" font-size="12" fill="#475569">继续自建也可以，但要自己盯 CVE、构建打补丁</text>
+  <text x="60" y="362" font-size="12" fill="#DC2626">风险：冻结代码 + 已知漏洞不会修</text>
+
+  <!-- branch 2 -->
+  <rect x="430" y="224" width="340" height="72" rx="10" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/>
+  <text x="450" y="252" font-size="14" font-weight="700" fill="#047857">新项目 / 小规模 / 异地多站点</text>
+  <text x="450" y="278" font-size="11" fill="#475569">→ Garage（AGPLv3，活跃维护，轻量）</text>
+  <rect x="430" y="310" width="340" height="70" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="450" y="338" font-size="12" fill="#475569">多节点类 MinIO 模型 → RustFS（Apache 2.0）</text>
+  <text x="450" y="362" font-size="12" fill="#475569">海量小对象 / 多协议 → SeaweedFS</text>
+
+  <!-- branch 3 -->
+  <rect x="820" y="224" width="340" height="72" rx="10" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2"/>
+  <text x="840" y="252" font-size="14" font-weight="700" fill="#5B21B6">生产要支持 / 大规模</text>
+  <text x="840" y="278" font-size="11" fill="#475569">→ AIStor（商业）/ Ceph RGW（企业级）</text>
+  <rect x="820" y="310" width="340" height="70" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="840" y="338" font-size="12" fill="#475569">AIStor Free 免费但仅单节点、禁止再分发</text>
+  <text x="840" y="362" font-size="12" fill="#475569">Ceph RGW：严格 S3 语义，但运维重</text>
+
+  <!-- migration steps -->
+  <text x="40" y="430" font-size="17" font-weight="700" fill="#0F172A">迁移五步（别直接 switch）</text>
+  <g font-size="12">
+    <rect x="40" y="448" width="1080" height="40" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="60" y="474" font-weight="700" fill="#1E40AF">① 盘点</text>
+    <text x="160" y="474" fill="#475569">桶、策略、用户、生命周期、版本控制 —— 目标端不一定都有对应物</text>
+
+    <rect x="40" y="494" width="1080" height="40" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="60" y="520" font-weight="700" fill="#1E40AF">② 搬数据</text>
+    <text x="160" y="520" fill="#475569">rclone sync 或 mc mirror（归档的 mc 仍能当普通 S3 客户端用）</text>
+
+    <rect x="40" y="540" width="1080" height="40" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="60" y="566" font-weight="700" fill="#1E40AF">③ 测兼容</text>
+    <text x="160" y="566" fill="#475569">用应用真实的 S3 调用：分段上传、预签名 URL、版本控制、批量删除</text>
+
+    <rect x="40" y="586" width="1080" height="40" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="60" y="612" font-weight="700" fill="#1E40AF">④ 并存</text>
+    <text x="160" y="612" fill="#475569">新旧端点同时在线，旧集群先转只读，别急着下线</text>
+  </g>
+
+  <rect x="40" y="636" width="1120" height="32" rx="8" fill="#FFFBEB" stroke="#FDE68A"/>
+  <text x="60" y="658" font-size="12" font-weight="700" fill="#92400E">⑤ 观察一个完整维护周期后再切流量 —— 对象存储是「出事最要命」的基础设施，稳比快重要。</text>
+</svg>

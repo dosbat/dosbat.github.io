@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="700" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0F172A">五种部署方式：从本地验证到生产集群</text>
+  <text x="40" y="76" font-size="14" fill="#64748B">本地形态一律绑 127.0.0.1 + 反代；生产形态用 4 节点纠删码，避免公网直曝 9000/9001</text>
+
+  <!-- 方式1 -->
+  <rect x="40" y="106" width="350" height="180" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <rect x="40" y="106" width="350" height="40" rx="12" fill="#F1F5F9"/>
+  <text x="60" y="133" font-size="14" font-weight="700" fill="#475569">1 · 二进制 + systemd</text>
+  <text x="60" y="172" font-size="12" fill="#0F172A">go install 自构建 → /usr/local/bin/minio</text>
+  <text x="60" y="196" font-size="12" fill="#475569">EnvironmentFile 存凭据（chmod 600）</text>
+  <text x="60" y="220" font-size="12" fill="#475569">Restart=always + LimitNOFILE=65536</text>
+  <text x="60" y="252" font-size="11" fill="#94A3B8">适合：不用 Docker、愿意自己构建与跟进 CVE</text>
+  <rect x="60" y="262" width="310" height="0" fill="none"/>
+
+  <!-- 方式2 -->
+  <rect x="425" y="106" width="350" height="180" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <rect x="425" y="106" width="350" height="40" rx="12" fill="#DBEAFE"/>
+  <text x="445" y="133" font-size="14" font-weight="700" fill="#1E40AF">2 · Docker run 单机</text>
+  <text x="445" y="172" font-size="12" fill="#0F172A">-p 127.0.0.1:9000:9000（API）</text>
+  <text x="445" y="196" font-size="12" fill="#475569">-p 127.0.0.1:9001:9001（Console）</text>
+  <text x="445" y="220" font-size="12" fill="#475569">-v /opt/minio/data:/data 必须挂载</text>
+  <text x="445" y="252" font-size="11" fill="#94A3B8">适合：本机开发、临时验证（最快）</text>
+
+  <!-- 方式3 -->
+  <rect x="810" y="106" width="350" height="180" rx="12" fill="#FFFFFF" stroke="#10B981" stroke-width="2"/>
+  <rect x="810" y="106" width="350" height="40" rx="12" fill="#D1FAE5"/>
+  <text x="830" y="133" font-size="14" font-weight="700" fill="#065F46">3 · Docker Compose 单机（推荐）</text>
+  <text x="830" y="172" font-size="12" fill="#0F172A">compose.yaml + .env 凭据分离</text>
+  <text x="830" y="196" font-size="12" fill="#475569">healthcheck: /minio/health/live</text>
+  <text x="830" y="220" font-size="12" fill="#475569">绑 localhost + 加入 app-net 网络</text>
+  <text x="830" y="252" font-size="11" fill="#047857">适合：本地/内网长期运行</text>
+
+  <!-- 方式4 -->
+  <rect x="40" y="312" width="560" height="200" rx="12" fill="#FFFFFF" stroke="#DC2626" stroke-width="2"/>
+  <rect x="40" y="312" width="560" height="40" rx="12" fill="#FEE2E2"/>
+  <text x="60" y="339" font-size="14" font-weight="700" fill="#991B1B">4 · 分布式 4 节点 × 4 盘（生产形态）</text>
+  <text x="60" y="378" font-size="13" fill="#0F172A">server http://minio{1...4}/data{1...4} --console-address ":9001"</text>
+  <text x="60" y="404" font-size="12" fill="#475569">椭圆展开用三个点 {1...4}；extra_hosts 配好四节点解析</text>
+  <text x="60" y="428" font-size="12" fill="#475569">每节点 4 块 XFS 盘直挂：/data1 ~ /data4</text>
+  <text x="60" y="452" font-size="12" fill="#475569">N=16，EC:8 → 可用约 50%，最多坏 8 盘</text>
+  <text x="60" y="484" font-size="11" fill="#DC2626">前置：NTP 同步、节点互通、凭据一致；冻结镜像需评估 CVE</text>
+
+  <!-- 方式5 -->
+  <rect x="630" y="312" width="530" height="200" rx="12" fill="#FFFFFF" stroke="#7C3AED" stroke-width="2"/>
+  <rect x="630" y="312" width="530" height="40" rx="12" fill="#F5F3FF"/>
+  <text x="650" y="339" font-size="14" font-weight="700" fill="#5B21B6">5 · Kubernetes Helm / Operator</text>
+  <text x="650" y="378" font-size="13" fill="#0F172A">helm install minio minio/minio --set mode=standalone</text>
+  <text x="650" y="404" font-size="12" fill="#475569">分布式：--set mode=distributed --set replicas=4</text>
+  <text x="650" y="428" font-size="12" fill="#475569">StatefulSet + 本地 PV / CSI；Ingress 分 API 与 Console</text>
+  <text x="650" y="452" font-size="12" fill="#DC2626">注意：operator 仓库 2026 年也归档，Chart 不再更新</text>
+  <text x="650" y="484" font-size="11" fill="#7C3AED">适合：已在 K8s 上、有存储运维经验</text>
+
+  <!-- 决策条 -->
+  <rect x="40" y="542" width="1120" height="138" rx="10" fill="#FFFBEB" stroke="#FDE68A"/>
+  <text x="60" y="574" font-size="15" font-weight="700" fill="#92400E">怎么选</text>
+  <text x="60" y="604" font-size="13" fill="#78350F">开发 / CI / 临时对象存储 → 方式 3（Compose，固定 tag 镜像，绑 localhost）</text>
+  <text x="60" y="630" font-size="13" fill="#78350F">内网小团队长期用 → 方式 3 + 反代 + 定期备份，并接受「上游冻结」风险</text>
+  <text x="60" y="656" font-size="13" fill="#78350F">生产 / 要冗余 → 方式 4 或换活跃引擎（见替代方案），别用单节点单盘</text>
+</svg>
