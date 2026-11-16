@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="700" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="27" font-weight="700" fill="#0F172A">2026 年 ELK 版本与许可现状</text>
+  <text x="40" y="78" font-size="14" fill="#64748B">先看版本再动手：新项目上 9.x，存量 8.x 可用到 2027 年中，7.x 已 EOL</text>
+
+  <!-- 版本时间线 -->
+  <text x="40" y="118" font-size="14" font-weight="700" fill="#475569">版本主线</text>
+  <line x1="80" y1="180" x2="1120" y2="180" stroke="#CBD5E1" stroke-width="4"/>
+  <circle cx="200" cy="180" r="12" fill="#94A3B8"/>
+  <circle cx="560" cy="180" r="12" fill="#F59E0B"/>
+  <circle cx="940" cy="180" r="12" fill="#10B981"/>
+
+  <rect x="100" y="214" width="200" height="150" rx="12" fill="#F1F5F9" stroke="#94A3B8" stroke-width="2"/>
+  <text x="200" y="246" font-size="18" font-weight="700" fill="#475569" text-anchor="middle">7.x</text>
+  <text x="200" y="276" font-size="12" fill="#64748B" text-anchor="middle">7.17.29</text>
+  <text x="200" y="300" font-size="12" fill="#64748B" text-anchor="middle">2025-06 最后补丁</text>
+  <text x="200" y="330" font-size="13" font-weight="700" fill="#DC2626" text-anchor="middle">已 EOL · 无安全修复</text>
+  <text x="200" y="352" font-size="11" fill="#94A3B8" text-anchor="middle">勿新装</text>
+
+  <rect x="460" y="214" width="200" height="150" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+  <text x="560" y="246" font-size="18" font-weight="700" fill="#B45309" text-anchor="middle">8.x</text>
+  <text x="560" y="276" font-size="12" fill="#92400E" text-anchor="middle">8.19.25</text>
+  <text x="560" y="300" font-size="12" fill="#92400E" text-anchor="middle">2026-11-05 补丁</text>
+  <text x="560" y="330" font-size="13" font-weight="700" fill="#B45309" text-anchor="middle">维护中 · 2027-07-15 EOL</text>
+  <text x="560" y="352" font-size="11" fill="#A16207" text-anchor="middle">存量可平稳使用</text>
+
+  <rect x="840" y="214" width="240" height="150" rx="12" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="960" y="246" font-size="18" font-weight="700" fill="#065F46" text-anchor="middle">9.x（当前主线）</text>
+  <text x="960" y="276" font-size="12" fill="#047857" text-anchor="middle">9.5.6（2026-10-28）</text>
+  <text x="960" y="300" font-size="12" fill="#047857" text-anchor="middle">PromQL GA · Columnar Mode</text>
+  <text x="960" y="330" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">新项目首选</text>
+  <text x="960" y="352" font-size="11" fill="#059669" text-anchor="middle">9.5 支持到 2027-10-15</text>
+
+  <!-- 许可区 -->
+  <text x="40" y="408" font-size="14" font-weight="700" fill="#475569">许可：三套代码两套系</text>
+  <rect x="40" y="424" width="350" height="150" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="60" y="454" font-size="15" font-weight="700" fill="#0F172A">ELK / Elastic Stack</text>
+  <text x="60" y="482" font-size="12" fill="#475569">7.11 起弃用 Apache 2.0</text>
+  <text x="60" y="506" font-size="12" fill="#475569">ELv2 + SSPL + AGPLv3 三重许可</text>
+  <text x="60" y="534" font-size="12" fill="#059669">✓ 内部自用 / 运维监控免费</text>
+  <text x="60" y="558" font-size="12" fill="#DC2626">✗ 包装成对外 SaaS 需评估</text>
+
+  <rect x="418" y="424" width="350" height="150" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="438" y="454" font-size="15" font-weight="700" fill="#0F172A">OpenSearch</text>
+  <text x="438" y="482" font-size="12" fill="#475569">2021 年从 ES 7.10 分叉</text>
+  <text x="438" y="506" font-size="12" fill="#475569">OpenSearch 基金会（LF 旗下）</text>
+  <text x="438" y="534" font-size="12" fill="#059669">✓ Apache 2.0，API 眼熟</text>
+  <text x="438" y="558" font-size="12" fill="#DC2626">✗ 版本/插件已与 ELK 分道</text>
+
+  <rect x="796" y="424" width="364" height="150" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="816" y="454" font-size="15" font-weight="700" fill="#1E40AF">基础 vs 商业功能</text>
+  <text x="816" y="482" font-size="12" fill="#1E3A8A">免费：检索/日志/指标/可视化/基本安全</text>
+  <text x="816" y="506" font-size="12" fill="#1E3A8A">同版本：ES = Kibana = Logstash = Agent</text>
+  <text x="816" y="534" font-size="12" fill="#1E3A8A">收费：跨集群复制、字段级安全、高级 ML</text>
+  <text x="816" y="558" font-size="12" fill="#1E3A8A">无 LTS：每主版本固定维护周期</text>
+
+  <!-- 底部提示 -->
+  <rect x="40" y="596" width="1120" height="66" rx="12" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="60" y="622" font-size="14" font-weight="700" fill="#991B1B">⚠ 最容易翻车的三件事</text>
+  <text x="60" y="646" font-size="12" fill="#B91C1C">① 安全默认开启（8.0+）裸连必失败　② 全栈版本混用直接报错　③ 用 latest 镜像某天自动升级炸管道</text>
+
+  <text x="40" y="684" font-size="11" fill="#94A3B8">数据来源：Elastic 官方支持 EOL 政策与文档 · 整理于 2026-11</text>
+</svg>

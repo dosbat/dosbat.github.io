@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="700" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="27" font-weight="700" fill="#0F172A">Docker Compose 部署拓扑与启动顺序</text>
+  <text x="40" y="78" font-size="14" fill="#64748B">三容器同一 bridge 网络，端口只绑 127.0.0.1，前置系统参数别漏</text>
+
+  <!-- 前置 -->
+  <rect x="40" y="104" width="1120" height="72" rx="12" fill="#FFF7ED" stroke="#F59E0B" stroke-width="2"/>
+  <text x="60" y="132" font-size="14" font-weight="700" fill="#9A3412">启动前先做（否则容器起不来）</text>
+  <text x="60" y="158" font-size="12" fill="#C2410C">sysctl -w vm.max_map_count=262144　|　容器内存 ≥ 4GB　|　建议关闭 swap　|　.env 锁 ELK_VERSION 并改掉默认密码</text>
+
+  <!-- 三个服务 -->
+  <text x="40" y="216" font-size="14" font-weight="700" fill="#475569">服务拓扑（docker compose up -d）</text>
+
+  <!-- ES -->
+  <rect x="40" y="234" width="320" height="230" rx="14" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="200" y="266" font-size="17" font-weight="700" fill="#065F46" text-anchor="middle">① elasticsearch</text>
+  <text x="200" y="290" font-size="11" fill="#047857" text-anchor="middle">docker.elastic.co/.../elasticsearch:9.5.6</text>
+  <line x1="64" y1="304" x2="336" y2="304" stroke="#A7F3D0" stroke-width="2"/>
+  <text x="64" y="328" font-size="12" fill="#065F46">端口：127.0.0.1:9200</text>
+  <text x="64" y="352" font-size="12" fill="#065F46">discovery.type=single-node</text>
+  <text x="64" y="376" font-size="12" fill="#065F46">xpack.security.enabled=true</text>
+  <text x="64" y="400" font-size="12" fill="#065F46">ES_JAVA_OPTS=-Xms1g -Xmx1g</text>
+  <text x="64" y="424" font-size="12" fill="#065F46">卷：es-data:/usr/share/.../data</text>
+  <text x="64" y="448" font-size="11" fill="#059669">healthcheck 通过才起下游</text>
+
+  <!-- Kibana -->
+  <rect x="440" y="234" width="320" height="230" rx="14" fill="#F0F9FF" stroke="#0EA5E9" stroke-width="2.5"/>
+  <text x="600" y="266" font-size="17" font-weight="700" fill="#0369A1" text-anchor="middle">② kibana</text>
+  <text x="600" y="290" font-size="11" fill="#0284C7" text-anchor="middle">docker.elastic.co/.../kibana:9.5.6</text>
+  <line x1="464" y1="304" x2="736" y2="304" stroke="#BAE6FD" stroke-width="2"/>
+  <text x="464" y="328" font-size="12" fill="#0369A1">端口：127.0.0.1:5601</text>
+  <text x="464" y="352" font-size="12" fill="#0369A1">ELASTICSEARCH_HOSTS=http://es:9200</text>
+  <text x="464" y="376" font-size="12" fill="#0369A1">USERNAME=kibana_system</text>
+  <text x="464" y="400" font-size="12" fill="#0369A1">PASSWORD=写进 .env</text>
+  <text x="464" y="424" font-size="12" fill="#0369A1">depends_on: es 健康</text>
+  <text x="464" y="448" font-size="11" fill="#0284C7">连不上先重置 kibana_system 密码</text>
+
+  <!-- Logstash -->
+  <rect x="840" y="234" width="320" height="230" rx="14" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2.5"/>
+  <text x="1000" y="266" font-size="17" font-weight="700" fill="#5B21B6" text-anchor="middle">③ logstash</text>
+  <text x="1000" y="290" font-size="11" fill="#6D28D9" text-anchor="middle">docker.elastic.co/.../logstash:9.5.6</text>
+  <line x1="864" y1="304" x2="1136" y2="304" stroke="#DDD6FE" stroke-width="2"/>
+  <text x="864" y="328" font-size="12" fill="#5B21B6">端口：5044（Beats）/ 9600（API）</text>
+  <text x="864" y="352" font-size="12" fill="#5B21B6">挂载 ./logstash/pipeline:ro</text>
+  <text x="864" y="376" font-size="12" fill="#5B21B6">LS_JAVA_OPTS=-Xms512m -Xmx512m</text>
+  <text x="864" y="400" font-size="12" fill="#5B21B6">ELASTIC_PASSWORD 注入</text>
+  <text x="864" y="424" font-size="12" fill="#5B21B6">depends_on: es 健康</text>
+  <text x="864" y="448" font-size="11" fill="#7C3AED">管道 conf 放 pipeline 目录即生效</text>
+
+  <!-- 箭头连接 -->
+  <path d="M360,348 L436,348" stroke="#64748B" stroke-width="2.5"/>
+  <path d="M434,344 l6,4 l-6,4 z" fill="#64748B"/>
+  <path d="M760,348 L836,348" stroke="#64748B" stroke-width="2.5"/>
+  <path d="M834,344 l6,4 l-6,4 z" fill="#64748B"/>
+
+  <!-- Filebeat 输入 -->
+  <rect x="300" y="500" width="600" height="56" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="600" y="524" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">Filebeat / Elastic Agent → 5044 → Logstash → ES</text>
+  <text x="600" y="544" font-size="11" fill="#64748B" text-anchor="middle">或格式规整时直写 9200，省掉 Logstash 这个 JVM</text>
+  <path d="M600,500 L600,470 L1000,470 L1000,466" stroke="#7C3AED" stroke-width="2.5" fill="none"/>
+  <path d="M998,462 l-4,8 l8,0 z" fill="#7C3AED"/>
+
+  <!-- 验收命令 -->
+  <rect x="40" y="580" width="1120" height="80" rx="12" fill="#F1F5F9" stroke="#94A3B8" stroke-width="2"/>
+  <text x="60" y="608" font-size="13" font-weight="700" fill="#0F172A">验收三步</text>
+  <text x="60" y="632" font-size="12" fill="#334155">docker compose ps（都 Up）　→　curl -u elastic:'密码' 127.0.0.1:9200/_cluster/health（green/yellow）　→　浏览器开 127.0.0.1:5601 用 elastic 登录</text>
+  <text x="60" y="652" font-size="11" fill="#64748B">单节点显示 yellow 属正常（副本无处安放），把 number_of_replicas 设 0 即转 green</text>
+
+  <text x="40" y="686" font-size="11" fill="#94A3B8">部署顺序：ES → Kibana → Logstash → 采集端 · 证书要在 Fleet/Agent 之前备好</text>
+</svg>

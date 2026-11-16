@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="700" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="27" font-weight="700" fill="#0F172A">Logstash 管道：input → filter → output</text>
+  <text x="40" y="78" font-size="14" fill="#64748B">一段 beats.conf 讲清解析、转换、分流与写出，附性能要点</text>
+
+  <!-- INPUT -->
+  <rect x="40" y="110" width="330" height="200" rx="14" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5"/>
+  <text x="205" y="142" font-size="17" font-weight="700" fill="#1E40AF" text-anchor="middle">input 输入</text>
+  <line x1="64" y1="156" x2="346" y2="156" stroke="#BFDBFE" stroke-width="2"/>
+  <text x="64" y="184" font-size="12" fill="#1E3A8A" font-family="Consolas, monospace">input {</text>
+  <text x="82" y="208" font-size="12" fill="#1E40AF" font-family="Consolas, monospace">beats { port =&gt; 5044 }</text>
+  <text x="64" y="232" font-size="12" fill="#1E3A8A" font-family="Consolas, monospace">}</text>
+  <text x="64" y="264" font-size="12" fill="#475569">也支持 syslog / file / kafka / http</text>
+  <text x="64" y="288" font-size="12" fill="#475569">codec 可在入口先解码 JSON</text>
+
+  <!-- FILTER -->
+  <rect x="435" y="110" width="450" height="330" rx="14" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2.5"/>
+  <text x="660" y="142" font-size="17" font-weight="700" fill="#5B21B6" text-anchor="middle">filter 加工（核心）</text>
+  <line x1="459" y1="156" x2="861" y2="156" stroke="#DDD6FE" stroke-width="2"/>
+
+  <text x="459" y="182" font-size="12" font-weight="700" fill="#6D28D9">① grok — 非结构化 → 字段</text>
+  <text x="477" y="204" font-size="11" fill="#475569" font-family="Consolas, monospace">match =&gt; { "message" =&gt; "%{NGINXACCESS}" }</text>
+
+  <text x="459" y="232" font-size="12" font-weight="700" fill="#6D28D9">② date — 校正 @timestamp</text>
+  <text x="477" y="254" font-size="11" fill="#475569" font-family="Consolas, monospace">match =&gt; ["time_local", "dd/MMM/yyyy:HH:mm:ss Z"]</text>
+
+  <text x="459" y="282" font-size="12" font-weight="700" fill="#6D28D9">③ mutate — 类型转换 / 删冗余</text>
+  <text x="477" y="304" font-size="11" fill="#475569" font-family="Consolas, monospace">convert =&gt; { "status" =&gt; "integer" }</text>
+
+  <text x="459" y="332" font-size="12" font-weight="700" fill="#6D28D9">④ 条件分流</text>
+  <text x="477" y="354" font-size="11" fill="#475569" font-family="Consolas, monospace">if [status] &gt;= 500 { add_tag =&gt; ["server_error"] }</text>
+
+  <rect x="459" y="374" width="402" height="50" rx="8" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="2"/>
+  <text x="477" y="396" font-size="11" font-weight="700" fill="#5B21B6">⚡ 性能：grok 是性能大户</text>
+  <text x="477" y="414" font-size="11" fill="#6D28D9">能用 dissect（分隔符固定）就别用 grok；能放 ES ingest 做就别压 Logstash</text>
+
+  <!-- OUTPUT -->
+  <rect x="950" y="110" width="210" height="200" rx="14" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="1055" y="142" font-size="17" font-weight="700" fill="#065F46" text-anchor="middle">output 输出</text>
+  <line x1="974" y1="156" x2="1136" y2="156" stroke="#A7F3D0" stroke-width="2"/>
+  <text x="974" y="184" font-size="12" fill="#065F46" font-family="Consolas, monospace">elasticsearch {</text>
+  <text x="992" y="208" font-size="11" fill="#047857" font-family="Consolas, monospace">hosts =&gt; ["http://es:9200"]</text>
+  <text x="992" y="228" font-size="11" fill="#047857" font-family="Consolas, monospace">index =&gt; "nginx-%{+YYYY.MM.dd}"</text>
+  <text x="974" y="252" font-size="12" fill="#065F46" font-family="Consolas, monospace">}</text>
+  <text x="974" y="282" font-size="11" fill="#475569">stdout rubydebug 调试用</text>
+  <text x="974" y="300" font-size="11" fill="#DC2626">稳定后记得删掉</text>
+
+  <!-- 箭头 -->
+  <path d="M370,210 L431,210" stroke="#64748B" stroke-width="2.5"/>
+  <path d="M429,206 l6,4 l-6,4 z" fill="#64748B"/>
+  <path d="M885,210 L946,210" stroke="#64748B" stroke-width="2.5"/>
+  <path d="M944,206 l6,4 l-6,4 z" fill="#64748B"/>
+
+  <!-- 底部调优 -->
+  <text x="40" y="490" font-size="14" font-weight="700" fill="#475569">管道吞吐调优</text>
+  <rect x="40" y="506" width="350" height="140" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="60" y="534" font-size="13" font-weight="700" fill="#0F172A">pipeline.workers</text>
+  <text x="60" y="558" font-size="12" fill="#475569">默认 = CPU 核数</text>
+  <text x="60" y="584" font-size="12" fill="#475569">先调 batch.size，</text>
+  <text x="60" y="608" font-size="12" fill="#475569">再考虑加 workers</text>
+  <text x="60" y="632" font-size="11" fill="#94A3B8">命令行 -w 也可覆盖</text>
+
+  <rect x="425" y="506" width="350" height="140" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="445" y="534" font-size="13" font-weight="700" fill="#0F172A">pipeline.batch.size</text>
+  <text x="445" y="558" font-size="12" fill="#475569">默认 125，可调 512–1000</text>
+  <text x="445" y="584" font-size="12" fill="#475569">配合 bulk 批量写 ES</text>
+  <text x="445" y="608" font-size="12" fill="#475569">观察 CPU 与拒绝率</text>
+  <text x="445" y="632" font-size="11" fill="#94A3B8">太大增加延迟与内存</text>
+
+  <rect x="810" y="506" width="350" height="140" rx="12" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="2"/>
+  <text x="830" y="534" font-size="13" font-weight="700" fill="#991B1B">429 / indexing_pressure</text>
+  <text x="830" y="558" font-size="12" fill="#7F1D1D">写入超过集群承受力</text>
+  <text x="830" y="584" font-size="12" fill="#7F1D1D">降速、扩 data 节点、</text>
+  <text x="830" y="608" font-size="12" fill="#7F1D1D">检查分片是否过多</text>
+  <text x="830" y="632" font-size="11" fill="#DC2626">别硬顶，会堆积甚至丢数据</text>
+
+  <text x="40" y="682" font-size="11" fill="#94A3B8">Logstash 管道三段式 · 9.x 字段建议贴合 ECS，Kibana 现成面板依赖 ECS 字段名</text>
+</svg>

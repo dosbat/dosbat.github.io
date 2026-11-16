@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="700" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="27" font-weight="700" fill="#0F172A">ELK 核心调优四件套</text>
+  <text x="40" y="78" font-size="14" fill="#64748B">JVM、分片、refresh、批量写入——按优先级排，先做前两项收益最大</text>
+
+  <!-- 1 JVM -->
+  <rect x="40" y="108" width="550" height="240" rx="14" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5"/>
+  <text x="60" y="140" font-size="17" font-weight="700" fill="#1E40AF">① JVM heap</text>
+  <text x="60" y="170" font-size="13" fill="#1E3A8A">• Xms 与 Xmx 设为相等，避免运行期扩缩堆</text>
+  <text x="60" y="196" font-size="13" fill="#1E3A8A">• 不超过物理内存一半，且 ≤ 31GB</text>
+  <text x="60" y="222" font-size="13" fill="#1E3A8A">• 超过 31GB 失去压缩指针，反而更慢</text>
+  <text x="60" y="248" font-size="13" fill="#1E3A8A">• 32GB 内存节点：heap 给 16GB</text>
+  <text x="60" y="274" font-size="13" fill="#1E3A8A">• 剩下一半留给 Lucene 文件系统缓存</text>
+  <rect x="60" y="296" width="510" height="36" rx="8" fill="#DBEAFE"/>
+  <text x="76" y="320" font-size="12" font-weight="700" fill="#1E40AF">ES_JAVA_OPTS="-Xms16g -Xmx16g"（示例：32G 内存节点）</text>
+
+  <!-- 2 分片 -->
+  <rect x="610" y="108" width="550" height="240" rx="14" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="630" y="140" font-size="17" font-weight="700" fill="#065F46">② 分片规划</text>
+  <text x="630" y="170" font-size="13" fill="#047857">• 单分片目标 20–50GB，太大太小都不好</text>
+  <text x="630" y="196" font-size="13" fill="#047857">• 副本数 1 是甜点；单节点设 0 否则 yellow</text>
+  <text x="630" y="222" font-size="13" fill="#047857">• 每天 50GB 日志：1 主 + 1 副本足够</text>
+  <text x="630" y="248" font-size="13" fill="#047857">• 分片数建索引时定死，不能原地改</text>
+  <text x="630" y="274" font-size="13" fill="#047857">• 要改只能 reindex，故前期估算很重要</text>
+  <rect x="630" y="296" width="510" height="36" rx="8" fill="#D1FAE5"/>
+  <text x="646" y="320" font-size="12" font-weight="700" fill="#065F46">按天分索引：nginx-2026.11.16，便于 ILM 按时间删除</text>
+
+  <!-- 3 refresh -->
+  <rect x="40" y="368" width="550" height="200" rx="14" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2.5"/>
+  <text x="60" y="400" font-size="17" font-weight="700" fill="#5B21B6">③ refresh_interval</text>
+  <text x="60" y="430" font-size="13" fill="#6D28D9">• 默认 1s = 每秒生成新段，段碎查询合并都累</text>
+  <text x="60" y="456" font-size="13" fill="#6D28D9">• 日志场景放宽到 30s，立竿见影</text>
+  <text x="60" y="482" font-size="13" fill="#6D28D9">• 写入模板统一设置，别一条条改</text>
+  <rect x="60" y="504" width="510" height="44" rx="8" fill="#EDE9FE"/>
+  <text x="76" y="532" font-size="11" font-family="Consolas, monospace" fill="#5B21B6">PUT nginx-*/_settings { "index": { "refresh_interval": "30s" } }</text>
+
+  <!-- 4 批量 -->
+  <rect x="610" y="368" width="550" height="200" rx="14" fill="#FFF7ED" stroke="#F59E0B" stroke-width="2.5"/>
+  <text x="630" y="400" font-size="17" font-weight="700" fill="#9A3412">④ 批量写入与存储</text>
+  <text x="630" y="430" font-size="13" fill="#C2410C">• Filebeat / Logstash 用 bulk，别一条条 PUT</text>
+  <text x="630" y="456" font-size="13" fill="#C2410C">• 磁盘用 SSD/NVMe，ES 对 IO 极敏感</text>
+  <text x="630" y="482" font-size="13" fill="#C2410C">• 磁盘水位线 85% / 90% / 95%(flood 只读)</text>
+  <rect x="630" y="504" width="510" height="44" rx="8" fill="#FFEDD5"/>
+  <text x="646" y="532" font-size="12" font-weight="700" fill="#9A3412">开 Stack Monitoring 盯：CPU / heap / GC / 写拒绝 / 磁盘</text>
+
+  <!-- 底部优先级 -->
+  <rect x="40" y="588" width="1120" height="76" rx="12" fill="#F1F5F9" stroke="#94A3B8" stroke-width="2"/>
+  <text x="60" y="616" font-size="14" font-weight="700" fill="#0F172A">收益优先级</text>
+  <text x="60" y="642" font-size="12" fill="#334155">版本统一 &amp; 前置 sysctl → JVM heap → 分片规划 → refresh 放宽 → 批量写入 → ILM 自动删除。前两项不做，后面全是白调。</text>
+  <text x="60" y="658" font-size="11" fill="#64748B">调优的前提是先有监控数据：靠猜不如看 _cat/nodes、_cluster/health 与 GC 日志</text>
+
+  <text x="40" y="686" font-size="11" fill="#94A3B8">ELK 核心调优速查 · 整理于 2026-11</text>
+</svg>

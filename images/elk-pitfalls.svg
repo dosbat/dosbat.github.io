@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="760" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="27" font-weight="700" fill="#0F172A">ELK 十个必踩的坑</text>
+  <text x="40" y="78" font-size="14" fill="#64748B">按「部署期 → 运行期」排列，每条都标了现象与处理</text>
+
+  <!-- 部署期 5 个 -->
+  <text x="40" y="116" font-size="14" font-weight="700" fill="#475569">部署期</text>
+
+  <rect x="40" y="130" width="355" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="66" cy="156" r="14" fill="#DC2626"/>
+  <text x="66" y="161" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+  <text x="90" y="161" font-size="13" font-weight="700" fill="#0F172A">vm.max_map_count 没调</text>
+  <text x="60" y="190" font-size="11" fill="#475569">现象：容器秒退，日志报 too low</text>
+  <text x="60" y="212" font-size="11" fill="#475569">处理：sysctl -w vm.max_map_count=262144</text>
+  <text x="60" y="234" font-size="11" fill="#475569">写进 /etc/sysctl.conf 永久生效</text>
+
+  <rect x="420" y="130" width="355" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="446" cy="156" r="14" fill="#DC2626"/>
+  <text x="446" y="161" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+  <text x="470" y="161" font-size="13" font-weight="700" fill="#0F172A">安全默认开启后连不上</text>
+  <text x="440" y="190" font-size="11" fill="#475569">现象：8.0+ Kibana 裸连 ES 报 security 错</text>
+  <text x="440" y="212" font-size="11" fill="#475569">处理：重置 kibana_system 密码写入 .env</text>
+  <text x="440" y="234" font-size="11" fill="#475569">或用 enrollment token 加入</text>
+
+  <rect x="800" y="130" width="360" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="826" cy="156" r="14" fill="#DC2626"/>
+  <text x="826" y="161" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+  <text x="850" y="161" font-size="13" font-weight="700" fill="#0F172A">全栈版本混用</text>
+  <text x="820" y="190" font-size="11" fill="#475569">现象：ES 9 配 Kibana 8 直接报错</text>
+  <text x="820" y="212" font-size="11" fill="#475569">处理：.env 里 ELK_VERSION 统一锁定</text>
+  <text x="820" y="234" font-size="11" fill="#475569">不用 latest 这种浮动 tag</text>
+
+  <rect x="40" y="264" width="355" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="66" cy="290" r="14" fill="#F59E0B"/>
+  <text x="66" y="295" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+  <text x="90" y="295" font-size="13" font-weight="700" fill="#0F172A">单节点还设 1 副本</text>
+  <text x="60" y="324" font-size="11" fill="#475569">现象：集群永远 yellow</text>
+  <text x="60" y="346" font-size="11" fill="#475569">处理：number_of_replicas 设为 0</text>
+  <text x="60" y="368" font-size="11" fill="#475569">或加节点，yellow 也能用但看着膈应</text>
+
+  <rect x="420" y="264" width="355" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="446" cy="290" r="14" fill="#DC2626"/>
+  <text x="446" y="295" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">5</text>
+  <text x="470" y="295" font-size="13" font-weight="700" fill="#0F172A">9200/5601 裸奔公网</text>
+  <text x="440" y="324" font-size="11" fill="#475569">现象：勒索事件、数据被清空</text>
+  <text x="440" y="346" font-size="11" fill="#475569">处理：绑 127.0.0.1 或前置 Nginx 认证</text>
+  <text x="440" y="368" font-size="11" fill="#475569">改掉 elastic:changeme 默认密码</text>
+
+  <!-- 运行期 5 个 -->
+  <text x="40" y="424" font-size="14" font-weight="700" fill="#475569">运行期</text>
+
+  <rect x="40" y="438" width="355" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="66" cy="464" r="14" fill="#F59E0B"/>
+  <text x="66" y="469" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">6</text>
+  <text x="90" y="469" font-size="13" font-weight="700" fill="#0F172A">分片过多</text>
+  <text x="60" y="498" font-size="11" fill="#475569">现象：几千小分片，master 累、查询慢</text>
+  <text x="60" y="520" font-size="11" fill="#475569">处理：按 20–50GB/分片规划</text>
+  <text x="60" y="542" font-size="11" fill="#475569">小索引可 forcemerge / shrink</text>
+
+  <rect x="420" y="438" width="355" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="446" cy="464" r="14" fill="#F59E0B"/>
+  <text x="446" y="469" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">7</text>
+  <text x="470" y="469" font-size="13" font-weight="700" fill="#0F172A">heap 超过 31GB</text>
+  <text x="440" y="498" font-size="11" fill="#475569">现象：内存给越多反而越慢</text>
+  <text x="440" y="520" font-size="11" fill="#475569">处理：heap ≤ 31GB 保住压缩指针</text>
+  <text x="440" y="542" font-size="11" fill="#475569">Xms=Xmx，不超过内存一半</text>
+
+  <rect x="800" y="438" width="360" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="826" cy="464" r="14" fill="#F59E0B"/>
+  <text x="826" y="469" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">8</text>
+  <text x="850" y="469" font-size="13" font-weight="700" fill="#0F172A">latest 镜像自动升级</text>
+  <text x="820" y="498" font-size="11" fill="#475569">现象：某天 grok 行为变了却没人知道</text>
+  <text x="820" y="520" font-size="11" fill="#475569">处理：生产固定版本 tag</text>
+  <text x="820" y="542" font-size="11" fill="#475569">升级前读 breaking changes</text>
+
+  <rect x="40" y="572" width="355" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="66" cy="598" r="14" fill="#DC2626"/>
+  <text x="66" y="603" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">9</text>
+  <text x="90" y="603" font-size="13" font-weight="700" fill="#0F172A">磁盘 flood 水位线只读</text>
+  <text x="60" y="632" font-size="11" fill="#475569">现象：日志写不进去，索引变 read-only</text>
+  <text x="60" y="654" font-size="11" fill="#475569">处理：95% flood，提前配 ILM 自动删</text>
+  <text x="60" y="676" font-size="11" fill="#475569">85%/90% 水位线先做迁移告警</text>
+
+  <rect x="420" y="572" width="355" height="118" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="446" cy="598" r="14" fill="#F59E0B"/>
+  <text x="446" y="603" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">10</text>
+  <text x="470" y="603" font-size="13" font-weight="700" fill="#0F172A">grok 解析失败不察觉</text>
+  <text x="440" y="632" font-size="11" fill="#475569">现象：字段全空，面板无数据</text>
+  <text x="440" y="654" font-size="11" fill="#475569">处理：开 rubydebug 比对原始 message</text>
+  <text x="440" y="676" font-size="11" fill="#475569">查 _grokparsefailure 标签</text>
+
+  <!-- 底部 -->
+  <rect x="800" y="572" width="360" height="126" rx="12" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="820" y="598" font-size="14" font-weight="700" fill="#991B1B">一句话</text>
+  <text x="820" y="622" font-size="12" fill="#B91C1C">ELK 门槛不在「装得上」，而在</text>
+  <text x="820" y="642" font-size="12" fill="#B91C1C">「养得起」：版本、分片、生命</text>
+  <text x="820" y="662" font-size="12" fill="#B91C1C">周期想明白，其余查表可解。</text>
+  <text x="820" y="682" font-size="12" fill="#B91C1C">少撞墙，多查表。</text>
+
+  <text x="40" y="726" font-size="11" fill="#94A3B8">ELK 高频坑与排障 · 详细处理见正文第九、十一节 · 整理于 2026-11</text>
+</svg>

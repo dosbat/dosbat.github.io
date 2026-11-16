@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="700" fill="#F8FAFC"/>
+  <text x="40" y="48" font-size="27" font-weight="700" fill="#0F172A">ELK Stack：一条日志的完整旅程</text>
+  <text x="40" y="78" font-size="14" fill="#64748B">采集 → 加工 → 存储检索 → 可视化，四层流水线与对应组件</text>
+
+  <!-- 数据来源 -->
+  <text x="40" y="116" font-size="13" font-weight="700" fill="#475569">① 数据来源</text>
+  <rect x="40" y="130" width="200" height="50" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="140" y="161" font-size="13" fill="#0F172A" text-anchor="middle">应用日志 / Docker</text>
+  <rect x="252" y="130" width="200" height="50" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="352" y="161" font-size="13" fill="#0F172A" text-anchor="middle">主机 / 系统指标</text>
+  <rect x="464" y="130" width="200" height="50" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="564" y="161" font-size="13" fill="#0F172A" text-anchor="middle">网络设备 syslog</text>
+  <rect x="676" y="130" width="200" height="50" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="776" y="161" font-size="13" fill="#0F172A" text-anchor="middle">Windows 事件日志</text>
+
+  <!-- 箭头到采集层 -->
+  <path d="M140,180 L140,214 L340,214 L340,238" stroke="#2563EB" stroke-width="2.5" fill="none"/>
+  <path d="M352,180 L352,214" stroke="#2563EB" stroke-width="2.5" fill="none"/>
+  <path d="M564,180 L564,214" stroke="#2563EB" stroke-width="2.5" fill="none"/>
+  <path d="M776,180 L776,214 L340,214" stroke="#2563EB" stroke-width="2.5" fill="none"/>
+  <path d="M338,234 l-4,8 l8,0 z" fill="#2563EB"/>
+
+  <!-- 采集层 -->
+  <rect x="40" y="242" width="520" height="86" rx="12" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5"/>
+  <text x="300" y="272" font-size="16" font-weight="700" fill="#1E40AF" text-anchor="middle">② 采集层（端侧 Agent）</text>
+  <rect x="66" y="284" width="215" height="32" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2"/>
+  <text x="173" y="306" font-size="13" fill="#1E40AF" text-anchor="middle">Filebeat（轻量日志）</text>
+  <rect x="300" y="284" width="238" height="32" rx="8" fill="#FFFFFF" stroke="#93C5FD" stroke-width="2"/>
+  <text x="419" y="306" font-size="13" fill="#1E40AF" text-anchor="middle">Elastic Agent（日志+指标+安全）</text>
+
+  <!-- 箭头到加工层 -->
+  <path d="M300,328 L300,362" stroke="#7C3AED" stroke-width="2.5" fill="none"/>
+  <path d="M298,358 l-4,8 l8,0 z" fill="#7C3AED"/>
+  <text x="315" y="352" font-size="11" fill="#7C3AED">可选</text>
+
+  <!-- 加工层 -->
+  <rect x="40" y="372" width="520" height="86" rx="12" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2.5"/>
+  <text x="300" y="402" font-size="16" font-weight="700" fill="#5B21B6" text-anchor="middle">③ 加工层 Logstash（input → filter → output）</text>
+  <text x="300" y="430" font-size="12" fill="#6D28D9" text-anchor="middle">grok 解析 · date 时间校正 · mutate 字段处理 · 多源汇聚</text>
+
+  <!-- 右侧 ES 存储 -->
+  <path d="M560,285 L700,285" stroke="#475569" stroke-width="2.5" fill="none"/>
+  <path d="M560,415 L700,415" stroke="#475569" stroke-width="2.5" fill="none"/>
+  <rect x="704" y="250" width="456" height="200" rx="14" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="932" y="284" font-size="18" font-weight="700" fill="#065F46" text-anchor="middle">④ Elasticsearch 集群</text>
+  <text x="932" y="310" font-size="12" fill="#047857" text-anchor="middle">倒排索引 · 分布式存储 · 秒级检索</text>
+  <rect x="726" y="326" width="130" height="46" rx="8" fill="#FFFFFF" stroke="#6EE7B7" stroke-width="2"/>
+  <text x="791" y="354" font-size="12" fill="#065F46" text-anchor="middle">Master 节点</text>
+  <rect x="868" y="326" width="130" height="46" rx="8" fill="#FFFFFF" stroke="#6EE7B7" stroke-width="2"/>
+  <text x="933" y="354" font-size="12" fill="#065F46" text-anchor="middle">Data 节点</text>
+  <rect x="1010" y="326" width="130" height="46" rx="8" fill="#FFFFFF" stroke="#6EE7B7" stroke-width="2"/>
+  <text x="1075" y="354" font-size="12" fill="#065F46" text-anchor="middle">分片 + 副本</text>
+  <text x="932" y="404" font-size="12" fill="#047857" text-anchor="middle">按天分索引 · ILM 热温冷删 · refresh 30s</text>
+  <text x="932" y="428" font-size="11" fill="#64748B" text-anchor="middle">单分片建议 20–50GB</text>
+
+  <!-- ES 到 Kibana -->
+  <path d="M932,450 L932,486" stroke="#0EA5E9" stroke-width="2.5" fill="none"/>
+  <path d="M930,482 l-4,8 l8,0 z" fill="#0EA5E9"/>
+
+  <!-- Kibana -->
+  <rect x="560" y="494" width="600" height="120" rx="14" fill="#F0F9FF" stroke="#0EA5E9" stroke-width="2.5"/>
+  <text x="860" y="524" font-size="18" font-weight="700" fill="#0369A1" text-anchor="middle">⑤ Kibana（可视化与管理）</text>
+  <rect x="586" y="540" width="128" height="52" rx="8" fill="#FFFFFF" stroke="#7DD3FC" stroke-width="2"/>
+  <text x="650" y="562" font-size="12" fill="#0369A1" text-anchor="middle">Discover</text>
+  <text x="650" y="580" font-size="10" fill="#64748B" text-anchor="middle">KQL / ES|QL</text>
+  <rect x="726" y="540" width="128" height="52" rx="8" fill="#FFFFFF" stroke="#7DD3FC" stroke-width="2"/>
+  <text x="790" y="562" font-size="12" fill="#0369A1" text-anchor="middle">Dashboard</text>
+  <text x="790" y="580" font-size="10" fill="#64748B" text-anchor="middle">Lens 面板</text>
+  <rect x="866" y="540" width="128" height="52" rx="8" fill="#FFFFFF" stroke="#7DD3FC" stroke-width="2"/>
+  <text x="930" y="562" font-size="12" fill="#0369A1" text-anchor="middle">Alerting</text>
+  <text x="930" y="580" font-size="10" fill="#64748B" text-anchor="middle">查询告警</text>
+  <rect x="1006" y="540" width="128" height="52" rx="8" fill="#FFFFFF" stroke="#7DD3FC" stroke-width="2"/>
+  <text x="1070" y="562" font-size="12" fill="#0369A1" text-anchor="middle">Fleet / 监控</text>
+  <text x="1070" y="580" font-size="10" fill="#64748B" text-anchor="middle">Agent 管理</text>
+
+  <!-- 底部说明 -->
+  <rect x="40" y="494" width="500" height="120" rx="14" fill="#FFF7ED" stroke="#F59E0B" stroke-width="2"/>
+  <text x="60" y="522" font-size="14" font-weight="700" fill="#9A3412">铁律：全栈同版本</text>
+  <text x="60" y="548" font-size="12" fill="#C2410C">ES / Kibana / Logstash / Agent 必须一致，如 9.5.6</text>
+  <text x="60" y="572" font-size="12" fill="#C2410C">部署顺序：ES → Kibana → Logstash → 采集端</text>
+  <text x="60" y="596" font-size="12" fill="#C2410C">前置：vm.max_map_count=262144</text>
+
+  <text x="40" y="672" font-size="11" fill="#94A3B8">ELK Stack 数据流 · 版本现状截至 2026-11</text>
+</svg>
