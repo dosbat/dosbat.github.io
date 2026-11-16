@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="620" fill="#F8FAFC"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#0F172A">Vector 配置三段式：sources → transforms → sinks</text>
+  <text x="40" y="74" font-size="14" fill="#64748B">每个组件靠 inputs 连成有向无环图；一个 source 可喂多个 transform，一个 sink 可接多个输入</text>
+
+  <!-- sources -->
+  <rect x="40" y="102" width="330" height="370" rx="14" fill="#FFFFFF" stroke="#2563EB" stroke-width="2.5"/>
+  <rect x="40" y="102" width="330" height="48" rx="14" fill="#DBEAFE"/>
+  <text x="60" y="134" font-size="16" font-weight="700" fill="#1E40AF">① sources（从哪读）</text>
+  <text x="60" y="180" font-size="13" fill="#0F172A">file</text>
+  <text x="300" y="180" font-size="12" fill="#64748B" text-anchor="end">日志文件</text>
+  <text x="60" y="216" font-size="13" fill="#0F172A">docker_logs</text>
+  <text x="300" y="216" font-size="12" fill="#64748B" text-anchor="end">容器日志</text>
+  <text x="60" y="252" font-size="13" fill="#0F172A">journald</text>
+  <text x="300" y="252" font-size="12" fill="#64748B" text-anchor="end">systemd journal</text>
+  <text x="60" y="288" font-size="13" fill="#0F172A">nginx_metrics</text>
+  <text x="300" y="288" font-size="12" fill="#64748B" text-anchor="end">stub_status</text>
+  <text x="60" y="324" font-size="13" fill="#0F172A">host_metrics</text>
+  <text x="300" y="324" font-size="12" fill="#64748B" text-anchor="end">CPU/内存/磁盘</text>
+  <text x="60" y="360" font-size="13" fill="#0F172A">http_server</text>
+  <text x="300" y="360" font-size="12" fill="#64748B" text-anchor="end">收 JSON</text>
+  <text x="60" y="396" font-size="13" fill="#0F172A">opentelemetry</text>
+  <text x="300" y="396" font-size="12" fill="#64748B" text-anchor="end">OTLP 三类信号</text>
+  <text x="60" y="444" font-size="11" fill="#94A3B8">按需选，不必全开</text>
+
+  <!-- transforms -->
+  <rect x="435" y="102" width="330" height="370" rx="14" fill="#FFFFFF" stroke="#7C3AED" stroke-width="2.5"/>
+  <rect x="435" y="102" width="330" height="48" rx="14" fill="#F5F3FF"/>
+  <text x="455" y="134" font-size="16" font-weight="700" fill="#5B21B6">② transforms（怎么洗）</text>
+  <text x="455" y="180" font-size="13" fill="#0F172A">type: remap</text>
+  <text x="455" y="212" font-size="12" fill="#475569">用 VRL 写处理脚本：</text>
+  <text x="455" y="244" font-size="12" fill="#475569">· parse_json / parse_nginx_log</text>
+  <text x="455" y="272" font-size="12" fill="#475569">· 加字段 / 改字段</text>
+  <text x="455" y="300" font-size="12" fill="#475569">· redact 脱敏邮箱、手机号</text>
+  <text x="455" y="328" font-size="12" fill="#475569">· del(.label) 删无用列</text>
+  <text x="455" y="356" font-size="12" fill="#475569">· parse_timestamp 统一时间</text>
+  <text x="455" y="396" font-size="13" font-weight="700" fill="#0F172A">type: filter / sample / route</text>
+  <text x="455" y="424" font-size="12" fill="#475569">过滤噪音、采样、分流</text>
+  <text x="455" y="452" font-size="11" fill="#94A3B8">可串联多个 transform</text>
+
+  <!-- sinks -->
+  <rect x="830" y="102" width="330" height="370" rx="14" fill="#FFFFFF" stroke="#059669" stroke-width="2.5"/>
+  <rect x="830" y="102" width="330" height="48" rx="14" fill="#D1FAE5"/>
+  <text x="850" y="134" font-size="16" font-weight="700" fill="#065F46">③ sinks（往哪写）</text>
+  <text x="850" y="180" font-size="13" fill="#0F172A">http</text>
+  <text x="1130" y="180" font-size="12" fill="#059669" text-anchor="end">→ O2 /_json（日志）</text>
+  <text x="850" y="216" font-size="13" fill="#0F172A">prometheus_remote_write</text>
+  <text x="1130" y="252" font-size="12" fill="#059669" text-anchor="end">→ O2 指标接口</text>
+  <text x="850" y="288" font-size="13" fill="#0F172A">elasticsearch</text>
+  <text x="1130" y="288" font-size="12" fill="#64748B" text-anchor="end">→ ELK</text>
+  <text x="850" y="324" font-size="13" fill="#0F172A">kafka</text>
+  <text x="1130" y="324" font-size="12" fill="#64748B" text-anchor="end">→ 消息队列</text>
+  <text x="850" y="360" font-size="13" fill="#0F172A">s3</text>
+  <text x="1130" y="360" font-size="12" fill="#64748B" text-anchor="end">→ 对象存储归档</text>
+  <text x="850" y="396" font-size="13" fill="#0F172A">file</text>
+  <text x="1130" y="396" font-size="12" fill="#64748B" text-anchor="end">→ 本地文件</text>
+  <text x="850" y="444" font-size="11" fill="#94A3B8">endpoint 须带 http(s):// 协议</text>
+
+  <!-- 连接箭头 -->
+  <path d="M375,288 L430,288" stroke="#475569" stroke-width="3"/>
+  <path d="M428,283 l7,5 l-7,5 z" fill="#475569"/>
+  <path d="M770,288 L825,288" stroke="#475569" stroke-width="3"/>
+  <path d="M823,283 l7,5 l-7,5 z" fill="#475569"/>
+
+  <!-- 底部提示 -->
+  <rect x="40" y="498" width="1120" height="98" rx="10" fill="#FFFBEB" stroke="#FDE68A"/>
+  <text x="60" y="530" font-size="15" font-weight="700" fill="#92400E">动手顺序</text>
+  <text x="60" y="558" font-size="13" fill="#78350F">1. 写配置 → 2. vector validate --no-environment 校验（提前抓 endpoint / 模板 / auth 错误）→ 3. 启动 → 4. 看日志排障</text>
+  <text x="60" y="582" font-size="13" fill="#78350F">密码用 SECRET[...] 从 secrets 读，别写 ${PASSWORD}：Vector 0.57+ 默认不替换环境变量（详见版本坑图）。</text>
+</svg>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="660" fill="#F8FAFC"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#0F172A">选型对比：为什么是 OpenObserve + Vector</text>
+  <text x="40" y="74" font-size="14" fill="#64748B">四套方案的定位差异；O2+Vector 的价值是「一套顶三套」，但全文检索仍不如 ELK</text>
+
+  <!-- 表头 -->
+  <rect x="40" y="100" width="200" height="44" rx="8" fill="#1E293B"/>
+  <text x="140" y="129" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">方案</text>
+  <rect x="244" y="100" width="230" height="44" rx="8" fill="#1E293B"/>
+  <text x="359" y="129" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">覆盖的信号</text>
+  <rect x="478" y="100" width="230" height="44" rx="8" fill="#1E293B"/>
+  <text x="593" y="129" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">资源 / 存储</text>
+  <rect x="712" y="100" width="230" height="44" rx="8" fill="#1E293B"/>
+  <text x="827" y="129" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">典型痛点</text>
+  <rect x="946" y="100" width="214" height="44" rx="8" fill="#1E293B"/>
+  <text x="1053" y="129" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">适合场景</text>
+
+  <!-- ELK -->
+  <rect x="40" y="150" width="200" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="140" y="188" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">ELK</text>
+  <text x="140" y="212" font-size="11" fill="#64748B" text-anchor="middle">Elasticsearch+Logstash+Kibana</text>
+  <rect x="244" y="150" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="359" y="192" font-size="13" fill="#0F172A" text-anchor="middle">仅日志（强全文检索）</text>
+  <rect x="478" y="150" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="593" y="182" font-size="12" fill="#DC2626" text-anchor="middle">最重：16G+ 内存起步</text>
+  <text x="593" y="206" font-size="12" fill="#DC2626" text-anchor="middle">索引膨胀 1.5~4 倍</text>
+  <rect x="712" y="150" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="827" y="192" font-size="12" fill="#475569" text-anchor="middle">笨重、GC 卡顿、存储贵</text>
+  <rect x="946" y="150" width="214" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="1053" y="192" font-size="12" fill="#475569" text-anchor="middle">大厂安全审计 / 海量检索</text>
+
+  <!-- Loki+Prom -->
+  <rect x="40" y="244" width="200" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="140" y="282" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">Loki + Prometheus</text>
+  <text x="140" y="306" font-size="11" fill="#64748B" text-anchor="middle">+ Tempo（链路）</text>
+  <rect x="244" y="244" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="359" y="282" font-size="13" fill="#0F172A" text-anchor="middle">日志+指标+链路</text>
+  <text x="359" y="306" font-size="11" fill="#64748B" text-anchor="middle">但要三套系统</text>
+  <rect x="478" y="244" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="593" y="282" font-size="12" fill="#F59E0B" text-anchor="middle">中等：2G+ 起步</text>
+  <text x="593" y="306" font-size="12" fill="#475569" text-anchor="middle">长期存储贵</text>
+  <rect x="712" y="244" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="827" y="276" font-size="12" fill="#475569" text-anchor="middle">三套查询语言：</text>
+  <text x="827" y="300" font-size="12" fill="#475569" text-anchor="middle">LogQL / PromQL / TraceQL</text>
+  <rect x="946" y="244" width="214" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="1053" y="282" font-size="12" fill="#475569" text-anchor="middle">K8s 指标、要海量面板</text>
+
+  <!-- Netdata -->
+  <rect x="40" y="338" width="200" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="140" y="376" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">Netdata</text>
+  <rect x="244" y="338" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="359" y="380" font-size="13" fill="#0F172A" text-anchor="middle">单机实时硬件指标</text>
+  <rect x="478" y="338" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="593" y="380" font-size="12" fill="#059669" text-anchor="middle">最轻：几十 M 内存</text>
+  <rect x="712" y="338" width="230" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="827" y="376" font-size="12" fill="#475569" text-anchor="middle">不存业务日志、无审计</text>
+  <text x="827" y="400" font-size="12" fill="#475569" text-anchor="middle">机器挂了数据就没</text>
+  <rect x="946" y="338" width="214" height="86" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="1053" y="380" font-size="12" fill="#475569" text-anchor="middle">临时巡检、边缘机器</text>
+
+  <!-- O2+Vector 高亮 -->
+  <rect x="40" y="432" width="200" height="96" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="140" y="474" font-size="15" font-weight="700" fill="#065F46" text-anchor="middle">O2 + Vector</text>
+  <text x="140" y="498" font-size="11" fill="#047857" text-anchor="middle">本文方案</text>
+  <rect x="244" y="432" width="230" height="96" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="359" y="470" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">日志+指标+追踪</text>
+  <text x="359" y="494" font-size="11" fill="#047857" text-anchor="middle">SQL + PromQL 两种语言</text>
+  <rect x="478" y="432" width="230" height="96" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="593" y="470" font-size="12" font-weight="700" fill="#065F46" text-anchor="middle">最省：512M 可启动</text>
+  <text x="593" y="494" font-size="12" fill="#047857" text-anchor="middle">Parquet 压缩约 20 倍起</text>
+  <rect x="712" y="432" width="230" height="96" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="827" y="470" font-size="12" fill="#065F46" text-anchor="middle">模糊检索不如 ELK</text>
+  <text x="827" y="494" font-size="12" fill="#065F46" text-anchor="middle">面板模板不如 Grafana</text>
+  <rect x="946" y="432" width="214" height="96" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <text x="1053" y="470" font-size="12" font-weight="700" fill="#065F46" text-anchor="middle">中小团队 / 微服务</text>
+  <text x="1053" y="494" font-size="12" fill="#047857" text-anchor="middle">省机器、省运维</text>
+
+  <!-- 结论条 -->
+  <rect x="40" y="548" width="1120" height="86" rx="10" fill="#FFFBEB" stroke="#FDE68A"/>
+  <text x="60" y="580" font-size="15" font-weight="700" fill="#92400E">一句话结论</text>
+  <text x="60" y="610" font-size="13" fill="#78350F">要全文检索/安全审计 → ELK；要 K8s 指标大盘 → Prometheus+Grafana；看单机负载 → Netdata。</text>
+  <text x="60" y="630" font-size="13" fill="#78350F">想用一套省钱省心地搞定日志+指标+链路排障 → O2 + Vector（人力少、预算有限的团队首选）。</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="720" fill="#F8FAFC"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#0F172A">四个必踩的版本坑（旧教程不会告诉你）</text>
+  <text x="40" y="74" font-size="14" fill="#64748B">都是 2026 年版本变化导致的「照着旧文档做就失败」——记牢这四个，基本一次跑通</text>
+
+  <!-- 坑1 -->
+  <rect x="40" y="100" width="550" height="240" rx="14" fill="#FFFFFF" stroke="#DC2626" stroke-width="2.5"/>
+  <rect x="40" y="100" width="550" height="48" rx="14" fill="#FEE2E2"/>
+  <text x="60" y="132" font-size="16" font-weight="700" fill="#991B1B">坑 1 · Vector 0.57+ 不替换 ${PASSWORD}，一路 401</text>
+  <text x="60" y="176" font-size="13" fill="#DC2626">现象：密码明明对，curl 能登录，Vector 每个请求却 401</text>
+  <text x="60" y="204" font-size="13" fill="#475569">原因：0.57 起环境变量插值默认关闭，把 ${O2_PASSWORD}</text>
+  <text x="60" y="226" font-size="13" fill="#475569">当成字符串原样发出去了</text>
+  <rect x="60" y="244" width="510" height="80" rx="8" fill="#F1F5F9"/>
+  <text x="76" y="268" font-size="12" font-weight="700" fill="#065F46">解法：改用 secrets 后端</text>
+  <text x="76" y="290" font-size="12" fill="#0F172A">secret: o2: {type: directory, path: /run/secrets}</text>
+  <text x="76" y="311" font-size="12" fill="#0F172A">password: SECRET[o2.o2_password]</text>
+
+  <!-- 坑2 -->
+  <rect x="610" y="100" width="550" height="240" rx="14" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2.5"/>
+  <rect x="610" y="100" width="550" height="48" rx="14" fill="#FEF3C7"/>
+  <text x="630" y="132" font-size="16" font-weight="700" fill="#92400E">坑 2 · O2 密码太弱，容器崩溃重启</text>
+  <text x="630" y="176" font-size="13" fill="#D97706">现象：容器反复 Restart，起不来</text>
+  <text x="630" y="204" font-size="13" fill="#475569">原因：密码须 8–128 位，且同时含小写、大写、</text>
+  <text x="630" y="226" font-size="13" fill="#475569">数字、特殊字符四类</text>
+  <rect x="630" y="244" width="510" height="80" rx="8" fill="#F1F5F9"/>
+  <text x="646" y="268" font-size="12" font-weight="700" fill="#065F46">解法：生成时带符号前缀</text>
+  <text x="646" y="290" font-size="12" fill="#0F172A">printf '%s' "Aa9-$(openssl rand -hex 12)"</text>
+  <text x="646" y="311" font-size="12" fill="#0F172A">&gt; o2_password</text>
+
+  <!-- 坑3 -->
+  <rect x="40" y="358" width="550" height="200" rx="14" fill="#FFFFFF" stroke="#7C3AED" stroke-width="2.5"/>
+  <rect x="40" y="358" width="550" height="48" rx="14" fill="#F5F3FF"/>
+  <text x="60" y="390" font-size="16" font-weight="700" fill="#5B21B6">坑 3 · remote write 健康检查报 405</text>
+  <text x="60" y="434" font-size="13" fill="#7C3AED">现象：Vector 启动报 405 Method Not Allowed</text>
+  <text x="60" y="462" font-size="13" fill="#475569">原因：O2 的 remote write 接口只收 POST，</text>
+  <text x="60" y="484" font-size="13" fill="#475569">Vector 启动时的健康检查 GET 被拒</text>
+  <rect x="60" y="502" width="510" height="42" rx="8" fill="#F1F5F9"/>
+  <text x="76" y="528" font-size="12" fill="#0F172A">解法：healthcheck: {enabled: false}（实际写入 200 正常）</text>
+
+  <!-- 坑4 -->
+  <rect x="610" y="358" width="550" height="200" rx="14" fill="#FFFFFF" stroke="#2563EB" stroke-width="2.5"/>
+  <rect x="610" y="358" width="550" height="48" rx="14" fill="#DBEAFE"/>
+  <text x="630" y="390" font-size="16" font-weight="700" fill="#1E40AF">坑 4 · 官方入门文档默认装的是企业版</text>
+  <text x="630" y="434" font-size="13" fill="#2563EB">现象：复制 docker run，装的却是企业版</text>
+  <text x="630" y="462" font-size="13" fill="#475569">原因：文档用 o2cr.ai/.../openobserve-enterprise，</text>
+  <text x="630" y="484" font-size="13" fill="#475569">商业许可，超 50GB/天要付费</text>
+  <rect x="630" y="502" width="510" height="42" rx="8" fill="#F1F5F9"/>
+  <text x="646" y="528" font-size="12" fill="#0F172A">解法：开源版用 public.ecr.aws/zinclabs/openobserve</text>
+
+  <!-- 附加小坑条 -->
+  <rect x="40" y="578" width="1120" height="118" rx="10" fill="#FFFBEB" stroke="#FDE68A"/>
+  <text x="60" y="608" font-size="15" font-weight="700" fill="#92400E">附加小坑</text>
+  <text x="60" y="636" font-size="13" fill="#78350F">· Vector 0.57+ 带模板字段不许无字面前缀：写 topic: "logs-{{ x }}"，别写 "{{ x }}"</text>
+  <text x="60" y="662" font-size="13" fill="#78350F">· O2 镜像是 distroless 无 shell：别在容器内用 curl 做 healthcheck</text>
+  <text x="60" y="686" font-size="13" fill="#78350F">· 缓存按宿主机内存 25% 算：共享机器必须给容器设 mem_limit，否则吃满内存</text>
+</svg>

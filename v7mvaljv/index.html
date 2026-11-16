@@ -1,0 +1,598 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑 | DOS/BAT</title><meta name="author" content="0x01"><meta name="copyright" content="0x01"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="用 OpenObserve 1.0 搭一套日志+指标统一平台，用 Vector 采集、解析、路由。覆盖选型对比、Docker Compose 部署、VRL 处理和 http&#x2F;remote_write 双链路，并说清 2026 年 AGPL&#x2F;企业版差异与四个必踩的版本坑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑">
+<meta property="og:url" content="https://dosbat.com/v7mvaljv/index.html">
+<meta property="og:site_name" content="DOS&#x2F;BAT">
+<meta property="og:description" content="用 OpenObserve 1.0 搭一套日志+指标统一平台，用 Vector 采集、解析、路由。覆盖选型对比、Docker Compose 部署、VRL 处理和 http&#x2F;remote_write 双链路，并说清 2026 年 AGPL&#x2F;企业版差异与四个必踩的版本坑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dosbat.com/images/o2v-architecture.png">
+<meta property="article:published_time" content="2026-11-16T14:10:00.000Z">
+<meta property="article:modified_time" content="2026-11-16T14:03:23.100Z">
+<meta property="article:author" content="0x01">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="运维">
+<meta property="article:tag" content="OpenObserve">
+<meta property="article:tag" content="Vector">
+<meta property="article:tag" content="日志收集">
+<meta property="article:tag" content="可观测性">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dosbat.com/images/o2v-architecture.png"><link rel="shortcut icon" href="https://s1.ax1x.com/2023/09/09/pP62Apj.png"><link rel="canonical" href="https://dosbat.com/v7mvaljv/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 0x01","link":"链接: ","source":"来源: DOS/BAT","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-16 22:03:23'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><span id="fps"></span><link rel="stylesheet" href="/css/readPercent.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">122</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">117</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-globe"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/"><i class="fa-fw fas fa-bolt"></i><span> 弱电</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-warehouse"></i><span> 收藏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-server"></i><span> 网站</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/linux/hot.html"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-address-card"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%B5%84%E6%96%99%E6%B1%87%E7%BC%96/"><i class="fa-fw fas fa-soap"></i><span> 资料汇编</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/o2v-architecture.png')"><nav id="nav"><span id="blog-info"><a href="/" title="DOS/BAT"><span class="site-name">DOS/BAT</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-globe"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/"><i class="fa-fw fas fa-bolt"></i><span> 弱电</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-warehouse"></i><span> 收藏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-server"></i><span> 网站</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/linux/hot.html"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-address-card"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%B5%84%E6%96%99%E6%B1%87%E7%BC%96/"><i class="fa-fw fas fa-soap"></i><span> 资料汇编</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-16T14:10:00.000Z" title="发表于 2026-11-16 22:10:00">2026-11-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-16T14:03:23.100Z" title="更新于 2026-11-16 22:03:23">2026-11-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%8D%E5%8A%A1%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/">服务与中间件</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%8D%E5%8A%A1%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/%E7%9B%91%E6%8E%A7%E5%91%8A%E8%AD%A6/">监控告警</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>21分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>搜索「OpenObserve 教程」，很多还在教你 <code>docker run openobserve/openobserve:latest</code>，密码随便填一个，Vector 配置里写 <code>password: $&#123;PASSWORD&#125;</code>。但如果你在 2026 年照着做，会连撞三堵墙：<strong>官方入门文档默认拉的是企业版镜像；密码太弱容器直接崩溃重启；Vector 0.57 起不再替换 <code>$&#123;PASSWORD&#125;</code>，密码明明对却一路 401。</strong></p>
+<p>这篇先把版本和许可讲清楚，再给一套能直接跑起来的 Compose + Vector 配置，最后把四个版本坑、SQL/PromQL 查询和 SLO 告警串起来。命令都验证过，每一步标明适用场景。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>零、先搞清楚：OpenObserve 是什么，Vector 又负责什么</li>
+<li>一、版本与许可：2026 年必须知道的现状</li>
+<li>二、整体架构与数据流</li>
+<li>三、部署 OpenObserve（极速版 + 生产版）</li>
+<li>四、部署 Vector（三种角色与安装方式）</li>
+<li>五、Vector 配置三段式：sources / transforms / sinks</li>
+<li>六、日志链路：从 Docker 日志到 <code>_json</code> 接口</li>
+<li>七、指标链路：Prometheus remote write</li>
+<li>八、VRL 常用处理招式</li>
+<li>九、四个必踩的版本坑（重点）</li>
+<li>十、查询与告警：SQL、PromQL 与 SLO</li>
+<li>十一、排障对照表</li>
+<li>十二、一页速查与生产建议</li>
+</ul>
+<hr>
+<h2 id="零、先搞清楚：OpenObserve-是什么，Vector-又负责什么"><a href="#零、先搞清楚：OpenObserve-是什么，Vector-又负责什么" class="headerlink" title="零、先搞清楚：OpenObserve 是什么，Vector 又负责什么"></a>零、先搞清楚：OpenObserve 是什么，Vector 又负责什么</h2><p>很多人把这两个放一起会问：这不就是「ELK + Filebeat」或者「Loki + Promtail」的翻版吗？思路类似，但定位不太一样。</p>
+<p><strong>OpenObserve（简称 O2）</strong> 是一个用 Rust 写的<strong>可观测性后端</strong>，一个进程同时存日志、指标、链路追踪三类数据，底层用 Parquet 列式存储，可以放本地盘也可以放 S3 兼容对象存储。查询日志和追踪用 SQL，查指标用 PromQL 或 SQL。它主打的卖点是省——官方宣称存储成本是 Elasticsearch 的 1/140，无需建索引所以没有「索引税」。</p>
+<p><strong>Vector</strong> 是一个用 Rust 写的<strong>可观测性数据管道</strong>，负责「采集 → 处理 → 路由」。它不存数据，只做搬运和加工：从文件、Docker socket、syslog、Kafka 等读数据，用 VRL（Vector Remap Language）解析、过滤、脱敏、改字段，再写到 O2、Elasticsearch、S3、Kafka 等 60 多个下游。</p>
+<p>一句话分工：<strong>Vector 管「数据怎么来的、怎么洗」，OpenObserve 管「数据存哪、怎么查、怎么告警」。</strong> 为什么这对组合在中小团队里很香？因为它可以一套顶掉 ELK（日志）、Prometheus（指标）、Tempo（链路）三套系统，而且总内存占用常常不到 ELK 的一个零头。</p>
+<p><img src="/images/o2v-comparison.png" alt="选型对比：ELK、Loki+Prometheus 与 OpenObserve+Vector"></p>
+<h3 id="什么时候不适合这套"><a href="#什么时候不适合这套" class="headerlink" title="什么时候不适合这套"></a>什么时候<strong>不</strong>适合这套</h3><p>客观说清楚边界，避免踩坑：</p>
+<ul>
+<li><strong>超大规模全文检索</strong>：ELK 的分词和倒排索引在模糊检索、中文分词、安全审计上仍是王者，O2 这类列存+SQL 方案在大范围 <code>LIKE %xxx%</code> 上不占优。</li>
+<li><strong>要 Grafana 海量现成面板</strong>：虽然 O2 能导入 Grafana 面板，但社区模板数量仍不如 Grafana 生态。</li>
+<li><strong>极高基数的指标场景</strong>：Loki 基于标签索引，某些超高基数场景比列存方案更合适。</li>
+<li><strong>已有成熟 ELK 且稳定运行</strong>：迁移成本大于收益，没必要为了省存储折腾。</li>
+</ul>
+<p>对绝大多数中小企业、微服务、测试/生产环境——人力少、预算有限、想一套搞定排障——这套组合是当下性价比很高的选择。</p>
+<hr>
+<h2 id="一、版本与许可：2026-年必须知道的现状"><a href="#一、版本与许可：2026-年必须知道的现状" class="headerlink" title="一、版本与许可：2026 年必须知道的现状"></a>一、版本与许可：2026 年必须知道的现状</h2><p>这一节是<strong>动手前必读</strong>，因为搞错版本会直接导致「拉不到镜像」或「部署的是另一个许可的产品」。</p>
+<h3 id="1-1-OpenObserve-的时间线"><a href="#1-1-OpenObserve-的时间线" class="headerlink" title="1.1 OpenObserve 的时间线"></a>1.1 OpenObserve 的时间线</h3><ul>
+<li><strong>2023 年</strong>：项目启动，快速迭代到 0.x。</li>
+<li><strong>2026-09-11</strong>：发布 <strong>1.0.0</strong>，1.x 首个稳定版，距 0.92.2 累计 375 次提交。带来 SLO（含 burn-rate 告警）、组合告警、告警库、Terraform/OpenTofu 导出、合成监控全面开源。</li>
+<li><strong>2026-09-24</strong>：<strong>1.0.4</strong>（本文验证所用版本），修复 SLO 状态写入、告警 pending 期静默、PromQL 与 OTLP 序列身份问题。</li>
+</ul>
+<h3 id="1-2-AGPL-开源版-vs-企业版（最容易踩的坑）"><a href="#1-2-AGPL-开源版-vs-企业版（最容易踩的坑）" class="headerlink" title="1.2 AGPL 开源版 vs 企业版（最容易踩的坑）"></a>1.2 AGPL 开源版 vs 企业版（最容易踩的坑）</h3><p>O2 有两个发行版，许可不同：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>AGPL 开源版</th>
+<th>企业版</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>日志、指标、追踪、仪表盘</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>SLO 与 burn-rate 告警</td>
+<td>有（1.0 起）</td>
+<td>有</td>
+</tr>
+<tr>
+<td>组合告警、告警库</td>
+<td>有</td>
+<td>有</td>
+</tr>
+<tr>
+<td>SSO（OIDC/SAML/LDAP）、高级 RBAC</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr>
+<td>审计日志、跨集群联邦搜索</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr>
+<td>敏感数据脱敏、自动指标降采样</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr>
+<td>SRE agent、AI 助手、事件管理</td>
+<td>无</td>
+<td>有</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>关键坑</strong>：官方 Getting Started 文档里的 <code>docker run</code> 用的是 <code>o2cr.ai/openobserve/openobserve-enterprise:latest</code>——<strong>这是企业版</strong>，用商业许可，日摄入 50 GB 以内免费（约 1.5 TB/月，允许商用），超过要付费，一个自然月超 3 次还会锁定搜索。很多人复制命令后以为自己装的是开源版，其实完全不是一回事。</p>
+<p>要装 AGPL 开源版，镜像是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AGPL 开源版（推荐自托管个人/团队）</span></span><br><span class="line">public.ecr.aws/zinclabs/openobserve:v1.0.4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 企业版（官方入门文档默认，注意许可）</span></span><br><span class="line">o2cr.ai/openobserve/openobserve-enterprise:latest</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>版本和镜像可用性会变，以官方仓库 README 和 <code>docker pull</code> 实测为准。</p>
+</blockquote>
+<h3 id="1-3-Vector-版本现状"><a href="#1-3-Vector-版本现状" class="headerlink" title="1.3 Vector 版本现状"></a>1.3 Vector 版本现状</h3><p>Vector 由 Datadog 维护，截至本文约 <strong>0.61.0</strong>，0.58.0（2026-08-26）是被很多教程引用的版本。两个必须知道的变化：</p>
+<ul>
+<li><strong>0.57 起</strong>：配置文件里的环境变量插值 <code>$&#123;VAR&#125;</code> <strong>默认关闭</strong>，除非加 <code>--dangerously-allow-env-var-interpolation</code> 或改用 secrets 后端（详见第九节）。</li>
+<li><strong>0.58 起</strong>：sink 的 <code>endpoint</code> 必须是带协议的绝对 URL，<code>localhost:8080</code> 这种会被自动补成 <code>https://</code>；空端点、无主机端点在配置加载阶段就报错。</li>
+</ul>
+<hr>
+<h2 id="二、整体架构与数据流"><a href="#二、整体架构与数据流" class="headerlink" title="二、整体架构与数据流"></a>二、整体架构与数据流</h2><p>先看一张全局图，后面所有配置都对应这里的某一段。</p>
+<p><img src="/images/o2v-architecture.png" alt="OpenObserve + Vector 整体架构与数据流"></p>
+<p>数据流可以浓缩成四步：</p>
+<ol>
+<li><strong>采集（source）</strong>：Vector 从文件 / Docker socket / nginx stub_status 读到原始事件。</li>
+<li><strong>处理（transform）</strong>：VRL 解析 nginx 日志、删掉无用字段、脱敏。</li>
+<li><strong>路由（sink）</strong>：日志走 <code>http</code> sink 打到 O2 的 <code>_json</code> 接口；指标走 <code>prometheus_remote_write</code> 打到 remote write 接口。</li>
+<li><strong>存储与查询</strong>：O2 写成 Parquet，UI / SQL / PromQL / 告警从同一份数据读。</li>
+</ol>
+<p>同理，链路追踪（traces）可以直接 OTLP 推给 O2 的 5081 端口，或用 OpenTelemetry Collector 中转——这篇聚焦日志和指标，traces 接入思路类似。</p>
+<hr>
+<h2 id="三、部署-OpenObserve（极速版-生产版）"><a href="#三、部署-OpenObserve（极速版-生产版）" class="headerlink" title="三、部署 OpenObserve（极速版 + 生产版）"></a>三、部署 OpenObserve（极速版 + 生产版）</h2><h3 id="3-1-极速体验：一条命令"><a href="#3-1-极速体验：一条命令" class="headerlink" title="3.1 极速体验：一条命令"></a>3.1 极速体验：一条命令</h3><p>先跑起来看看长什么样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/openobserve/data</span><br><span class="line">docker run -d \</span><br><span class="line">  --name openobserve \</span><br><span class="line">  --restart unless-stopped \</span><br><span class="line">  -p 5080:5080 \</span><br><span class="line">  -v ~/openobserve/data:/data \</span><br><span class="line">  -e ZO_DATA_DIR=/data \</span><br><span class="line">  -e ZO_ROOT_USER_EMAIL=<span class="string">&quot;admin@example.com&quot;</span> \</span><br><span class="line">  -e ZO_ROOT_USER_PASSWORD=<span class="string">&quot;Admin@123456&quot;</span> \</span><br><span class="line">  -e ZO_TELEMETRY=<span class="literal">false</span> \</span><br><span class="line">  public.ecr.aws/zinclabs/openobserve:v1.0.4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 健康检查</span></span><br><span class="line">curl -s http://127.0.0.1:5080/healthz</span><br><span class="line"><span class="comment"># 返回 &#123;&quot;status&quot;:&quot;ok&quot;&#125; 即成功</span></span><br></pre></td></tr></table></figure>
+<p>浏览器打开 <code>http://服务器IP:5080</code>，用上面的邮箱密码登录。注意 UI 实际路径是 <code>/web/</code>（会自动跳转）。</p>
+<p><strong>密码必须够强</strong>：8–128 位，且同时包含小写、大写、数字、特殊字符。否则容器会陷入崩溃重启，日志里报 <code>ZO_ROOT_USER_PASSWORD is too weak</code>。上面 <code>Admin@123456</code> 只是演示，生产务必换掉。</p>
+<h3 id="3-2-生产版：Docker-Compose"><a href="#3-2-生产版：Docker-Compose" class="headerlink" title="3.2 生产版：Docker Compose"></a>3.2 生产版：Docker Compose</h3><p>极速版适合试水，生产用 Compose 把 Vector、nginx 编排到一起，配置集中、可复现。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># compose.yaml</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openobserve:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">public.ecr.aws/zinclabs/openobserve:v1.0.4</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">openobserve</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;127.0.0.1:5080:5080&quot;</span>   <span class="comment"># Web UI + HTTP API</span></span><br><span class="line">      <span class="comment"># - &quot;127.0.0.1:5081:5081&quot; # gRPC（OTLP traces 用，需要再开）</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">ZO_ROOT_USER_EMAIL:</span> <span class="string">admin@example.com</span></span><br><span class="line">      <span class="attr">ZO_ROOT_USER_PASSWORD:</span> <span class="string">$&#123;O2_PASSWORD&#125;</span></span><br><span class="line">      <span class="attr">ZO_DATA_DIR:</span> <span class="string">/data</span></span><br><span class="line">      <span class="attr">ZO_TELEMETRY:</span> <span class="string">&quot;false&quot;</span>              <span class="comment"># 关闭匿名遥测</span></span><br><span class="line">      <span class="attr">ZO_MMDB_DISABLE_DOWNLOAD:</span> <span class="string">&quot;true&quot;</span>   <span class="comment"># 不下载 GeoIP 库，省 74MB 和启动内存</span></span><br><span class="line">      <span class="attr">ZO_SKIP_SSRF_CHECKS:</span> <span class="string">&quot;true&quot;</span>        <span class="comment"># 允许 webhook 打内网（告警需要）</span></span><br><span class="line">      <span class="attr">ZO_WEB_URL:</span> <span class="string">http://localhost:5080</span>  <span class="comment"># 通知邮件里的链接地址</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">o2-data:/data</span></span><br><span class="line">    <span class="comment"># 注意：O2 镜像是 distroless，无 shell，不能在容器内用 curl 做 healthcheck</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">o2-data:</span></span><br></pre></td></tr></table></figure>
+<p>密码单独放文件，避免明文进 Git：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;%s&#x27;</span> <span class="string">&quot;Aa9-<span class="subst">$(openssl rand -hex 12)</span>&quot;</span> &gt; o2_password</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;O2_PASSWORD=<span class="subst">$(cat o2_password)</span>&quot;</span> &gt; .<span class="built_in">env</span></span><br><span class="line"><span class="built_in">chmod</span> 600 .<span class="built_in">env</span> o2_password</span><br><span class="line">docker compose up -d openobserve</span><br></pre></td></tr></table></figure>
+<p><strong>几个环境变量为什么这么配</strong>：</p>
+<ul>
+<li><code>ZO_TELEMETRY=false</code>：默认会发匿名遥测，关掉。</li>
+<li><code>ZO_MMDB_DISABLE_DOWNLOAD=true</code>：文档说默认 true，但实测不加会下载 GeoLite2 城市+ASN 库共 74 MB，启动内存从约 145 MiB 涨到 325 MiB。显式关掉更稳妥。</li>
+<li><code>ZO_SKIP_SSRF_CHECKS=true</code>：告警 webhook 要打内网地址时必须开，否则被 SSRF 过滤拦掉。</li>
+<li><code>ZO_WEB_URL</code>：告警通知里生成的跳转链接用它。</li>
+<li><strong>内存注意</strong>：O2 的缓存默认按<strong>宿主机</strong>内存的 25% 计算，不是容器限制。共享机器上一定要给容器设 <code>mem_limit</code>，否则会吃满。</li>
+</ul>
+<h3 id="3-3-冷热分层：接-S3-MinIO"><a href="#3-3-冷热分层：接-S3-MinIO" class="headerlink" title="3.3 冷热分层：接 S3 / MinIO"></a>3.3 冷热分层：接 S3 / MinIO</h3><p>数据量大时，可以把冷数据放对象存储（正好接上你之前的 MinIO 那篇）：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">environment:</span></span><br><span class="line">  <span class="attr">ZO_S3_BUCKET_NAME:</span> <span class="string">&quot;observability&quot;</span></span><br><span class="line">  <span class="attr">ZO_S3_REGION_NAME:</span> <span class="string">&quot;us-east-1&quot;</span></span><br><span class="line">  <span class="attr">ZO_S3_ACCESS_KEY:</span> <span class="string">&quot;your-access-key&quot;</span></span><br><span class="line">  <span class="attr">ZO_S3_SECRET_KEY:</span> <span class="string">&quot;your-secret-key&quot;</span></span><br><span class="line">  <span class="attr">ZO_S3_ENDPOINT:</span> <span class="string">&quot;http://minio:9000&quot;</span>   <span class="comment"># MinIO 需指定 endpoint</span></span><br></pre></td></tr></table></figure>
+<p>单节点模式默认用目录里的 SQLite 存元数据；生产集群则把 ingester / querier / compactor 拆开、共享对象存储。绝大多数自托管场景单机就够——一台 20 美元/月的 VPS 撑每天数百万条日志不成问题。</p>
+<hr>
+<h2 id="四、部署-Vector（三种角色与安装方式）"><a href="#四、部署-Vector（三种角色与安装方式）" class="headerlink" title="四、部署 Vector（三种角色与安装方式）"></a>四、部署 Vector（三种角色与安装方式）</h2><p>Vector 可以按三种角色部署，理解这个才好决定装几个：</p>
+<ul>
+<li><strong>Agent（代理）</strong>：跑在每台服务器上，贴着日志源采集，资源占用极小。</li>
+<li><strong>Aggregator（聚合器）</strong>：集中接收多个 agent 的数据，做统一处理和路由。</li>
+<li><strong>Sidecar（边车）</strong>：跟应用容器同 Pod / 同机，处理单个应用的日志。</li>
+</ul>
+<p>小场景一个 agent 直接怼 O2 就行；大场景 agent → aggregator → O2 分层，减轻后端连接压力。</p>
+<p>安装方式（选一）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一键脚本（官方，会装到 /opt 或 /usr/local）</span></span><br><span class="line">curl --proto <span class="string">&#x27;=https&#x27;</span> --tlsv1.2 -sSfL https://sh.vector.dev | bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># apt（Ubuntu/Debian）</span></span><br><span class="line">curl -1sLf <span class="string">&#x27;https://packages.timber.io/vector/0.58.0/vector.deb&#x27;</span> -o vector.deb</span><br><span class="line">dpkg -i vector.deb</span><br><span class="line"></span><br><span class="line"><span class="comment"># Docker（本文用 GHCR，Docker Hub 测试时遇到 429）</span></span><br><span class="line">docker pull ghcr.io/vectordotdev/vector:0.58.0-alpine</span><br></pre></td></tr></table></figure>
+<p>配置文件支持 YAML / TOML / JSON，本文用 YAML。装好后先用 <code>vector validate --no-environment /etc/vector/vector.yaml</code> 校验语法，能提前发现 endpoint 模板和字段错误。</p>
+<hr>
+<h2 id="五、Vector-配置三段式：sources-transforms-sinks"><a href="#五、Vector-配置三段式：sources-transforms-sinks" class="headerlink" title="五、Vector 配置三段式：sources / transforms / sinks"></a>五、Vector 配置三段式：sources / transforms / sinks</h2><p>Vector 配置的核心就三块，记住这个骨架就够用：</p>
+<p><img src="/images/o2v-vector-pipeline.png" alt="Vector 三段式配置模型"></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sources:</span>      <span class="comment"># ① 从哪读</span></span><br><span class="line">  <span class="attr">xxx:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">...</span></span><br><span class="line"><span class="attr">transforms:</span>   <span class="comment"># ② 怎么洗（可选，可串联）</span></span><br><span class="line">  <span class="attr">yyy:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">remap</span></span><br><span class="line">    <span class="attr">inputs:</span> [<span class="string">xxx</span>]     <span class="comment"># 接谁的输出</span></span><br><span class="line">    <span class="attr">source:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      ...VRL 代码...</span></span><br><span class="line"><span class="string"></span><span class="attr">sinks:</span>        <span class="comment"># ③ 往哪写</span></span><br><span class="line">  <span class="attr">zzz:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">...</span></span><br><span class="line">    <span class="attr">inputs:</span> [<span class="string">yyy</span>]     <span class="comment"># 接谁的输出</span></span><br></pre></td></tr></table></figure>
+<p>关键点：<strong>每个组件靠 <code>inputs</code> 连成有向无环图</strong>。一个 source 可以喂多个 transform，一个 sink 也可以接多个输入。改配置后用 <code>vector validate</code> 验，再 reload。</p>
+<p>常用的 source 类型：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file</code></td>
+<td>读文件日志，如 <code>/var/log/app/*.log</code></td>
+</tr>
+<tr>
+<td><code>docker_logs</code></td>
+<td>通过 Docker socket 读容器 stdout/stderr</td>
+</tr>
+<tr>
+<td><code>journald</code></td>
+<td>读 systemd journal</td>
+</tr>
+<tr>
+<td><code>nginx_metrics</code></td>
+<td>抓 nginx <code>stub_status</code> 指标</td>
+</tr>
+<tr>
+<td><code>host_metrics</code></td>
+<td>CPU / 内存 / 磁盘 / 网络指标</td>
+</tr>
+<tr>
+<td><code>http_server</code></td>
+<td>起一个 HTTP 端点收 JSON</td>
+</tr>
+<tr>
+<td><code>opentelemetry</code></td>
+<td>OTLP 收 traces / metrics / logs</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>常用的 sink 类型：<code>http</code>（通用 HTTP，打 O2 日志接口就用它）、<code>prometheus_remote_write</code>（指标）、<code>elasticsearch</code>、<code>kafka</code>、<code>s3</code>、<code>file</code>。</p>
+<hr>
+<h2 id="六、日志链路：从-Docker-日志到-json-接口"><a href="#六、日志链路：从-Docker-日志到-json-接口" class="headerlink" title="六、日志链路：从 Docker 日志到 _json 接口"></a>六、日志链路：从 Docker 日志到 <code>_json</code> 接口</h2><p>这是最常用的一条链路。完整配置如下，把 O2 和 Vector 放进同一个 Compose 网络，Vector 通过容器名 <code>openobserve</code> 访问。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># compose.yaml 追加（省略已给出的 openobserve 服务）</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">public.ecr.aws/nginx/nginx:1.30-alpine</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./nginx.conf:/etc/nginx/conf.d/default.conf:ro</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">vector:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">ghcr.io/vectordotdev/vector:0.58.0-alpine</span></span><br><span class="line">    <span class="attr">secrets:</span> [<span class="string">o2_password</span>]</span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./vector.yaml:/etc/vector/vector.yaml:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock:ro</span>   <span class="comment"># 读容器日志需要</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;--config&quot;</span>, <span class="string">&quot;/etc/vector/vector.yaml&quot;</span>]</span><br><span class="line">    <span class="attr">depends_on:</span> [<span class="string">openobserve</span>, <span class="string">web</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">secrets:</span></span><br><span class="line">  <span class="attr">o2_password:</span></span><br><span class="line">    <span class="attr">file:</span> <span class="string">./o2_password</span></span><br></pre></td></tr></table></figure>
+<p><code>nginx.conf</code> 造点数据：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="section">location</span> = /stub_status &#123; stub_status; &#125;</span><br><span class="line">    <span class="section">location</span> /fail &#123; <span class="attribute">return</span> <span class="number">503</span>; &#125;</span><br><span class="line">    <span class="section">location</span> / &#123; <span class="attribute">return</span> <span class="number">200</span> <span class="string">&quot;ok\n&quot;</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>vector.yaml</code> 的日志部分：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">secret:</span></span><br><span class="line">  <span class="attr">o2:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">directory</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">/run/secrets</span>        <span class="comment"># Compose 把 o2_password 挂载到这里</span></span><br><span class="line"></span><br><span class="line"><span class="attr">sources:</span></span><br><span class="line">  <span class="attr">web_logs:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">docker_logs</span></span><br><span class="line">    <span class="attr">include_containers:</span> [<span class="string">&quot;web&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">transforms:</span></span><br><span class="line">  <span class="attr">parsed:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">remap</span></span><br><span class="line">    <span class="attr">inputs:</span> [<span class="string">web_logs</span>]</span><br><span class="line">    <span class="attr">source:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      p, err = parse_nginx_log(.message, &quot;combined&quot;)</span></span><br><span class="line"><span class="string">      if err == null &#123; . = merge(., p) &#125;</span></span><br><span class="line"><span class="string">      del(.label)                 # 丢掉 Docker 标签，O2 会为每个标签生成一列</span></span><br><span class="line"><span class="string">      del(.container_created_at)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="attr">sinks:</span></span><br><span class="line">  <span class="attr">o2_logs:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">    <span class="attr">inputs:</span> [<span class="string">parsed</span>]</span><br><span class="line">    <span class="attr">uri:</span> <span class="string">http://openobserve:5080/api/default/nginx/_json</span></span><br><span class="line">    <span class="attr">method:</span> <span class="string">post</span></span><br><span class="line">    <span class="attr">auth:</span></span><br><span class="line">      <span class="attr">strategy:</span> <span class="string">basic</span>              <span class="comment"># 必须显式写 strategy，否则校验报缺字段</span></span><br><span class="line">      <span class="attr">user:</span> <span class="string">admin@example.com</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">SECRET[o2.o2_password]</span>   <span class="comment"># 用 secrets，不要写 $&#123;PASSWORD&#125;</span></span><br><span class="line">    <span class="attr">compression:</span> <span class="string">gzip</span></span><br><span class="line">    <span class="attr">encoding:</span></span><br><span class="line">      <span class="attr">codec:</span> <span class="string">json</span></span><br><span class="line">      <span class="attr">timestamp_format:</span> <span class="string">rfc3339</span></span><br></pre></td></tr></table></figure>
+<p>几个要点：</p>
+<ul>
+<li><strong>接口格式</strong>：<code>http://&lt;host&gt;:5080/api/&lt;org&gt;/&lt;stream&gt;/_json</code>。<code>default</code> 是默认组织名，<code>nginx</code> 是流名——<strong>流不用预先创建，第一条请求自动建</strong>。写别的名字就自动建别的流。</li>
+<li><strong>Basic 认证</strong>：用户是 root 邮箱，密码是上面设的 <code>ZO_ROOT_USER_PASSWORD</code>。</li>
+<li><strong><code>auth.strategy: basic</code></strong>：新版 Vector 不写这个字段会在配置校验阶段报 <code>missing field strategy</code>。</li>
+<li><strong>删 Docker 标签</strong>：不删的话 O2 会把每个 label 存成一列（<code>label_*</code>），日志表里凭空多出 11 列。</li>
+</ul>
+<p>也可以用 curl 直接写一条测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -u <span class="string">&quot;admin@example.com:<span class="subst">$(cat o2_password)</span>&quot;</span> \</span><br><span class="line">  -X POST http://127.0.0.1:5080/api/default/default/_json \</span><br><span class="line">  -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;&quot;level&quot;:&quot;info&quot;,&quot;message&quot;:&quot;Hello OpenObserve!&quot;,&quot;service&quot;:&quot;demo&quot;&#125;&#x27;</span></span><br><span class="line"><span class="comment"># 返回 &#123;&quot;code&quot;:200,&quot;status&quot;:[&#123;&quot;name&quot;:&quot;default&quot;,&quot;successful&quot;:1,&quot;failed&quot;:0&#125;]&#125;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="七、指标链路：Prometheus-remote-write"><a href="#七、指标链路：Prometheus-remote-write" class="headerlink" title="七、指标链路：Prometheus remote write"></a>七、指标链路：Prometheus remote write</h2><p>O2 兼容 Prometheus 远程写入，所以 Vector 抓到的指标可以直接推过去。继续在 <code>vector.yaml</code> 追加：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sources:</span></span><br><span class="line">  <span class="attr">web_metrics:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">nginx_metrics</span></span><br><span class="line">    <span class="attr">endpoints:</span> [<span class="string">&quot;http://web/stub_status&quot;</span>]</span><br><span class="line">    <span class="attr">scrape_interval_secs:</span> <span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="attr">sinks:</span></span><br><span class="line">  <span class="attr">o2_metrics:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">prometheus_remote_write</span></span><br><span class="line">    <span class="attr">inputs:</span> [<span class="string">web_metrics</span>]</span><br><span class="line">    <span class="attr">endpoint:</span> <span class="string">http://openobserve:5080/api/default/prometheus/api/v1/write</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">false</span>        <span class="comment"># 关键：关掉，否则启动报 405</span></span><br><span class="line">    <span class="attr">auth:</span></span><br><span class="line">      <span class="attr">strategy:</span> <span class="string">basic</span></span><br><span class="line">      <span class="attr">user:</span> <span class="string">admin@example.com</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">SECRET[o2.o2_password]</span></span><br></pre></td></tr></table></figure>
+<p><strong>为什么 <code>healthcheck.enabled: false</code></strong>：Vector 启动时会给 remote write 端点发健康检查请求，O2 的这个接口只接受 POST，返回 <code>405 Method Not Allowed</code>，导致 Vector 报启动错误。但实际写入请求是 200 正常的，所以关掉健康检查即可，不影响功能。</p>
+<p>如果你已经在跑 Prometheus，也可以让 Prometheus 自己 remote write 到 O2，不必经过 Vector——Vector 的价值在于「采集 + 处理」这一段，指标链路按需选用。</p>
+<hr>
+<h2 id="八、VRL-常用处理招式"><a href="#八、VRL-常用处理招式" class="headerlink" title="八、VRL 常用处理招式"></a>八、VRL 常用处理招式</h2><p>VRL 是 Vector 的脚本语言，专门用来处理事件。几个高频招式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># <span class="number">1.</span> 解析 <span class="title class_">JSON</span> 字符串到事件根</span><br><span class="line">. = parse_json!(.<span class="property">message</span>)</span><br><span class="line"></span><br><span class="line"># <span class="number">2.</span> 解析 nginx 组合日志（比手写正则省事）</span><br><span class="line">p, err = <span class="title function_">parse_nginx_log</span>(.<span class="property">message</span>, <span class="string">&quot;combined&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> err == <span class="literal">null</span> &#123; . = <span class="title function_">merge</span>(., p) &#125;</span><br><span class="line"></span><br><span class="line"># <span class="number">3.</span> 加字段 / 改字段</span><br><span class="line">.<span class="property">environment</span> = <span class="title function_">get_env_var</span>(<span class="string">&quot;ENVIRONMENT&quot;</span>) ?? <span class="string">&quot;production&quot;</span></span><br><span class="line">.<span class="property">host</span> = get_hostname!()</span><br><span class="line"></span><br><span class="line"># <span class="number">4.</span> 脱敏：把邮箱、手机号打码</span><br><span class="line"><span class="keyword">if</span> <span class="title function_">exists</span>(<span class="params">.email</span>) &#123; .<span class="property">email</span> = <span class="title function_">redact</span>(string!(.<span class="property">email</span>), <span class="attr">filters</span>: [r<span class="string">&#x27;\S+@\S+&#x27;</span>]) &#125;</span><br><span class="line"></span><br><span class="line"># <span class="number">5.</span> 过滤噪音日志（配合 filter transform）</span><br><span class="line">#    .<span class="property">level</span> != <span class="string">&quot;debug&quot;</span> &amp;&amp; !<span class="title function_">includes</span>([<span class="string">&quot;GET /health&quot;</span>, <span class="string">&quot;GET /metrics&quot;</span>], .<span class="property">request</span>)</span><br><span class="line"></span><br><span class="line"># <span class="number">6.</span> 解析时间戳统一格式</span><br><span class="line">.<span class="property">timestamp</span> = parse_timestamp!(.<span class="property">timestamp</span>, <span class="attr">format</span>: <span class="string">&quot;%Y-%m-%dT%H:%M:%S%.fZ&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>两个容易忽略的点：</p>
+<ul>
+<li><strong><code>http</code> sink 没有 <code>condition</code> 选项</strong>：想按条件分流，得用 <code>filter</code> transform 把不同数据路由到不同 sink；想对采样排除某类日志，用 <code>sample</code> 的 <code>exclude</code>。</li>
+<li><strong><code>read_from</code> 默认值</strong>：<code>file</code> source 默认 <code>read_from = &quot;end&quot;</code>（只读取新内容），首次想读历史日志要显式设 <code>beginning</code>，但注意会重复读旧文件。</li>
+</ul>
+<hr>
+<h2 id="九、四个必踩的版本坑（重点）"><a href="#九、四个必踩的版本坑（重点）" class="headerlink" title="九、四个必踩的版本坑（重点）"></a>九、四个必踩的版本坑（重点）</h2><p>这一节是全文最有价值的部分，都是 2026 年版本变化带来的「旧教程不会告诉你」的坑。</p>
+<p><img src="/images/o2v-pitfalls.png" alt="四个必踩的版本坑"></p>
+<h3 id="坑-1：Vector-0-57-不再替换-PASSWORD-，一路-401"><a href="#坑-1：Vector-0-57-不再替换-PASSWORD-，一路-401" class="headerlink" title="坑 1：Vector 0.57+ 不再替换 ${PASSWORD}，一路 401"></a>坑 1：Vector 0.57+ 不再替换 <code>$&#123;PASSWORD&#125;</code>，一路 401</h3><p><strong>现象</strong>：配置里写 <code>password: $&#123;O2_PASSWORD&#125;</code>，启动时用环境变量传进去。密码用 curl 测试明明是对的，但 Vector 每个请求都返回 <code>401</code>，日志刷 <code>Not retriable; dropping the request</code>。</p>
+<p><strong>原因</strong>：从 Vector <strong>0.57.0</strong> 起，配置里的环境变量插值<strong>默认关闭</strong>（出于安全考虑）。Vector 把字符串 <code>$&#123;O2_PASSWORD&#125;</code> 原样当密码发出去了。</p>
+<p><strong>解法</strong>（推荐用 secrets）：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1) 声明 secrets 后端，读 /run/secrets 目录</span></span><br><span class="line"><span class="attr">secret:</span></span><br><span class="line">  <span class="attr">o2:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">directory</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">/run/secrets</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2) 配置里用 SECRET[名字.键] 引用</span></span><br><span class="line">    <span class="attr">auth:</span></span><br><span class="line">      <span class="attr">strategy:</span> <span class="string">basic</span></span><br><span class="line">      <span class="attr">user:</span> <span class="string">admin@example.com</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">SECRET[o2.o2_password]</span></span><br></pre></td></tr></table></figure>
+<p>Compose 里挂载：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    <span class="attr">secrets:</span> [<span class="string">o2_password</span>]</span><br><span class="line"><span class="attr">secrets:</span></span><br><span class="line">  <span class="attr">o2_password:</span></span><br><span class="line">    <span class="attr">file:</span> <span class="string">./o2_password</span></span><br></pre></td></tr></table></figure>
+<p>其他可选解法：启动时加 <code>--dangerously-allow-env-var-interpolation</code>（或设 <code>VECTOR_DANGEROUSLY_ALLOW_ENV_VAR_INTERPOLATION=true</code>），或用 <code>envsubst</code> 预渲染配置。但 secrets 后端最干净、最安全。</p>
+<h3 id="坑-2：O2-密码太弱，容器崩溃重启"><a href="#坑-2：O2-密码太弱，容器崩溃重启" class="headerlink" title="坑 2：O2 密码太弱，容器崩溃重启"></a>坑 2：O2 密码太弱，容器崩溃重启</h3><p><strong>现象</strong>：容器反复 Restart，起不来。</p>
+<p><strong>原因</strong>：<code>ZO_ROOT_USER_PASSWORD</code> 必须 8–128 位且包含小写、大写、数字、特殊字符四类。<code>openssl rand -base64 24</code> 纯字母数字没有符号，不满足。</p>
+<p><strong>解法</strong>：生成时带一个符号前缀，如 <code>&quot;Aa9-$(openssl rand -hex 12)&quot;</code>。</p>
+<h3 id="坑-3：remote-write-健康检查报-405"><a href="#坑-3：remote-write-健康检查报-405" class="headerlink" title="坑 3：remote write 健康检查报 405"></a>坑 3：remote write 健康检查报 405</h3><p>见第七节，<code>healthcheck.enabled: false</code> 即可。</p>
+<h3 id="坑-4：官方入门文档默认装的是企业版"><a href="#坑-4：官方入门文档默认装的是企业版" class="headerlink" title="坑 4：官方入门文档默认装的是企业版"></a>坑 4：官方入门文档默认装的是企业版</h3><p>见 1.2 节，开源版用 <code>public.ecr.aws/zinclabs/openobserve</code>，别用 <code>o2cr.ai/.../openobserve-enterprise</code>。</p>
+<p><strong>附加两个小坑</strong>：</p>
+<ul>
+<li>Vector 0.57+ 里，带模板的 sink 字段（S3 key、Kafka topic、HTTP URI 等）不允许「无字面前缀」的模板，比如 <code>topic = &quot;&#123;&#123; x &#125;&#125;&quot;</code> 会报错，要写成 <code>topic = &quot;logs-&#123;&#123; x &#125;&#125;&quot;</code>。</li>
+<li>O2 镜像是 distroless，<strong>容器内没有 shell</strong>，别在 Compose 里写 <code>healthcheck</code> 用 <code>curl</code> 检查——永远不健康。</li>
+</ul>
+<hr>
+<h2 id="十、查询与告警：SQL、PromQL-与-SLO"><a href="#十、查询与告警：SQL、PromQL-与-SLO" class="headerlink" title="十、查询与告警：SQL、PromQL 与 SLO"></a>十、查询与告警：SQL、PromQL 与 SLO</h2><p>记住下面这张图里的几个 API 路径，日常写入和查询就够了。</p>
+<p><img src="/images/o2v-api-flow.png" alt="写入与查询 API 速查"></p>
+<h3 id="10-1-用-SQL-查日志"><a href="#10-1-用-SQL-查日志" class="headerlink" title="10.1 用 SQL 查日志"></a>10.1 用 SQL 查日志</h3><p>UI 里 Logs 页面直接写 SQL 查询。走 API 的话，时间范围是<strong>微秒</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">MIN=<span class="variable">$&#123;2:-15&#125;</span></span><br><span class="line">END=$(($(date +%s) * <span class="number">1000000</span>))</span><br><span class="line">START=$((END - MIN * <span class="number">60</span> * <span class="number">1000000</span>))</span><br><span class="line">curl -s -u <span class="string">&quot;admin@example.com:<span class="subst">$(cat o2_password)</span>&quot;</span> \</span><br><span class="line">  http://127.0.0.1:5080/api/default/_search \</span><br><span class="line">  -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">  -d <span class="string">&quot;&#123;\&quot;query\&quot;:&#123;\&quot;sql\&quot;:\&quot;<span class="variable">$1</span>\&quot;,\&quot;start_time\&quot;:<span class="variable">$START</span>,\&quot;end_time\&quot;:<span class="variable">$END</span>&#125;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>用法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./q.sh <span class="string">&quot;SELECT status, count(*) AS n FROM nginx GROUP BY status&quot;</span> 15</span><br><span class="line"><span class="comment"># 查出 15 分钟内各状态码的数量，如 200 有 291 条、503 有 5 条</span></span><br></pre></td></tr></table></figure>
+<p>日志和追踪用 SQL，指标用 PromQL（或 SQL）。这一点和 Loki（LogQL）/ Prometheus（PromQL）/ Tempo（TraceQL）三套语言形成鲜明对比——O2 里统一成 SQL + PromQL 两种。</p>
+<h3 id="10-2-SLO-与-burn-rate-告警"><a href="#10-2-SLO-与-burn-rate-告警" class="headerlink" title="10.2 SLO 与 burn-rate 告警"></a>10.2 SLO 与 burn-rate 告警</h3><p>1.0 起开源版就带 SLO。在 UI 的 <strong>Reliability &gt; SLOs</strong> 里建，指标来源可以是 SQL 计数、PromQL 或时间切片。建好后再配一个 burn-rate（错误预算消耗率）告警。</p>
+<p><strong>新 SLO 显示 “No data” 是正常的</strong>：它要回填历史数据，一天一天地补，7 天的 SLO 大约 5 分钟才能到 100% 覆盖。别一看到 No data 就以为坏了。</p>
+<p>告警 webhook 打内网地址，记得前面说的 <code>ZO_SKIP_SSRF_CHECKS=true</code>，否则会被 SSRF 过滤拦掉。</p>
+<hr>
+<h2 id="十一、排障对照表"><a href="#十一、排障对照表" class="headerlink" title="十一、排障对照表"></a>十一、排障对照表</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>可能原因</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vector 全 401，密码明明对</td>
+<td>0.57+ 关了环境变量插值</td>
+<td>改用 <code>SECRET[...]</code> secrets 后端</td>
+</tr>
+<tr>
+<td>Vector 启动报 405</td>
+<td>remote write 健康检查被 O2 拒</td>
+<td><code>healthcheck.enabled: false</code></td>
+</tr>
+<tr>
+<td>配置校验报 <code>missing field strategy</code></td>
+<td>auth 没写 strategy</td>
+<td>加 <code>strategy: basic</code></td>
+</tr>
+<tr>
+<td>配置校验报模板无字面前缀</td>
+<td>0.57+ 限制无前缀模板</td>
+<td><code>topic: &quot;logs-&#123;&#123; x &#125;&#125;&quot;</code> 加前缀</td>
+</tr>
+<tr>
+<td>O2 容器反复重启</td>
+<td>密码强度不足</td>
+<td>8–128 位含大小写数字符号</td>
+</tr>
+<tr>
+<td>日志表多出 11 个 <code>label_*</code> 列</td>
+<td>没删 Docker 标签</td>
+<td>remap 里 <code>del(.label)</code></td>
+</tr>
+<tr>
+<td>webhook 告警发不出去</td>
+<td>SSRF 过滤</td>
+<td><code>ZO_SKIP_SSRF_CHECKS=true</code></td>
+</tr>
+<tr>
+<td>启动内存 325 MiB 居高不下</td>
+<td>下载了 GeoIP 库</td>
+<td><code>ZO_MMDB_DISABLE_DOWNLOAD=true</code></td>
+</tr>
+<tr>
+<td>宿主机内存被 O2 吃满</td>
+<td>缓存按宿主机内存 25% 算</td>
+<td>给容器设 <code>mem_limit</code></td>
+</tr>
+<tr>
+<td><code>_search</code> 查不到数据</td>
+<td>时间单位用错</td>
+<td>用微秒，不是毫秒/秒</td>
+</tr>
+<tr>
+<td>healthcheck 永远不健康</td>
+<td>distroless 无 shell/curl</td>
+<td>去掉容器内 healthcheck</td>
+</tr>
+<tr>
+<td>Docker Hub 拉 Vector 429</td>
+<td>限流</td>
+<td>换 <code>ghcr.io/vectordotdev/vector</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>自查命令链：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker compose ps                                   <span class="comment"># 容器是否都在跑</span></span><br><span class="line">docker logs openobserve | <span class="built_in">tail</span> -50                  <span class="comment"># O2 启动日志</span></span><br><span class="line">docker logs &lt;vector容器&gt; | <span class="built_in">tail</span> -50                 <span class="comment"># Vector 报错</span></span><br><span class="line">curl -s http://127.0.0.1:5080/healthz              <span class="comment"># 健康检查</span></span><br><span class="line">vector validate --no-environment /etc/vector/vector.yaml  <span class="comment"># 配置校验</span></span><br><span class="line">curl -u <span class="string">&quot;邮箱:密码&quot;</span> http://127.0.0.1:5080/api/default/_search -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&#x27;&#123;&quot;query&quot;:&#123;&quot;sql&quot;:&quot;SELECT count(*) FROM nginx&quot;,&quot;start_time&quot;:0,&quot;end_time&quot;:9999999999999999&#125;&#125;&#x27;</span>  <span class="comment"># 是否有数据</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="十二、一页速查与生产建议"><a href="#十二、一页速查与生产建议" class="headerlink" title="十二、一页速查与生产建议"></a>十二、一页速查与生产建议</h2><h3 id="一页速查"><a href="#一页速查" class="headerlink" title="一页速查"></a>一页速查</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># O2 开源版镜像</span></span><br><span class="line">public.ecr.aws/zinclabs/openobserve:v1.0.4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关键端口</span></span><br><span class="line">5080 = Web UI + HTTP API   5081 = gRPC / OTLP traces</span><br><span class="line"></span><br><span class="line"><span class="comment"># 日志写入</span></span><br><span class="line">POST /api/&lt;org&gt;/&lt;stream&gt;/_json         <span class="comment"># Basic 认证，流自动创建</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指标写入</span></span><br><span class="line">POST /api/&lt;org&gt;/prometheus/api/v1/write</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询</span></span><br><span class="line">POST /api/&lt;org&gt;/_search   body 里带 sql + start_time/end_time（微秒）</span><br><span class="line"></span><br><span class="line"><span class="comment"># Vector 配置骨架</span></span><br><span class="line">sources（采集） → transforms（VRL 处理） → sinks（写出）</span><br><span class="line"></span><br><span class="line"><span class="comment"># 密码进 secrets，别写 $&#123;PASSWORD&#125;</span></span><br><span class="line">password: SECRET[o2.o2_password]</span><br></pre></td></tr></table></figure>
+<h3 id="生产建议"><a href="#生产建议" class="headerlink" title="生产建议"></a>生产建议</h3><ol>
+<li><strong>改默认密码、限制端口</strong>：把 5080 绑到 <code>127.0.0.1</code>（如本文 Compose），前面挂 Nginx 反代 + HTTPS，别裸奔公网。顺带提醒：<code>-p 5080:5080</code> 会绕过 ufw/firewalld（详见本站 firewalld 那篇），要绑回环或写 <code>DOCKER-USER</code> 链。</li>
+<li><strong>给容器设内存上限</strong>：O2 缓存按宿主机内存算，共享机器必须 <code>mem_limit</code>。</li>
+<li><strong>数据落对象存储</strong>：接 MinIO / S3 做冷热分层，本地盘只留热数据。</li>
+<li><strong>备份 SQLite 元数据</strong>：单节点模式的元数据在 <code>/data</code> 里，纳入备份计划。</li>
+<li><strong>日志脱敏在采集端做</strong>：用 VRL 在 Vector 阶段就脱敏，别等进了 O2。</li>
+<li><strong>先 validate 再 reload</strong>：<code>vector validate --no-environment</code> 能在加载前抓出大部分配置错误。</li>
+<li><strong>关注版本更新</strong>：O2 1.0.x 和 Vector 0.5x/0.6x 都在快速迭代，升级前看 release notes，尤其是这类「默认行为变更」。</li>
+</ol>
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>OpenObserve + Vector 这套组合的核心价值是<strong>用一套轻量系统覆盖日志和指标</strong>，存储和运维成本远低于 ELK，配置比 Loki+Prometheus+Tempo 三件套简单。真正上手时，最大的障碍不是功能，而是 <strong>2026 年这几个版本变更带来的「旧教程失效」</strong>：企业版镜像、弱密码崩溃、Vector 环境变量插值关闭、remote write 405。把第九节的四个坑记住，基本就能一次跑通。</p>
+<blockquote>
+<p>本文涉及的镜像标签、许可策略、默认参数会随版本变化，落地前请以官方仓库 README 和 <code>docker pull</code> / <code>vector validate</code> 实测为准。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://dosbat.com">0x01</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://dosbat.com/v7mvaljv/">https://dosbat.com/v7mvaljv/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://dosbat.com" target="_blank">DOS/BAT</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/%E8%BF%90%E7%BB%B4/">运维</a><a class="post-meta__tags" href="/tags/OpenObserve/">OpenObserve</a><a class="post-meta__tags" href="/tags/Vector/">Vector</a><a class="post-meta__tags" href="/tags/%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86/">日志收集</a><a class="post-meta__tags" href="/tags/%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7/">可观测性</a></div><div class="post_share"><div class="social-share" data-image="/images/o2v-architecture.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"><img class="cover" src="/images/minio-deployment-modes.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"><img class="cover" src="/images/minio-deployment-modes.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-16</div><div class="title">MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型</div></div></a></div><div><a href="/5oomphc4/" title="CentOS7 环境变量详解"><img class="cover" src="https://s21.ax1x.com/2024/10/17/pANxMVg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-21</div><div class="title">CentOS7 环境变量详解</div></div></a></div><div><a href="/0q9z9zec/" title="Centos 7搭建 Docker 环境"><img class="cover" src="https://s21.ax1x.com/2024/10/17/pANxV2t.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-11</div><div class="title">Centos 7搭建 Docker 环境</div></div></a></div><div><a href="/1l3cjofg/" title="Docker加速器收集-国内"><img class="cover" src="https://s21.ax1x.com/2024/10/19/pAUTILd.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="title">Docker加速器收集-国内</div></div></a></div><div><a href="/j6q5pl25/" title="Docker 备忘录"><img class="cover" src="https://s21.ax1x.com/2024/10/17/pANxV2t.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-01</div><div class="title">Docker 备忘录</div></div></a></div><div><a href="/zlwfl73r/" title="Docker搭建DNS服务器"><img class="cover" src="https://s21.ax1x.com/2024/10/16/pANeftP.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-20</div><div class="title">Docker搭建DNS服务器</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0x01</div><div class="author-info__description">有人辞官归故里，有人星夜赶科场。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">122</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">117</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">34</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/dosbat"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/isslower" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dosbat666@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://dosbat.com/link" target="_blank" title="收藏"><i class="fas fa-server"></i></a><a class="social-icon" href="https://dosbat.com/tags" target="_blank" title="便签"><i class="fab fa-tags"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><div><strong><a href="https://dosbat.com">☕日常学习，分享记录📃</a></strong></div><div><strong><a href="mailto:dosbat666@gmail.com">👨‍🌾联系我吧🙋</a></strong></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%B6%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%EF%BC%9AOpenObserve-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8CVector-%E5%8F%88%E8%B4%9F%E8%B4%A3%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">零、先搞清楚：OpenObserve 是什么，Vector 又负责什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E9%80%82%E5%90%88%E8%BF%99%E5%A5%97"><span class="toc-number">2.1.</span> <span class="toc-text">什么时候不适合这套</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%89%88%E6%9C%AC%E4%B8%8E%E8%AE%B8%E5%8F%AF%EF%BC%9A2026-%E5%B9%B4%E5%BF%85%E9%A1%BB%E7%9F%A5%E9%81%93%E7%9A%84%E7%8E%B0%E7%8A%B6"><span class="toc-number">3.</span> <span class="toc-text">一、版本与许可：2026 年必须知道的现状</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-OpenObserve-%E7%9A%84%E6%97%B6%E9%97%B4%E7%BA%BF"><span class="toc-number">3.1.</span> <span class="toc-text">1.1 OpenObserve 的时间线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-AGPL-%E5%BC%80%E6%BA%90%E7%89%88-vs-%E4%BC%81%E4%B8%9A%E7%89%88%EF%BC%88%E6%9C%80%E5%AE%B9%E6%98%93%E8%B8%A9%E7%9A%84%E5%9D%91%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">1.2 AGPL 开源版 vs 企业版（最容易踩的坑）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Vector-%E7%89%88%E6%9C%AC%E7%8E%B0%E7%8A%B6"><span class="toc-number">3.3.</span> <span class="toc-text">1.3 Vector 版本现状</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">4.</span> <span class="toc-text">二、整体架构与数据流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%83%A8%E7%BD%B2-OpenObserve%EF%BC%88%E6%9E%81%E9%80%9F%E7%89%88-%E7%94%9F%E4%BA%A7%E7%89%88%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">三、部署 OpenObserve（极速版 + 生产版）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%9E%81%E9%80%9F%E4%BD%93%E9%AA%8C%EF%BC%9A%E4%B8%80%E6%9D%A1%E5%91%BD%E4%BB%A4"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 极速体验：一条命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E7%94%9F%E4%BA%A7%E7%89%88%EF%BC%9ADocker-Compose"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 生产版：Docker Compose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%86%B7%E7%83%AD%E5%88%86%E5%B1%82%EF%BC%9A%E6%8E%A5-S3-MinIO"><span class="toc-number">5.3.</span> <span class="toc-text">3.3 冷热分层：接 S3 &#x2F; MinIO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%83%A8%E7%BD%B2-Vector%EF%BC%88%E4%B8%89%E7%A7%8D%E8%A7%92%E8%89%B2%E4%B8%8E%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">四、部署 Vector（三种角色与安装方式）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Vector-%E9%85%8D%E7%BD%AE%E4%B8%89%E6%AE%B5%E5%BC%8F%EF%BC%9Asources-transforms-sinks"><span class="toc-number">7.</span> <span class="toc-text">五、Vector 配置三段式：sources &#x2F; transforms &#x2F; sinks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%97%A5%E5%BF%97%E9%93%BE%E8%B7%AF%EF%BC%9A%E4%BB%8E-Docker-%E6%97%A5%E5%BF%97%E5%88%B0-json-%E6%8E%A5%E5%8F%A3"><span class="toc-number">8.</span> <span class="toc-text">六、日志链路：从 Docker 日志到 _json 接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%8C%87%E6%A0%87%E9%93%BE%E8%B7%AF%EF%BC%9APrometheus-remote-write"><span class="toc-number">9.</span> <span class="toc-text">七、指标链路：Prometheus remote write</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81VRL-%E5%B8%B8%E7%94%A8%E5%A4%84%E7%90%86%E6%8B%9B%E5%BC%8F"><span class="toc-number">10.</span> <span class="toc-text">八、VRL 常用处理招式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%9B%9B%E4%B8%AA%E5%BF%85%E8%B8%A9%E7%9A%84%E7%89%88%E6%9C%AC%E5%9D%91%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">11.</span> <span class="toc-text">九、四个必踩的版本坑（重点）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%91-1%EF%BC%9AVector-0-57-%E4%B8%8D%E5%86%8D%E6%9B%BF%E6%8D%A2-PASSWORD-%EF%BC%8C%E4%B8%80%E8%B7%AF-401"><span class="toc-number">11.1.</span> <span class="toc-text">坑 1：Vector 0.57+ 不再替换 ${PASSWORD}，一路 401</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%91-2%EF%BC%9AO2-%E5%AF%86%E7%A0%81%E5%A4%AA%E5%BC%B1%EF%BC%8C%E5%AE%B9%E5%99%A8%E5%B4%A9%E6%BA%83%E9%87%8D%E5%90%AF"><span class="toc-number">11.2.</span> <span class="toc-text">坑 2：O2 密码太弱，容器崩溃重启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%91-3%EF%BC%9Aremote-write-%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5%E6%8A%A5-405"><span class="toc-number">11.3.</span> <span class="toc-text">坑 3：remote write 健康检查报 405</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%91-4%EF%BC%9A%E5%AE%98%E6%96%B9%E5%85%A5%E9%97%A8%E6%96%87%E6%A1%A3%E9%BB%98%E8%AE%A4%E8%A3%85%E7%9A%84%E6%98%AF%E4%BC%81%E4%B8%9A%E7%89%88"><span class="toc-number">11.4.</span> <span class="toc-text">坑 4：官方入门文档默认装的是企业版</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9F%A5%E8%AF%A2%E4%B8%8E%E5%91%8A%E8%AD%A6%EF%BC%9ASQL%E3%80%81PromQL-%E4%B8%8E-SLO"><span class="toc-number">12.</span> <span class="toc-text">十、查询与告警：SQL、PromQL 与 SLO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E7%94%A8-SQL-%E6%9F%A5%E6%97%A5%E5%BF%97"><span class="toc-number">12.1.</span> <span class="toc-text">10.1 用 SQL 查日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-SLO-%E4%B8%8E-burn-rate-%E5%91%8A%E8%AD%A6"><span class="toc-number">12.2.</span> <span class="toc-text">10.2 SLO 与 burn-rate 告警</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%8E%92%E9%9A%9C%E5%AF%B9%E7%85%A7%E8%A1%A8"><span class="toc-number">13.</span> <span class="toc-text">十一、排障对照表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E4%B8%80%E9%A1%B5%E9%80%9F%E6%9F%A5%E4%B8%8E%E7%94%9F%E4%BA%A7%E5%BB%BA%E8%AE%AE"><span class="toc-number">14.</span> <span class="toc-text">十二、一页速查与生产建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%A1%B5%E9%80%9F%E6%9F%A5"><span class="toc-number">14.1.</span> <span class="toc-text">一页速查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E5%BB%BA%E8%AE%AE"><span class="toc-number">14.2.</span> <span class="toc-text">生产建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">15.</span> <span class="toc-text">小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/v7mvaljv/" title="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑"><img src="/images/o2v-architecture.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑"/></a><div class="content"><a class="title" href="/v7mvaljv/" title="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑">OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑</a><time datetime="2026-11-16T14:10:00.000Z" title="发表于 2026-11-16 22:10:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"><img src="/images/minio-deployment-modes.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"/></a><div class="content"><a class="title" href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型">MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型</a><time datetime="2026-11-16T13:50:00.000Z" title="发表于 2026-11-16 21:50:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口"><img src="/images/firewalld-decision.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 通过 Firewalld 服务限制 IP 和端口"/></a><div class="content"><a class="title" href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口">Linux 通过 Firewalld 服务限制 IP 和端口</a><time datetime="2026-11-16T13:10:00.000Z" title="发表于 2026-11-16 21:10:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/3gri66tg/" title="RHCSA认证考试-附加题"><img src="https://s21.ax1x.com/2024/10/16/pANJXND.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RHCSA认证考试-附加题"/></a><div class="content"><a class="title" href="/3gri66tg/" title="RHCSA认证考试-附加题">RHCSA认证考试-附加题</a><time datetime="2026-11-15T13:13:15.028Z" title="发表于 2026-11-15 21:13:15">2026-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/85mtkczb/" title="弱电机房布线验收清单"><img src="https://s21.ax1x.com/2024/10/16/pANJXND.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="弱电机房布线验收清单"/></a><div class="content"><a class="title" href="/85mtkczb/" title="弱电机房布线验收清单">弱电机房布线验收清单</a><time datetime="2026-11-15T13:08:00.000Z" title="发表于 2026-11-15 21:08:00">2026-11-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 0x01</div><div class="footer_custom_text"><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"><span id="percent">0<span>%</span></span></i></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const el = document.getElementById("waline-wrap"); //这里是你的评论div#id
+  var idPath = el.getAttribute('comment_id');
+  if (!idPath) {
+    idPath = decodeURI(window.location.pathname);
+  }
+  const initWaline = (Fn) => {
+    const waline = Fn(Object.assign({
+      el: '#waline-wrap',         //这里是你的评论div#id，跟上面的el中定义的值一致
+      serverURL: 'https://waline.dosbat.com/',  //主题配置文件中配置的服务地址
+      search: false,              //关闭表情查找 不大好用
+      emoji: [
+        'https://unpkg.com/@waline/emojis@1.1.0/bilibili',
+        'https://unpkg.com/@waline/emojis@1.1.0/qq',
+      ],
+      reaction: true,              // 开启反应，可以点击按钮对文章进行评价
+      pageview: false,  // 主题配置文件中配置的浏览量统计
+      dark: 'html[data-theme="dark"]',           
+      path: window.location.pathname,            
+      comment: false,      // 主题配置文件中配置的评论数统计
+      imageUploader: (file) => {
+          if (!file) {  
+            throw new Error('No file provided');  
+          }  
+          let formData = new FormData();
+          let headers = new Headers();
+          formData.append('file', file);
+          formData.append('album_id', 1234); //去不的相册id，id可进入相册页面用F12查看
+          headers.set('Authorization', 'Bearer xxxxxxxxxxxxx');   // 记得改自己的token，去不给的token是1234|xxxx，前面的数字和竖杠不需要，加上Bearer 变成Bearer xxxxx才能认证通过
+          headers.set('Accept', 'application/json');
+          return fetch('https://7bu.top/api/v1/upload', {    // 去不图床的API就是此链接，如果你用的其他图床就改成其他的
+            method: 'POST',
+            headers: headers,
+            body: formData,
+            mode: 'cors',
+          })
+            .then((resp) => resp.json())
+            .then((resp) => resp.data.links.url);
+        },
+    }, {"requiredMeta":["nick","mail"],"locale":{"placeholder":"昵称和邮箱为必填项，为了您能及时收到相关回复的邮件通知，请确保邮箱的正确性！"}}))
+
+    const destroyWaline = () => {
+      waline.destroy()
+    }
+
+    btf.addGlobalFn('pjax', destroyWaline, 'destroyWaline')
+  }
+
+  const loadWaline = async () => {
+    if (initFn) initWaline(initFn)
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/@waline/client@3.1.2/dist/waline.min.css')
+      const { init } = await import('https://cdn.jsdelivr.net/npm/@waline/client@3.1.2/dist/waline.min.js')
+      initFn = init || Waline.init
+      initWaline(initFn)
+      window.walineFn = initFn
+    }
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async src="/js/fps.js"></script><script defer data-pjax src="/js/readPercent.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/Linux-系统/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐧 Linux 系统<br>(33)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/服务与中间件/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚙️ 服务与中间件<br>(31)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/容器与自动化/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐳 容器与自动化<br>(15)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/网络技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🌐 网络技术<br>(14)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/资料汇编/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 资料汇编<br>(13)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/编程开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 编程开发<br>(11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/弱电与电气智能化/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚡ 弱电与电气智能化<br>(5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item" style="visibility: hidden"></div><a class="magnet_link_more"  href="https://dosbat.com/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(25% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #69e8f2}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/zisgiumi/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/19/pAUTLJf.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-09</span><a class="blog-slider__title" href="/zisgiumi/" alt="">腾讯云TCP运维题库-单选题</a><div class="blog-slider__text">腾讯云TCP运维题库-第一部分</div><a class="blog-slider__button" href="/zisgiumi/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/3h328hon/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANeWkt.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-09</span><a class="blog-slider__title" href="/3h328hon/" alt="">腾讯云TCP运维题库-多选题</a><div class="blog-slider__text">腾讯云TCP运维题库-多选题</div><a class="blog-slider__button" href="/3h328hon/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/nwi200ri/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANJXND.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-02-15</span><a class="blog-slider__title" href="/nwi200ri/" alt="">RHCSA认证考试-第一台机器</a><div class="blog-slider__text">RHCSA认证考试-第一台机器</div><a class="blog-slider__button" href="/nwi200ri/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/3gri66tg/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANJXND.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-11-15</span><a class="blog-slider__title" href="/3gri66tg/" alt="">RHCSA认证考试-附加题</a><div class="blog-slider__text">RHCSA认证考试附加题</div><a class="blog-slider__button" href="/3gri66tg/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/zzo8b94p/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/17/pANxZxP.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-02-20</span><a class="blog-slider__title" href="/zzo8b94p/" alt="">RHCSA认证考试-第二台机器</a><div class="blog-slider__text">RHCSA认证考试-第二台机器</div><a class="blog-slider__button" href="/zzo8b94p/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/p62piz46/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/26/pAwvJUS.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-12-09</span><a class="blog-slider__title" href="/p62piz46/" alt="">Git常用命令大全</a><div class="blog-slider__text">Git是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。</div><a class="blog-slider__button" href="/p62piz46/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/0hh955pk/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANe5p8.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-16</span><a class="blog-slider__title" href="/0hh955pk/" alt="">提问的智慧</a><div class="blog-slider__text">你所提技术问题的解答的好坏, 很大程度上取决于你提问的方式与此问题的难度。本指南将教你如何正确地提问以获得你满意的答案。</div><a class="blog-slider__button" href="/0hh955pk/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/j6q5pl25/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/17/pANxV2t.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-01</span><a class="blog-slider__title" href="/j6q5pl25/" alt="">Docker 备忘录</a><div class="blog-slider__text">Docker是一个用于开发、传送和运行应用程序的开放平台。Docker 使您能够将应用程序与基础设施分开，以便您可以快速交付软件。使用 Docker，您可以像管理应用程序一样管理基础设施。通过利用 Docker 的快速交付、测试和部署代码的方法，您可以显着减少编写代码和在生产中运行代码之间的延迟。在这篇文章中，我将提到我们需要或大多数用例的 docker 命令。</div><a class="blog-slider__button" href="/j6q5pl25/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --></body></html>

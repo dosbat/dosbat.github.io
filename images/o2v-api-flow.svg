@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect x="0" y="0" width="1200" height="620" fill="#F8FAFC"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#0F172A">写入与查询 API：记住这几个路径就够了</text>
+  <text x="40" y="74" font-size="14" fill="#64748B">端口 5080 = Web UI + HTTP API；组织名默认 default；流名不必预创建，第一条请求自动建</text>
+
+  <!-- 写入日志 -->
+  <rect x="40" y="106" width="540" height="150" rx="14" fill="#ECFDF5" stroke="#10B981" stroke-width="2.5"/>
+  <rect x="40" y="106" width="540" height="44" rx="14" fill="#D1FAE5"/>
+  <text x="60" y="136" font-size="16" font-weight="700" fill="#065F46">写日志 · HTTP sink</text>
+  <text x="60" y="176" font-size="14" font-weight="700" fill="#0F172A">POST /api/&lt;org&gt;/&lt;stream&gt;/_json</text>
+  <text x="60" y="204" font-size="12" fill="#475569">例：/api/default/nginx/_json</text>
+  <text x="60" y="228" font-size="12" fill="#475569">Basic 认证（root 邮箱 + 密码）· gzip · JSON / RFC3339 时间</text>
+
+  <!-- 写入指标 -->
+  <rect x="620" y="106" width="540" height="150" rx="14" fill="#F5F3FF" stroke="#7C3AED" stroke-width="2.5"/>
+  <rect x="620" y="106" width="540" height="44" rx="14" fill="#EDE9FE"/>
+  <text x="640" y="136" font-size="16" font-weight="700" fill="#5B21B6">写指标 · prometheus_remote_write</text>
+  <text x="640" y="176" font-size="14" font-weight="700" fill="#0F172A">POST /api/&lt;org&gt;/prometheus/api/v1/write</text>
+  <text x="640" y="204" font-size="12" fill="#475569">例：/api/default/prometheus/api/v1/write</text>
+  <text x="640" y="228" font-size="12" fill="#DC2626">务必关 healthcheck，否则启动报 405</text>
+
+  <!-- 查询日志 -->
+  <rect x="40" y="278" width="540" height="150" rx="14" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5"/>
+  <rect x="40" y="278" width="540" height="44" rx="14" fill="#DBEAFE"/>
+  <text x="60" y="308" font-size="16" font-weight="700" fill="#1E40AF">查日志 · SQL（_search）</text>
+  <text x="60" y="348" font-size="14" font-weight="700" fill="#0F172A">POST /api/&lt;org&gt;/_search</text>
+  <text x="60" y="376" font-size="12" fill="#475569">body: query.sql + start_time / end_time</text>
+  <text x="60" y="400" font-size="12" fill="#DC2626">时间单位是微秒！不是毫秒/秒</text>
+
+  <!-- 查询指标 -->
+  <rect x="620" y="278" width="540" height="150" rx="14" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2.5"/>
+  <rect x="620" y="278" width="540" height="44" rx="14" fill="#FEF3C7"/>
+  <text x="640" y="308" font-size="16" font-weight="700" fill="#92400E">查指标 · PromQL 或 SQL</text>
+  <text x="640" y="348" font-size="14" font-weight="700" fill="#0F172A">UI 的 Metrics 页面直接写 PromQL</text>
+  <text x="640" y="376" font-size="12" fill="#475569">日志/追踪 = SQL；指标 = PromQL 或 SQL</text>
+  <text x="640" y="400" font-size="12" fill="#475569">比 Loki/Prom/Tempo 三套语言更省脑</text>
+
+  <!-- curl 测试示例 -->
+  <rect x="40" y="450" width="720" height="146" rx="12" fill="#1E293B"/>
+  <text x="60" y="480" font-size="13" font-weight="700" fill="#93C5FD">一条命令写入测试日志</text>
+  <text x="60" y="510" font-size="12" fill="#E2E8F0" font-family="Consolas, monospace">curl -u "admin@example.com:密码" \</text>
+  <text x="60" y="532" font-size="12" fill="#E2E8F0" font-family="Consolas, monospace">  -X POST http://127.0.0.1:5080/api/default/default/_json \</text>
+  <text x="60" y="554" font-size="12" fill="#E2E8F0" font-family="Consolas, monospace">  -H 'Content-Type: application/json' \</text>
+  <text x="60" y="576" font-size="12" fill="#E2E8F0" font-family="Consolas, monospace">  -d '{"level":"info","message":"Hello O2!"}'</text>
+
+  <!-- 右侧提示 -->
+  <rect x="786" y="450" width="374" height="146" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="806" y="480" font-size="14" font-weight="700" fill="#0F172A">返回成功</text>
+  <text x="806" y="510" font-size="12" fill="#475569" font-family="Consolas, monospace">{"code":200,"status":[{</text>
+  <text x="806" y="532" font-size="12" fill="#475569" font-family="Consolas, monospace">"name":"default",</text>
+  <text x="806" y="554" font-size="12" fill="#475569" font-family="Consolas, monospace">"successful":1,</text>
+  <text x="806" y="576" font-size="12" fill="#475569" font-family="Consolas, monospace">"failed":0}]}</text>
+</svg>
