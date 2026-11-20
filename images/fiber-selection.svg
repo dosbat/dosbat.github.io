@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+  </defs>
+  <rect width="960" height="520" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">光纤收发器选型速查表</text>
+  <text x="480" y="70" text-anchor="middle" font-size="14" fill="#64748b">按场景对号入座，四步锁定型号</text>
+
+  <!-- 表头 -->
+  <rect x="30" y="95" width="900" height="44" rx="6" fill="#1e3a5f"/>
+  <text x="120" y="124" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">选型维度</text>
+  <text x="400" y="124" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">怎么选</text>
+  <text x="760" y="124" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">常见坑</text>
+
+  <!-- 行1 -->
+  <rect x="30" y="139" width="900" height="70" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="30" y="139" width="180" height="70" fill="#e0f2fe"/>
+  <text x="120" y="180" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">① 传输距离</text>
+  <text x="250" y="168" font-size="13" fill="#334155">≤2km → 多模；2~20km → 单模；</text>
+  <text x="250" y="191" font-size="13" fill="#334155">&gt;20km → 单模长距（40/80/120km）</text>
+  <text x="610" y="168" font-size="12" fill="#b91c1c">多模跑单模距离 → 丢包不通</text>
+  <text x="610" y="191" font-size="12" fill="#b91c1c">长距模块功率大，近距要加衰减</text>
+
+  <!-- 行2 -->
+  <rect x="30" y="209" width="900" height="70" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="30" y="209" width="180" height="70" fill="#e0f2fe"/>
+  <text x="120" y="250" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">② 速率</text>
+  <text x="250" y="238" font-size="13" fill="#334155">百兆 / 千兆 / 万兆，与两端设备</text>
+  <text x="250" y="261" font-size="13" fill="#334155">端口速率一致；千兆为主流</text>
+  <text x="610" y="238" font-size="12" fill="#b91c1c">百兆收发器接千兆 → 只能跑百兆</text>
+  <text x="610" y="261" font-size="12" fill="#b91c1c">确认是电口速率还是光口速率</text>
+
+  <!-- 行3 -->
+  <rect x="30" y="279" width="900" height="70" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="30" y="279" width="180" height="70" fill="#e0f2fe"/>
+  <text x="120" y="320" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">③ 光纤资源</text>
+  <text x="250" y="308" font-size="13" fill="#334155">两根纤 → 双纤；只剩一根纤 → 单纤</text>
+  <text x="250" y="331" font-size="13" fill="#334155">BIDI；接口看 SC / FC / LC</text>
+  <text x="610" y="308" font-size="12" fill="#b91c1c">单纤 A/B 端买反 → 不通</text>
+  <text x="610" y="331" font-size="12" fill="#b91c1c">接口不匹配 → 转接头或换线</text>
+
+  <!-- 行4 -->
+  <rect x="30" y="349" width="900" height="70" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="30" y="349" width="180" height="70" fill="#e0f2fe"/>
+  <text x="120" y="390" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">④ 安装方式</text>
+  <text x="250" y="378" font-size="13" fill="#334155">机柜集中 → 机架式（14 槽卡式）；</text>
+  <text x="250" y="401" font-size="13" fill="#334155">现场/柜内 → 导轨式或桌面式</text>
+  <text x="610" y="378" font-size="12" fill="#b91c1c">导轨式要配 DIN 导轨和电源</text>
+  <text x="610" y="401" font-size="12" fill="#b91c1c">确认供电 220V 还是 5V/12V</text>
+
+  <!-- 底部口诀 -->
+  <rect x="30" y="435" width="900" height="65" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="50" y="462" font-size="14" font-weight="bold" fill="#b45309">采购口诀</text>
+  <text x="50" y="488" font-size="13" fill="#78350f">先定距离选单多模 → 再定速率 → 数清光纤根数选单/双纤 → 看安装位置定形态。成对购买，型号必须一致。</text>
+</svg>

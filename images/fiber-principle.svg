@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+    <marker id="arrowgray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="960" height="480" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">光纤收发器工作原理：电信号 ⇄ 光信号</text>
+  <text x="480" y="70" text-anchor="middle" font-size="14" fill="#64748b">发送端把电信号转成光信号，接收端再把光信号还原成电信号——中间用光纤传输，突破网线的 100 米限制</text>
+
+  <!-- 左：以太网设备 -->
+  <rect x="30" y="200" width="120" height="90" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+  <text x="90" y="238" text-anchor="middle" font-size="16" font-weight="bold" fill="#334155">交换机</text>
+  <text x="90" y="262" text-anchor="middle" font-size="13" fill="#64748b">以太网设备</text>
+
+  <!-- 网线 -->
+  <line x1="150" y1="245" x2="222" y2="245" stroke="#64748b" stroke-width="3" marker-end="url(#arrowgray)"/>
+  <text x="186" y="232" text-anchor="middle" font-size="12" fill="#64748b">网线</text>
+  <text x="186" y="270" text-anchor="middle" font-size="11" fill="#94a3b8">电信号</text>
+
+  <!-- 收发器 A -->
+  <rect x="225" y="170" width="215" height="150" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="332" y="158" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">光纤收发器 A（发送端）</text>
+  <rect x="240" y="195" width="70" height="45" rx="6" fill="#e0f2fe" stroke="#0891b2"/>
+  <text x="275" y="215" text-anchor="middle" font-size="12" fill="#0e7490">RJ45</text>
+  <text x="275" y="231" text-anchor="middle" font-size="11" fill="#0891b2">电口</text>
+  <rect x="322" y="195" width="70" height="45" rx="6" fill="#e0f2fe" stroke="#0891b2"/>
+  <text x="357" y="215" text-anchor="middle" font-size="12" fill="#0e7490">PHY</text>
+  <text x="357" y="231" text-anchor="middle" font-size="11" fill="#0891b2">处理芯片</text>
+  <rect x="404" y="195" width="26" height="45" rx="4" fill="#fef3c7" stroke="#ea580c"/>
+  <text x="417" y="215" text-anchor="middle" font-size="11" fill="#c2410c">光</text>
+  <text x="417" y="231" text-anchor="middle" font-size="11" fill="#c2410c">模</text>
+  <text x="332" y="278" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">电 → 光转换（E/O）</text>
+  <text x="332" y="300" text-anchor="middle" font-size="11" fill="#64748b">激光二极管发光</text>
+
+  <!-- 光纤 -->
+  <line x1="440" y1="217" x2="520" y2="217" stroke="#ea580c" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="480" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">光纤</text>
+
+  <!-- 回程信号标注 -->
+  <line x1="520" y1="262" x2="440" y2="262" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrowgray)"/>
+  <text x="480" y="282" text-anchor="middle" font-size="10" fill="#94a3b8">另一根回传</text>
+
+  <!-- 收发器 B -->
+  <rect x="522" y="170" width="215" height="150" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="629" y="158" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">光纤收发器 B（接收端）</text>
+  <rect x="532" y="195" width="26" height="45" rx="4" fill="#fef3c7" stroke="#ea580c"/>
+  <text x="545" y="215" text-anchor="middle" font-size="11" fill="#c2410c">光</text>
+  <text x="545" y="231" text-anchor="middle" font-size="11" fill="#c2410c">模</text>
+  <rect x="570" y="195" width="70" height="45" rx="6" fill="#e0f2fe" stroke="#0891b2"/>
+  <text x="605" y="215" text-anchor="middle" font-size="12" fill="#0e7490">PHY</text>
+  <text x="605" y="231" text-anchor="middle" font-size="11" fill="#0891b2">处理芯片</text>
+  <rect x="652" y="195" width="70" height="45" rx="6" fill="#e0f2fe" stroke="#0891b2"/>
+  <text x="687" y="215" text-anchor="middle" font-size="12" fill="#0e7490">RJ45</text>
+  <text x="687" y="231" text-anchor="middle" font-size="11" fill="#0891b2">电口</text>
+  <text x="629" y="278" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">光 → 电转换（O/E）</text>
+  <text x="629" y="300" text-anchor="middle" font-size="11" fill="#64748b">光电二极管接收</text>
+
+  <!-- 网线右 -->
+  <line x1="738" y1="245" x2="810" y2="245" stroke="#64748b" stroke-width="3" marker-end="url(#arrowgray)"/>
+  <text x="774" y="232" text-anchor="middle" font-size="12" fill="#64748b">网线</text>
+  <text x="774" y="270" text-anchor="middle" font-size="11" fill="#94a3b8">电信号</text>
+
+  <!-- 右：以太网设备 -->
+  <rect x="812" y="200" width="120" height="90" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+  <text x="872" y="238" text-anchor="middle" font-size="16" font-weight="bold" fill="#334155">交换机</text>
+  <text x="872" y="262" text-anchor="middle" font-size="13" fill="#64748b">以太网设备</text>
+
+  <!-- 底部说明 -->
+  <rect x="30" y="360" width="900" height="95" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="50" y="388" font-size="14" font-weight="bold" fill="#1e3a5f">关键点</text>
+  <text x="50" y="414" font-size="13" fill="#475569">① 收发器成对使用，一端电转光、一端光转电，对两端设备完全透明——就像一根「超长网线」。</text>
+  <text x="50" y="438" font-size="13" fill="#475569">② 常用波长：多模 850nm，单模 1310nm / 1550nm；TX（发）与 RX（收）波长要交叉对应。</text>
+</svg>

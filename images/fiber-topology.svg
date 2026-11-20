@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+  </defs>
+  <rect width="960" height="440" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">典型组网：用光纤收发器连接远距离机房</text>
+  <text x="480" y="70" text-anchor="middle" font-size="14" fill="#64748b">网线超过 100 米信号就衰减，光纤可轻松传几公里到几十公里</text>
+
+  <!-- 机房A -->
+  <rect x="30" y="120" width="250" height="200" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="155" y="148" text-anchor="middle" font-size="15" font-weight="bold" fill="#475569">机房 A（监控中心）</text>
+  <rect x="60" y="175" width="190" height="55" rx="8" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="155" y="208" text-anchor="middle" font-size="15" fill="#0e7490">核心交换机 / NVR</text>
+  <line x1="155" y1="230" x2="155" y2="262" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="200" y="250" font-size="11" fill="#64748b">网线 ≤100m</text>
+  <rect x="70" y="265" width="170" height="42" rx="8" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <text x="155" y="292" text-anchor="middle" font-size="14" font-weight="bold" fill="#0e7490">光纤收发器 A</text>
+
+  <!-- 光纤链路 -->
+  <line x1="240" y1="286" x2="720" y2="286" stroke="#ea580c" stroke-width="5"/>
+  <circle cx="480" cy="286" r="6" fill="#ea580c"/>
+  <rect x="400" y="248" width="160" height="30" rx="6" fill="#fef3c7" stroke="#ea580c"/>
+  <text x="480" y="268" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">光纤 · 单模可达 20km+</text>
+  <text x="480" y="320" text-anchor="middle" font-size="12" fill="#94a3b8">多模 2km / 单模 20~120km</text>
+
+  <!-- 机房B -->
+  <rect x="680" y="120" width="250" height="200" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="805" y="148" text-anchor="middle" font-size="15" font-weight="bold" fill="#475569">机房 B（前端/远端）</text>
+  <rect x="720" y="265" width="170" height="42" rx="8" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <text x="805" y="292" text-anchor="middle" font-size="14" font-weight="bold" fill="#0e7490">光纤收发器 B</text>
+  <line x1="805" y1="265" x2="805" y2="233" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="740" y="250" font-size="11" fill="#64748b">网线 ≤100m</text>
+  <rect x="710" y="175" width="190" height="55" rx="8" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="805" y="208" text-anchor="middle" font-size="15" fill="#0e7490">接入交换机 / 摄像头</text>
+
+  <!-- 底部场景 -->
+  <rect x="30" y="350" width="900" height="70" rx="8" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="50" y="378" font-size="14" font-weight="bold" fill="#1e3a5f">常见场景</text>
+  <text x="50" y="404" font-size="13" fill="#475569">监控跨楼布线 · 园区网互联 · 电梯/车库远距离接入 · 厂区弱电井到机房 · 临时应急打通网络</text>
+</svg>

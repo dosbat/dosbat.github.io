@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="960" height="500" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">两个维度看懂光纤收发器分类</text>
+
+  <!-- 左：按光纤类型 -->
+  <rect x="25" y="70" width="445" height="400" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="247" y="102" text-anchor="middle" font-size="18" font-weight="bold" fill="#0e7490">维度一：按光纤类型（芯径）</text>
+
+  <!-- 多模 -->
+  <rect x="45" y="122" width="405" height="140" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="65" y="150" font-size="16" font-weight="bold" fill="#c2410c">多模 MMF（橙色/水绿跳线）</text>
+  <circle cx="88" cy="200" r="26" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+  <circle cx="88" cy="200" r="9" fill="#ea580c"/>
+  <text x="88" y="248" text-anchor="middle" font-size="10" fill="#9a3412">芯径 50/62.5μm</text>
+  <text x="145" y="180" font-size="13" fill="#475569">• 光源：LED / VCSEL，散射光路</text>
+  <text x="145" y="204" font-size="13" fill="#475569">• 传输距离：2km 以内</text>
+  <text x="145" y="228" font-size="13" fill="#475569">• 带宽低、距离短，成本较低</text>
+  <text x="145" y="252" font-size="13" fill="#475569">• 波长：850nm</text>
+
+  <!-- 单模 -->
+  <rect x="45" y="275" width="405" height="140" rx="8" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="65" y="303" font-size="16" font-weight="bold" fill="#1e40af">单模 SMF（黄色跳线）</text>
+  <circle cx="88" cy="353" r="26" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+  <circle cx="88" cy="353" r="4" fill="#1d4ed8"/>
+  <text x="88" y="400" text-anchor="middle" font-size="10" fill="#1e40af">芯径 9μm</text>
+  <text x="145" y="333" font-size="13" fill="#475569">• 光源：激光器，直线传播</text>
+  <text x="145" y="357" font-size="13" fill="#475569">• 传输距离：20~120km</text>
+  <text x="145" y="381" font-size="13" fill="#475569">• 带宽高、距离远，最常用</text>
+  <text x="145" y="405" font-size="13" fill="#475569">• 波长：1310 / 1550nm</text>
+
+  <!-- 右：按纤芯数量 -->
+  <rect x="490" y="70" width="445" height="400" rx="12" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text x="712" y="102" text-anchor="middle" font-size="18" font-weight="bold" fill="#15803d">维度二：按纤芯数量</text>
+
+  <!-- 双纤 -->
+  <rect x="510" y="122" width="405" height="140" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="530" y="150" font-size="16" font-weight="bold" fill="#15803d">双纤收发器（SC 两个口）</text>
+  <line x1="560" y1="185" x2="640" y2="185" stroke="#16a34a" stroke-width="4"/>
+  <line x1="560" y1="215" x2="640" y2="215" stroke="#16a34a" stroke-width="4"/>
+  <text x="600" y="240" text-anchor="middle" font-size="11" fill="#166534">TX 发 / RX 收 各一根</text>
+  <text x="665" y="180" font-size="13" fill="#475569">• 一根发、一根收</text>
+  <text x="665" y="204" font-size="13" fill="#475569">• TX 接对端 RX，交叉连</text>
+  <text x="665" y="228" font-size="13" fill="#475569">• 接反不通，对调即可</text>
+  <text x="665" y="252" font-size="13" fill="#475569">• 稳定可靠，最常见</text>
+
+  <!-- 单纤 -->
+  <rect x="510" y="275" width="405" height="140" rx="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="530" y="303" font-size="16" font-weight="bold" fill="#7e22ce">单纤收发器（BIDI 单纤双向）</text>
+  <line x1="560" y1="358" x2="640" y2="358" stroke="#9333ea" stroke-width="4"/>
+  <text x="600" y="383" text-anchor="middle" font-size="11" fill="#6b21a8">一根纤双向传输</text>
+  <text x="665" y="333" font-size="13" fill="#475569">• WDM 波分复用</text>
+  <text x="665" y="357" font-size="13" fill="#475569">• 一端 1310 发 / 一端 1550 发</text>
+  <text x="665" y="381" font-size="13" fill="#475569">• 成对使用，A/B 端不能互换</text>
+  <text x="665" y="405" font-size="13" fill="#475569">• 省一半光纤资源</text>
+
+  <text x="480" y="490" text-anchor="middle" font-size="13" fill="#64748b">采购时两个维度都要确认：单模还是多模、单纤还是双纤——搞混了就通不了</text>
+</svg>

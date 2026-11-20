@@ -4,6 +4,41 @@
   
     
     <entry>
+      <title>光纤收发器是什么？一篇讲透原理、选型与组网</title>
+      <link href="/2026/11/20/%E5%85%89%E7%BA%A4%E6%94%B6%E5%8F%91%E5%99%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%B8%80%E7%AF%87%E8%AE%B2%E9%80%8F%E5%8E%9F%E7%90%86%E3%80%81%E9%80%89%E5%9E%8B%E4%B8%8E%E7%BB%84%E7%BD%91/"/>
+      <url>/2026/11/20/%E5%85%89%E7%BA%A4%E6%94%B6%E5%8F%91%E5%99%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%B8%80%E7%AF%87%E8%AE%B2%E9%80%8F%E5%8E%9F%E7%90%86%E3%80%81%E9%80%89%E5%9E%8B%E4%B8%8E%E7%BB%84%E7%BD%91/</url>
+      
+        <content type="html"><![CDATA[<p>做弱电、盯机房，迟早会碰到一个巴掌大的小铁盒——一头插网线，一头插光纤，中间亮着几个绿灯。它就是<strong>光纤收发器</strong>，也叫光电转换器。</p><p>别看它不起眼，两栋楼之间的监控、园区网的远距离互联、电梯和车库的接入，几乎都靠它打通。这篇把它讲透：它到底干了什么、怎么分类、怎么选、接线怎么接、不通了怎么查。</p><h2 id="一、它到底是干什么的"><a href="#一、它到底是干什么的" class="headerlink" title="一、它到底是干什么的"></a>一、它到底是干什么的</h2><p>一句话：<strong>把网线的电信号和光纤的光信号互相转换，让以太网能传得更远。</strong></p><p>网线（双绞线）有个硬伤——<strong>有效传输距离只有 100 米</strong>。超过这个长度，信号衰减、丢包、协商速率掉下来，再长干脆不通。而光纤轻松传几公里到几十公里。</p><p>光纤收发器就是接在中间的翻译官：</p><ul><li>发送端：把交换机出来的<strong>电信号</strong>转成<strong>光信号</strong>，送进光纤</li><li>接收端：把光纤里的<strong>光信号</strong>还原成<strong>电信号</strong>，交给对端交换机</li></ul><p>对两端的设备来说，它完全透明——<strong>就像一根超长的网线</strong>。交换机不知道中间隔了光纤，配置不用改任何东西。</p><p><img src="/images/fiber-principle.svg" alt="光纤收发器工作原理"></p><h3 id="为什么不用交换机上的光口"><a href="#为什么不用交换机上的光口" class="headerlink" title="为什么不用交换机上的光口"></a>为什么不用交换机上的光口</h3><p>有人会问：现在交换机不都有 SFP 光口吗，插个光模块不就行了？</p><p>确实，核心交换机走光口是主流。但光纤收发器有它不可替代的场景：</p><div class="table-container"><table><thead><tr><th>场景</th><th>用收发器</th><th>用光模块</th></tr></thead><tbody><tr><td>老设备只有电口</td><td>✅ 加个收发器就能接光纤</td><td>❌ 没有光口插不了</td></tr><tr><td>远距离单条链路</td><td>✅ 成对即用，不用动交换机</td><td>需要交换机有空余光口</td></tr><tr><td>现场/柜内远端接入</td><td>✅ 导轨式，就近安装供电</td><td>光模块在交换机侧，远端还是要布线</td></tr><tr><td>成本敏感的点位</td><td>✅ 一对几百块搞定</td><td>光模块 + 带光口交换机成本高</td></tr></tbody></table></div><p>简单说：<strong>光模块是”给设备加光口”，收发器是”给链路加光纤段”</strong>。很多现场是两者配合用的。</p><h2 id="二、工作原理：六步走完一次转换"><a href="#二、工作原理：六步走完一次转换" class="headerlink" title="二、工作原理：六步走完一次转换"></a>二、工作原理：六步走完一次转换</h2><p>拆开看，一台收发器的核心就三块：<strong>RJ45 电口 → PHY 处理芯片 → 光模块</strong>。信号走一遍是这样的：</p><p><strong>1. 电信号进入</strong><br>交换机的 RJ45 口送出差分电信号，通过网线进入收发器的电口。</p><p><strong>2. PHY 芯片处理</strong><br>PHY（物理层芯片）负责信号的编码解码、时钟恢复，把以太网帧整理干净。</p><p><strong>3. 电转光（E/O）</strong><br>芯片驱动光模块里的<strong>激光二极管</strong>（单模）或 <strong>LED/VCSEL</strong>（多模）发光，电信号被调制成光脉冲。</p><p><strong>4. 光纤传输</strong><br>光脉冲在光纤里靠全反射向前传播，衰减小、不受电磁干扰——这是光纤比网线强的根本原因。</p><p><strong>5. 光转电（O/E）</strong><br>对端收发器的<strong>光电二极管</strong>接收到光信号，还原成电信号。</p><p><strong>6. 送回以太网</strong><br>对端 PHY 再处理一遍，从 RJ45 口送进交换机。整个过程是双向的，收和发同时跑。</p><blockquote><p><strong> TX 与 RX 的坑</strong>：双纤收发器有两个光口，标 TX（发）和 RX（收）。一端 TX 必须接对端 RX，<strong>交叉对应</strong>。接反了灯不亮、链路不通，把两根纤对调一下就好——这是新手最常踩的坑。</p></blockquote><h2 id="三、两个维度看懂分类"><a href="#三、两个维度看懂分类" class="headerlink" title="三、两个维度看懂分类"></a>三、两个维度看懂分类</h2><p>市面上的收发器名字五花八门：单模、多模、单纤、双纤、百兆、千兆……其实就两个独立维度，交叉组合。</p><p><img src="/images/fiber-types.svg" alt="光纤收发器分类"></p><h3 id="维度一：单模还是多模"><a href="#维度一：单模还是多模" class="headerlink" title="维度一：单模还是多模"></a>维度一：单模还是多模</h3><p>按光纤的<strong>芯径</strong>分：</p><ul><li><strong>多模（MMF）</strong>：芯径 50/62.5μm，光走多条路径、散射传播，距离短（2km 内），跳线常是<strong>橙色或水绿色</strong>，波长 850nm</li><li><strong>单模（SMF）</strong>：芯径 9μm，光几乎直线传播，距离远（20~120km），跳线是<strong>黄色</strong>，波长 1310/1550nm</li></ul><blockquote><p>一句话记：<strong>近距离、省钱用多模；远距离、主流用单模</strong>。实际工程里单模用得最多。</p></blockquote><h3 id="维度二：单纤还是双纤"><a href="#维度二：单纤还是双纤" class="headerlink" title="维度二：单纤还是双纤"></a>维度二：单纤还是双纤</h3><p>按用几根光纤分：</p><ul><li><strong>双纤</strong>：一根发（TX）、一根收（RX），交叉连接，最稳定、最常见</li><li><strong>单纤（BIDI）</strong>：用 <strong>WDM 波分复用</strong>技术，一根纤上跑两个波长（一端 1310nm 发、另一端 1550nm 发），双向传输，省一半光纤</li></ul><blockquote><p><strong>单纤的坑</strong>：单纤收发器分 <strong>A 端和 B 端</strong>，必须成对买、波长互补。买两个 A 端是通不了的——采购时一定要跟卖家说清楚一端 A、一端 B。</p></blockquote><h3 id="还有两个常见说法"><a href="#还有两个常见说法" class="headerlink" title="还有两个常见说法"></a>还有两个常见说法</h3><ul><li><strong>百兆 / 千兆 / 万兆</strong>：指速率，要和两端设备端口速率匹配，现在主流是千兆</li><li><strong>机架式 / 导轨式 / 桌面式</strong>：指安装形态，机柜集中用机架式（14 槽卡式），现场柜内用导轨式</li></ul><h2 id="四、选型四步法"><a href="#四、选型四步法" class="headerlink" title="四、选型四步法"></a>四、选型四步法</h2><p>把上面的维度串起来，照着走不会错：</p><p><img src="/images/fiber-selection.svg" alt="光纤收发器选型速查"></p><p><strong>第一步，定距离选单多模。</strong> 2km 内多模，2~20km 单模，超过 20km 上单模长距模块（40/80/120km）。</p><p><strong>第二步，定速率。</strong> 百兆/千兆/万兆，跟两端端口一致。注意有些收发器电口是千兆、光口是百兆，买前看清参数。</p><p><strong>第三步，数光纤根数。</strong> 有两根纤用双纤，只剩一根用单纤 BIDI。同时确认接口类型（SC/FC/LC）对得上。</p><p><strong>第四步，定安装形态。</strong> 机柜集中管理用机架式，现场柜内用导轨式，临时用桌面式。别忘了确认供电——有 220V 交流的，也有 5V/12V 直流的，柜内通常用于后者。</p><blockquote><p><strong>长距模块的反向坑</strong>：40km 以上的模块发射功率大，如果只传 500 米，光功率过强会”晃瞎”对端接收器，反而丢包。这种情况要加<strong>光衰减器</strong>。短距离别盲目上长距模块。</p></blockquote><h2 id="五、典型组网：连接两个远距离机房"><a href="#五、典型组网：连接两个远距离机房" class="headerlink" title="五、典型组网：连接两个远距离机房"></a>五、典型组网：连接两个远距离机房</h2><p>最常见的用法是这样：</p><p><img src="/images/fiber-topology.svg" alt="光纤收发器组网拓扑"></p><p>机房 A 的核心交换机，用网线连到收发器 A；收发器 A 通过光纤（可能几公里、几十公里）连到远端机房的收发器 B；收发器 B 再用网线接前端的接入交换机或摄像头。</p><p><strong>典型场景：</strong></p><ul><li>监控跨楼布线：NVR 在中心机房，摄像头在另一栋楼</li><li>园区网互联：办公楼到厂房、到仓库</li><li>电梯/车库接入：弱电井到机房超过 100 米</li><li>厂区远距离点位：配电房、水泵房等分散点位回传</li></ul><p><strong>接线检查清单：</strong></p><ol><li>两端收发器<strong>型号一致</strong>（同品牌、同速率、同波长）</li><li>单纤分 A/B 端，<strong>成对配对</strong></li><li>双纤 TX↔RX <strong>交叉连接</strong></li><li>光接口清洁，无灰尘、无划痕（<strong>别用手摸陶瓷芯</strong>）</li><li>供电正常，PWR 灯亮</li><li>上电后看 LINK 灯：光口 LINK 亮说明光纤链路通，电口 LINK 亮说明网线通</li></ol><h2 id="六、不通了怎么查"><a href="#六、不通了怎么查" class="headerlink" title="六、不通了怎么查"></a>六、不通了怎么查</h2><p>收发器故障其实就那几类，按顺序查：</p><p><strong>1. PWR 灯不亮</strong> → 查电源。适配器坏了、供电电压不对、接触不良。</p><p><strong>2. 光口 LINK 灯不亮</strong>（最常见）→ 按这个顺序排查：</p><ul><li>光纤接反了（双纤 TX/RX 对调）</li><li>单模多模混用了（黄色纤配了多模模块）</li><li>单纤 A/B 端买反了</li><li>光模块型号不匹配（波长不一致）</li><li>光纤断了 or 接头脏了（清洁接头、换根纤试）</li><li>距离超了模块能力（加中继或换长距模块）</li></ul><p><strong>3. 光口 LINK 亮，但网络不通</strong> → 问题多半不在光纤：</p><ul><li>网线问题（测线仪打一下，8 芯是否全通）</li><li>两端端口速率/双工不匹配（强制千兆全双工试试）</li><li>IP 地址配置错误、VLAN 没放行</li><li>收发器死机（断电重启，长期建议选带看门狗的工业级）</li></ul><p><strong>4. 时通时断、丢包</strong> →</p><ul><li>光功率临界（距离太长、接头脏、光纤弯折过度）</li><li>长距模块近距离用，光功率过强（加衰减器）</li><li>供电不稳（尤其 12V 直流，电压跌落）</li><li>设备过热（柜内温度高，工业级 -40~75℃ 的更稳）</li></ul><blockquote><p><strong>一个实用技巧</strong>：判断是光纤段还是网线段的故障，用<strong>替换法</strong>最快——先把一对收发器放在桌上，用一根短光纤直连，两个电口接电脑互 ping。通了，说明收发器没问题，故障在中间的光纤链路（布线、接头、距离）；不通，就是收发器或配置的问题。这样一步就能把故障范围砍一半。</p></blockquote><h2 id="七、写在最后"><a href="#七、写在最后" class="headerlink" title="七、写在最后"></a>七、写在最后</h2><p>光纤收发器是个”简单到没存在感，但出问题很要命”的设备。记住三条就够了：</p><ol><li><strong>它是对称的</strong>：成对使用、型号一致、供电正常，这是能通的前提。</li><li><strong>光口 LINK 灯是分水岭</strong>：灯不亮查光纤（接反、混用、波长、距离），灯亮但不通查网线和数据配置。</li><li><strong>采购前想清楚四件事</strong>：距离、速率、光纤根数、安装形态——这四项定了，型号基本就锁死了。</li></ol><p>把这套逻辑记住，下次面对那个亮着绿灯的小铁盒，就不慌了。</p><hr><p><strong>相关阅读</strong></p><ul><li><a href="https://dosbat.com/2026/11/15/弱电机房布线验收清单/">弱电机房布线验收清单</a></li><li><a href="https://dosbat.com/2025/09/17/华为三层交换机配置ACL实现VLAN三层隔离/">华为三层交换机配置 ACL，实现 VLAN 三层隔离</a></li><li><a href="https://dosbat.com/2026/11/17/柜体里的心脏：开关电源原理、选型与故障排查/">柜体里的心脏：开关电源原理、选型与故障排查</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络技术 </category>
+          
+          <category> 硬件基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 光纤收发器 </tag>
+            
+            <tag> 光纤 </tag>
+            
+            <tag> 网络技术 </tag>
+            
+            <tag> 弱电 </tag>
+            
+            <tag> 组网 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>柜体里的&quot;心脏&quot;：开关电源原理、选型与故障排查</title>
       <link href="/2026/11/17/%E6%9F%9C%E4%BD%93%E9%87%8C%E7%9A%84%E5%BF%83%E8%84%8F%EF%BC%9A%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%8E%9F%E7%90%86%E3%80%81%E9%80%89%E5%9E%8B%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/"/>
       <url>/2026/11/17/%E6%9F%9C%E4%BD%93%E9%87%8C%E7%9A%84%E5%BF%83%E8%84%8F%EF%BC%9A%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%8E%9F%E7%90%86%E3%80%81%E9%80%89%E5%9E%8B%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/</url>
