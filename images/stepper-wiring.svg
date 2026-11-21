@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+  </defs>
+  <rect width="960" height="500" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">步进驱动器实战接线（共阴极接法）</text>
+  <text x="480" y="70" text-anchor="middle" font-size="14" fill="#64748b">以常见两相混合式步进驱动器为例，信号侧与电机侧分开接</text>
+
+  <!-- 控制器侧 -->
+  <rect x="25" y="115" width="195" height="185" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="122" y="145" text-anchor="middle" font-size="16" font-weight="bold" fill="#0e7490">PLC / 控制器</text>
+  <rect x="45" y="165" width="155" height="30" rx="4" fill="#e0f2fe"/>
+  <text x="122" y="186" text-anchor="middle" font-size="12" fill="#0e7490">PUL+　PUL-（脉冲）</text>
+  <rect x="45" y="205" width="155" height="30" rx="4" fill="#e0f2fe"/>
+  <text x="122" y="226" text-anchor="middle" font-size="12" fill="#0e7490">DIR+　DIR-（方向）</text>
+  <rect x="45" y="245" width="155" height="30" rx="4" fill="#e0f2fe"/>
+  <text x="122" y="266" text-anchor="middle" font-size="12" fill="#0e7490">ENA+　ENA-（使能）</text>
+
+  <!-- 信号线 -->
+  <line x1="220" y1="180" x2="330" y2="180" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="220" y1="220" x2="330" y2="220" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="220" y1="260" x2="330" y2="260" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- 驱动器 -->
+  <rect x="333" y="115" width="270" height="250" rx="10" fill="#ffffff" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="468" y="145" text-anchor="middle" font-size="16" font-weight="bold" fill="#c2410c">两相步进驱动器</text>
+  <rect x="355" y="160" width="226" height="115" rx="6" fill="#fef3c7" stroke="#ea580c"/>
+  <text x="468" y="182" text-anchor="middle" font-size="12" fill="#9a3412">信号输入端子</text>
+  <text x="468" y="204" text-anchor="middle" font-size="12" fill="#475569">PUL- / DIR- / ENA-（信号负）</text>
+  <text x="468" y="226" text-anchor="middle" font-size="12" fill="#475569">PUL+ / DIR+ / ENA+ 接 +5V</text>
+  <text x="468" y="255" text-anchor="middle" font-size="11" fill="#b91c1c">共阴极：负端接信号，正端并接 5V</text>
+  <rect x="355" y="288" width="226" height="62" rx="6" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="468" y="310" text-anchor="middle" font-size="12" fill="#475569">拨码开关：电流 / 细分设置</text>
+  <text x="468" y="332" text-anchor="middle" font-size="11" fill="#94a3b8">如 1.5A / 16 细分</text>
+
+  <!-- 电源线 -->
+  <line x1="468" y1="365" x2="468" y2="410" stroke="#dc2626" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="490" y="392" font-size="12" fill="#dc2626">DC 24~48V</text>
+  <rect x="380" y="412" width="176" height="38" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="468" y="437" text-anchor="middle" font-size="13" font-weight="bold" fill="#b91c1c">开关电源（注意功率余量）</text>
+
+  <!-- 电机线 -->
+  <line x1="603" y1="200" x2="690" y2="200" stroke="#ea580c" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="646" y="188" text-anchor="middle" font-size="11" fill="#ea580c">A+ A- B+ B-</text>
+  <rect x="693" y="150" width="240" height="130" rx="10" fill="#ffffff" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="813" y="180" text-anchor="middle" font-size="16" font-weight="bold" fill="#c2410c">两相步进电机</text>
+  <circle cx="813" cy="225" r="32" fill="#fef3c7" stroke="#ea580c" stroke-width="2"/>
+  <line x1="813" y1="225" x2="813" y2="198" stroke="#ea580c" stroke-width="3"/>
+  <line x1="813" y1="225" x2="834" y2="237" stroke="#ea580c" stroke-width="3"/>
+  <text x="813" y="270" text-anchor="middle" font-size="11" fill="#c2410c">四根线，别接错相</text>
+
+  <!-- 底部要点 -->
+  <rect x="25" y="462" width="908" height="30" rx="6" fill="#fffbeb" stroke="#f59e0b"/>
+  <text x="40" y="482" font-size="12" fill="#78350f">要点：共阴/共阳要与驱动器拨码一致；电机线按 A+/A-/B+/B- 对应；电流拨码别超过电机额定电流；上电前先接好电机。</text>
+</svg>

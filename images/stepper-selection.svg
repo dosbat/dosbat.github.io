@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="960" height="520" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">步进电机选型速查与丢步排查</text>
+
+  <!-- 左：选型 -->
+  <rect x="25" y="70" width="560" height="420" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="305" y="102" text-anchor="middle" font-size="17" font-weight="bold" fill="#0e7490">选型四要素</text>
+
+  <rect x="45" y="120" width="520" height="82" rx="8" fill="#f0f9ff" stroke="#0891b2"/>
+  <text x="65" y="148" font-size="14" font-weight="bold" fill="#0e7490">① 扭矩（N·m）</text>
+  <text x="65" y="172" font-size="12" fill="#475569">先算负载所需扭矩，再乘 1.5~2 倍余量；静态保持扭矩够用不代表动态够用。</text>
+  <text x="65" y="192" font-size="12" fill="#b91c1c">扭矩不足 → 丢步、堵转、发热</text>
+
+  <rect x="45" y="212" width="520" height="82" rx="8" fill="#ffffff" stroke="#0891b2"/>
+  <text x="65" y="240" font-size="14" font-weight="bold" fill="#0e7490">② 步距角 / 细分</text>
+  <text x="65" y="264" font-size="12" fill="#475569">常见 1.8°（200 步/圈）；细分由驱动器设，16/32 细分更平滑、噪音低。</text>
+  <text x="65" y="284" font-size="12" fill="#b91c1c">细分越高 ≠ 精度越高，只提升平滑度</text>
+
+  <rect x="45" y="304" width="520" height="82" rx="8" fill="#f0f9ff" stroke="#0891b2"/>
+  <text x="65" y="332" font-size="14" font-weight="bold" fill="#0e7490">③ 机身尺寸 / 法兰</text>
+  <text x="65" y="356" font-size="12" fill="#475569">NEMA 主流规格：42 / 57 / 86（法兰 mm），法兰越大扭矩越大。</text>
+  <text x="65" y="376" font-size="12" fill="#b91c1c">先定安装空间，再定法兰，最后核扭矩</text>
+
+  <rect x="45" y="396" width="520" height="80" rx="8" fill="#ffffff" stroke="#0891b2"/>
+  <text x="65" y="424" font-size="14" font-weight="bold" fill="#0e7490">④ 驱动电压与电流</text>
+  <text x="65" y="448" font-size="12" fill="#475569">电压越高高速扭矩越好（24/36/48V）；电流拨码 ≤ 电机额定电流。</text>
+  <text x="65" y="468" font-size="12" fill="#b91c1c">电压不足 → 高速无力；电流过大 → 发热严重</text>
+
+  <!-- 右：丢步排查 -->
+  <rect x="605" y="70" width="330" height="420" rx="12" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <text x="770" y="102" text-anchor="middle" font-size="17" font-weight="bold" fill="#b91c1c">丢步排查清单</text>
+
+  <text x="625" y="138" font-size="13" font-weight="bold" fill="#334155">现象：位置不准、累积偏移</text>
+
+  <rect x="625" y="155" width="290" height="44" rx="6" fill="#fef2f2"/>
+  <text x="640" y="174" font-size="12" fill="#7f1d1d">1. 加速太快 → 降低加速度</text>
+  <text x="640" y="192" font-size="11" fill="#94a3b8">起步给足加速时间</text>
+
+  <rect x="625" y="207" width="290" height="44" rx="6" fill="#ffffff"/>
+  <text x="640" y="226" font-size="12" fill="#7f1d1d">2. 扭矩不足 → 降负载/加余量</text>
+  <text x="640" y="244" font-size="11" fill="#94a3b8">含摩擦、惯量、垂直负载</text>
+
+  <rect x="625" y="259" width="290" height="44" rx="6" fill="#fef2f2"/>
+  <text x="640" y="278" font-size="12" fill="#7f1d1d">3. 电流偏小 → 调拨码</text>
+  <text x="640" y="296" font-size="11" fill="#94a3b8">但别超电机额定值</text>
+
+  <rect x="625" y="311" width="290" height="44" rx="6" fill="#ffffff"/>
+  <text x="640" y="330" font-size="12" fill="#7f1d1d">4. 电压偏低 → 换高压电源</text>
+  <text x="640" y="348" font-size="11" fill="#94a3b8">高速段尤其明显</text>
+
+  <rect x="625" y="363" width="290" height="44" rx="6" fill="#fef2f2"/>
+  <text x="640" y="382" font-size="12" fill="#7f1d1d">5. 机械卡滞 → 查丝杆/皮带</text>
+  <text x="640" y="400" font-size="11" fill="#94a3b8">阻力突变最易丢步</text>
+
+  <rect x="625" y="415" width="290" height="55" rx="6" fill="#fffbeb" stroke="#f59e0b"/>
+  <text x="640" y="437" font-size="12" font-weight="bold" fill="#b45309">根治：加编码器做闭环</text>
+  <text x="640" y="457" font-size="11" fill="#78350f">闭环步进，丢步自动补偿</text>
+
+  <text x="480" y="510" text-anchor="middle" font-size="12" fill="#64748b">口诀：先算扭矩定法兰，再配电压机电流；丢步先降速查阻力，要根治上闭环。</text>
+</svg>

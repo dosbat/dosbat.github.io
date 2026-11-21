@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="960" height="480" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">两相步进电机内部结构：定子与转子</text>
+  <text x="480" y="70" text-anchor="middle" font-size="14" fill="#64748b">定子绕组通电产生磁场，吸引转子齿对准磁场方向——每一步都是一次「对齐」</text>
+
+  <!-- 左：剖面示意 -->
+  <rect x="25" y="100" width="430" height="310" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="240" y="130" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">剖面结构（简化）</text>
+
+  <!-- 定子外圈 -->
+  <circle cx="240" cy="275" r="105" fill="none" stroke="#94a3b8" stroke-width="14"/>
+  <!-- 定子磁极 -->
+  <rect x="225" y="155" width="30" height="30" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="365" y="260" width="30" height="30" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="225" y="370" width="30" height="30" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="85" y="260" width="30" height="30" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <text x="240" y="150" text-anchor="middle" font-size="11" fill="#0e7490">A 相</text>
+  <text x="410" y="278" text-anchor="middle" font-size="11" fill="#0e7490">B 相</text>
+  <text x="240" y="415" text-anchor="middle" font-size="11" fill="#0e7490">A- 相</text>
+  <text x="68" y="278" text-anchor="middle" font-size="11" fill="#0e7490">B- 相</text>
+
+  <!-- 转子 -->
+  <circle cx="240" cy="275" r="58" fill="#fef3c7" stroke="#ea580c" stroke-width="3"/>
+  <circle cx="240" cy="275" r="14" fill="#ea580c"/>
+  <line x1="240" y1="275" x2="240" y2="222" stroke="#ea580c" stroke-width="3"/>
+  <line x1="240" y1="275" x2="286" y2="298" stroke="#ea580c" stroke-width="3"/>
+  <text x="240" y="352" text-anchor="middle" font-size="11" fill="#c2410c">转子（永磁体·带细齿）</text>
+
+  <!-- 右：通电顺序表 -->
+  <rect x="475" y="100" width="460" height="310" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="705" y="130" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">四拍通电顺序（一相励磁）</text>
+
+  <rect x="500" y="150" width="410" height="34" fill="#1e3a5f"/>
+  <text x="560" y="173" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">步序</text>
+  <text x="650" y="173" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">A 相</text>
+  <text x="745" y="173" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">B 相</text>
+  <text x="850" y="173" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">转子位置</text>
+
+  <rect x="500" y="184" width="410" height="42" fill="#f0f9ff"/>
+  <text x="560" y="211" text-anchor="middle" font-size="13" fill="#334155">第 1 拍</text>
+  <text x="650" y="211" text-anchor="middle" font-size="13" fill="#c2410c">通电</text>
+  <text x="745" y="211" text-anchor="middle" font-size="13" fill="#64748b">断电</text>
+  <text x="850" y="211" text-anchor="middle" font-size="13" fill="#334155">对准 A</text>
+
+  <rect x="500" y="226" width="410" height="42" fill="#ffffff"/>
+  <text x="560" y="253" text-anchor="middle" font-size="13" fill="#334155">第 2 拍</text>
+  <text x="650" y="253" text-anchor="middle" font-size="13" fill="#64748b">断电</text>
+  <text x="745" y="253" text-anchor="middle" font-size="13" fill="#c2410c">通电</text>
+  <text x="850" y="253" text-anchor="middle" font-size="13" fill="#334155">对准 B</text>
+
+  <rect x="500" y="268" width="410" height="42" fill="#f0f9ff"/>
+  <text x="560" y="295" text-anchor="middle" font-size="13" fill="#334155">第 3 拍</text>
+  <text x="650" y="295" text-anchor="middle" font-size="13" fill="#c2410c">通电</text>
+  <text x="745" y="295" text-anchor="middle" font-size="13" fill="#64748b">断电</text>
+  <text x="850" y="295" text-anchor="middle" font-size="13" fill="#334155">对准 A-</text>
+
+  <rect x="500" y="310" width="410" height="42" fill="#ffffff"/>
+  <text x="560" y="337" text-anchor="middle" font-size="13" fill="#334155">第 4 拍</text>
+  <text x="650" y="337" text-anchor="middle" font-size="13" fill="#64748b">断电</text>
+  <text x="745" y="337" text-anchor="middle" font-size="13" fill="#c2410c">通电</text>
+  <text x="850" y="337" text-anchor="middle" font-size="13" fill="#334155">对准 B-</text>
+
+  <text x="705" y="378" text-anchor="middle" font-size="12" fill="#64748b">四拍走完一个齿距，循环往复就连续转动</text>
+
+  <rect x="25" y="425" width="910" height="40" rx="8" fill="#fffbeb" stroke="#f59e0b"/>
+  <text x="45" y="451" font-size="13" fill="#78350f">整步 = 每次只给一相通电（步距角 1.8°）；半步 = 两相交替通电（0.9°，更平滑）；细分 = 控制相电流大小（更细、更静音）。</text>
+</svg>
