@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="960" height="640" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">六个关键参数：看懂 SPD 铭牌</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">真正要盯的是这六个——一个管"扛不扛得住"，一个管"护得住护不住"</text>
+
+  <!-- Uc -->
+  <rect x="30" y="95" width="290" height="150" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <rect x="30" y="95" width="60" height="44" rx="10" fill="#0891b2"/>
+  <text x="60" y="124" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffffff">Uc</text>
+  <text x="103" y="124" font-size="15" font-weight="bold" fill="#0e7490">最大持续工作电压</text>
+  <text x="50" y="165" font-size="12.5" fill="#334155">长期承受而不动作的最大电压</text>
+  <text x="50" y="190" font-size="12.5" fill="#334155">220V 系统 → 选 ≥ 275V</text>
+  <text x="50" y="215" font-size="12.5" fill="#334155">380V 系统 → 选 ≥ 385V</text>
+  <text x="50" y="236" font-size="11.5" fill="#dc2626">过低误动作，过高钳位效果变差</text>
+
+  <!-- Up -->
+  <rect x="335" y="95" width="290" height="150" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <rect x="335" y="95" width="60" height="44" rx="10" fill="#16a34a"/>
+  <text x="365" y="124" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffffff">Up</text>
+  <text x="408" y="124" font-size="15" font-weight="bold" fill="#15803d">电压保护水平（核心）</text>
+  <text x="355" y="165" font-size="12.5" fill="#334155">动作时加在设备端的最大残压</text>
+  <text x="355" y="190" font-size="12.5" fill="#334155">必须低于设备的冲击耐压</text>
+  <text x="355" y="215" font-size="12.5" fill="#334155">一般设备 ≤ 2.5kV</text>
+  <text x="355" y="236" font-size="11.5" fill="#dc2626">精密设备 ≤ 1.5kV 甚至 1.0kV</text>
+
+  <!-- In -->
+  <rect x="640" y="95" width="290" height="150" rx="10" fill="#ffffff" stroke="#ea580c" stroke-width="2"/>
+  <rect x="640" y="95" width="60" height="44" rx="10" fill="#ea580c"/>
+  <text x="670" y="124" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffffff">In</text>
+  <text x="713" y="124" font-size="15" font-weight="bold" fill="#c2410c">标称放电电流</text>
+  <text x="660" y="165" font-size="12.5" fill="#334155">8/20 μs 波形下可反复承受的电流</text>
+  <text x="660" y="190" font-size="12.5" fill="#334155">代表"日常扛浪涌"的能力</text>
+  <text x="660" y="215" font-size="12.5" fill="#334155">T2 常见 20 kA、40 kA</text>
+  <text x="660" y="236" font-size="11.5" fill="#64748b">反复动作的标称值</text>
+
+  <!-- Imax -->
+  <rect x="30" y="265" width="290" height="150" rx="10" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+  <rect x="30" y="265" width="72" height="44" rx="10" fill="#8b5cf6"/>
+  <text x="66" y="294" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">Imax</text>
+  <text x="115" y="294" font-size="15" font-weight="bold" fill="#6d28d9">最大放电电流</text>
+  <text x="50" y="335" font-size="12.5" fill="#334155">能承受的最大 8/20 μs 电流</text>
+  <text x="50" y="360" font-size="12.5" fill="#334155">"极限生存"能力，通常只扛一次</text>
+  <text x="50" y="385" font-size="12.5" fill="#334155">一般约为 In 的 2 倍</text>
+  <text x="50" y="406" font-size="11.5" fill="#64748b">别把 Imax 当日常指标</text>
+
+  <!-- Iimp -->
+  <rect x="335" y="265" width="290" height="150" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <rect x="335" y="265" width="72" height="44" rx="10" fill="#dc2626"/>
+  <text x="371" y="294" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">Iimp</text>
+  <text x="420" y="294" font-size="15" font-weight="bold" fill="#b91c1c">冲击电流（T1 专属）</text>
+  <text x="355" y="335" font-size="12.5" fill="#334155">10/350 μs 波形的冲击电流</text>
+  <text x="355" y="360" font-size="12.5" fill="#334155">衡量承受直击雷能量的能力</text>
+  <text x="355" y="385" font-size="12.5" fill="#334155">常见 12.5 kA、25 kA（每极）</text>
+  <text x="355" y="406" font-size="11.5" fill="#dc2626">T1 与 T2 的本质区别</text>
+
+  <!-- tA -->
+  <rect x="640" y="265" width="290" height="150" rx="10" fill="#ffffff" stroke="#0d9488" stroke-width="2"/>
+  <rect x="640" y="265" width="60" height="44" rx="10" fill="#0d9488"/>
+  <text x="670" y="294" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffffff">tA</text>
+  <text x="713" y="294" font-size="15" font-weight="bold" fill="#0f766e">响应时间</text>
+  <text x="660" y="335" font-size="12.5" fill="#334155">SPD 动作的响应速度</text>
+  <text x="660" y="360" font-size="12.5" fill="#334155">MOV 型一般 ≤ 25 ns</text>
+  <text x="660" y="385" font-size="12.5" fill="#334155">信号 SPD 要求更高（纳秒级）</text>
+  <text x="660" y="406" font-size="11.5" fill="#64748b">越快越早拦截浪涌</text>
+
+  <!-- 两个易忽略项 -->
+  <rect x="30" y="435" width="900" height="60" rx="8" fill="#fef3c7" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="50" y="460" font-size="13" font-weight="bold" fill="#c2410c">容易忽略的两项：</text>
+  <text x="50" y="483" font-size="12.5" fill="#78350f">① 后备保护 Se（专用 SCB 或熔断器）——SPD 短路失效时切断电源，防起火　② 失效指示窗 + 遥信触点——让失效"看得见"</text>
+
+  <!-- 口诀 -->
+  <rect x="30" y="515" width="900" height="90" rx="10" fill="#1e3a5f"/>
+  <text x="480" y="550" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">选型口诀</text>
+  <text x="480" y="580" text-anchor="middle" font-size="15" fill="#e0f2fe">制式定接法 · 位置定级别 · 电压定 Uc · 设备定 Up · 风险定通流</text>
+</svg>

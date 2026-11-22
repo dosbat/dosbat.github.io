@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="960" height="560" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">拆开看 SPD：内部结构与失效指示</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">SPD 是消耗品——每泄放一次浪涌就损耗一点，会老化、会失效，所以必须能"看见"它的健康状态</text>
+
+  <!-- SPD 模块剖面 -->
+  <rect x="30" y="95" width="520" height="380" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <text x="50" y="122" font-size="15" font-weight="bold" fill="#1e3a5f"> SPD 模块内部（剖面示意）</text>
+
+  <!-- 外壳 -->
+  <rect x="90" y="145" width="400" height="290" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="2.5"/>
+  <text x="290" y="170" text-anchor="middle" font-size="12" fill="#64748b">阻燃塑料外壳（导轨式安装）</text>
+
+  <!-- MOV 芯片 -->
+  <rect x="120" y="195" width="200" height="150" rx="6" fill="#fef3c7" stroke="#ea580c" stroke-width="2"/>
+  <text x="220" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#c2410c">MOV 压敏电阻芯片</text>
+  <rect x="140" y="235" width="45" height="90" rx="3" fill="#fbbf24" stroke="#b45309"/>
+  <rect x="197" y="235" width="45" height="90" rx="3" fill="#fbbf24" stroke="#b45309"/>
+  <rect x="254" y="235" width="45" height="90" rx="3" fill="#fbbf24" stroke="#b45309"/>
+  <text x="220" y="360" text-anchor="middle" font-size="12" fill="#9a3412">多片并联，吸收浪涌能量</text>
+
+  <!-- 热脱扣 -->
+  <rect x="340" y="195" width="130" height="150" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="405" y="220" text-anchor="middle" font-size="13" font-weight="bold" fill="#1d4ed8">热脱扣装置</text>
+  <!-- 弹簧/触点示意 -->
+  <line x1="375" y1="255" x2="375" y2="300" stroke="#2563eb" stroke-width="3"/>
+  <line x1="435" y1="255" x2="435" y2="300" stroke="#2563eb" stroke-width="3"/>
+  <line x1="375" y1="300" x2="435" y2="300" stroke="#2563eb" stroke-width="4"/>
+  <circle cx="375" cy="252" r="5" fill="#2563eb"/>
+  <circle cx="435" cy="252" r="5" fill="#2563eb"/>
+  <text x="405" y="325" text-anchor="middle" font-size="11" fill="#1e40af">劣化过热时</text>
+  <text x="405" y="341" text-anchor="middle" font-size="11" fill="#1e40af">自动断开</text>
+
+  <!-- 状态指示窗 -->
+  <rect x="120" y="375" width="180" height="45" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="210" y="404" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">状态窗 ● 绿=正常</text>
+  <!-- 遥信触点 -->
+  <rect x="320" y="375" width="150" height="45" rx="6" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <text x="395" y="404" text-anchor="middle" font-size="13" font-weight="bold" fill="#0e7490">遥信触点（选配）</text>
+  <!-- 后备保护 -->
+  <rect x="120" y="425" width="350" height="0" fill="none"/>
+
+  <!-- 失效过程 -->
+  <rect x="570" y="95" width="360" height="380" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <rect x="570" y="95" width="360" height="38" rx="10" fill="#fee2e2"/>
+  <text x="590" y="121" font-size="15" font-weight="bold" fill="#b91c1c">MOV 的宿命：逐步劣化直到失效</text>
+
+  <circle cx="600" cy="165" r="14" fill="#16a34a"/>
+  <text x="600" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">1</text>
+  <text x="625" y="162" font-size="13" font-weight="bold" fill="#334155">新装投运</text>
+  <text x="625" y="182" font-size="12" fill="#64748b">漏电流微安级，状态窗绿色</text>
+  <line x1="600" y1="180" x2="600" y2="205" stroke="#cbd5e1" stroke-width="2"/>
+
+  <circle cx="600" cy="222" r="14" fill="#f59e0b"/>
+  <text x="600" y="227" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">2</text>
+  <text x="625" y="219" font-size="13" font-weight="bold" fill="#334155">反复泄流</text>
+  <text x="625" y="239" font-size="12" fill="#64748b">每扛一次浪涌，MOV 就损耗一点</text>
+  <line x1="600" y1="237" x2="600" y2="262" stroke="#cbd5e1" stroke-width="2"/>
+
+  <circle cx="600" cy="279" r="14" fill="#ea580c"/>
+  <text x="600" y="284" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">3</text>
+  <text x="625" y="276" font-size="13" font-weight="bold" fill="#334155">压敏电压下降</text>
+  <text x="625" y="296" font-size="12" fill="#64748b">启动阈值降低，漏电流逐渐增大</text>
+  <line x1="600" y1="294" x2="600" y2="319" stroke="#cbd5e1" stroke-width="2"/>
+
+  <circle cx="600" cy="336" r="14" fill="#dc2626"/>
+  <text x="600" y="341" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">4</text>
+  <text x="625" y="333" font-size="13" font-weight="bold" fill="#334155">热脱扣动作</text>
+  <text x="625" y="353" font-size="12" fill="#64748b">过热时自动断开，防止起火</text>
+  <line x1="600" y1="351" x2="600" y2="376" stroke="#cbd5e1" stroke-width="2"/>
+
+  <circle cx="600" cy="393" r="14" fill="#7f1d1d"/>
+  <text x="600" y="398" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">5</text>
+  <text x="625" y="390" font-size="13" font-weight="bold" fill="#334155">状态窗变红 / 遥信报警</text>
+  <text x="625" y="410" font-size="12" fill="#64748b">此时必须更换 SPD 模块</text>
+
+  <rect x="585" y="435" width="330" height="30" rx="6" fill="#fef2f2"/>
+  <text x="600" y="455" font-size="12" font-weight="bold" fill="#b91c1c">雷区一年一换很正常——SPD 是消耗品，不是一劳永逸</text>
+
+  <text x="480" y="510" text-anchor="middle" font-size="13" fill="#475569">看窗口（绿/红）+ 接遥信到动环，是发现 SPD 失效的两个手段</text>
+  <text x="480" y="536" text-anchor="middle" font-size="12" fill="#64748b">没有热脱扣的劣质 SPD，劣化短路时可能直接起火</text>
+</svg>

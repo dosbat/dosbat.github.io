@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+    <marker id="arrowr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+  <rect width="960" height="600" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">安装接线：90% 的坑在这 0.5 米</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">浪涌是高频瞬态，接线每米电感约 1 μH——线一长，附加压降叠加到残压上，保护效果大打折扣</text>
+
+  <!-- 正确接法 -->
+  <rect x="30" y="95" width="560" height="360" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <rect x="30" y="95" width="560" height="38" rx="10" fill="#dcfce7"/>
+  <text x="50" y="121" font-size="15" font-weight="bold" fill="#15803d">✓ 正确：短、直、粗，并联接法</text>
+
+  <!-- 配电箱母排 -->
+  <line x1="70" y1="180" x2="550" y2="180" stroke="#dc2626" stroke-width="4"/>
+  <text x="75" y="170" font-size="12" font-weight="bold" fill="#b91c1c">L 相母排（主开关之后）</text>
+  <line x1="70" y1="220" x2="550" y2="220" stroke="#0891b2" stroke-width="3"/>
+  <text x="75" y="238" font-size="12" fill="#0e7490">N 零母排</text>
+  <line x1="70" y1="390" x2="550" y2="390" stroke="#16a34a" stroke-width="4"/>
+  <text x="75" y="412" font-size="12" font-weight="bold" fill="#15803d">PE 接地母排</text>
+
+  <!-- 主开关 -->
+  <rect x="70" y="255" width="110" height="40" rx="6" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+  <text x="125" y="280" text-anchor="middle" font-size="13" font-weight="bold" fill="#334155">主开关</text>
+
+  <!-- 后备保护 SCB -->
+  <rect x="235" y="180" width="30" height="35" rx="4" fill="#fef3c7" stroke="#ea580c" stroke-width="2"/>
+  <text x="250" y="172" text-anchor="middle" font-size="11" fill="#c2410c">SCB</text>
+
+  <!-- SPD 并联 -->
+  <line x1="250" y1="215" x2="250" y2="280" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5,4"/>
+  <rect x="190" y="280" width="120" height="55" rx="7" fill="#fef3c7" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="250" y="303" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">SPD 模块</text>
+  <text x="250" y="323" text-anchor="middle" font-size="11" fill="#9a3412">并联在主开关后</text>
+
+  <!-- 接地线：短直粗 -->
+  <line x1="250" y1="335" x2="250" y2="390" stroke="#16a34a" stroke-width="5"/>
+  <rect x="270" y="345" width="150" height="34" rx="6" fill="#ecfdf5" stroke="#16a34a"/>
+  <text x="345" y="367" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">接地线 ≤ 0.5 m</text>
+  <text x="345" y="430" font-size="11" fill="#15803d">↑ 越短越好，避免环路</text>
+
+  <!-- 被保护设备支路 -->
+  <line x1="430" y1="180" x2="430" y2="255" stroke="#64748b" stroke-width="2"/>
+  <rect x="370" y="255" width="120" height="45" rx="6" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <text x="430" y="283" text-anchor="middle" font-size="12" font-weight="bold" fill="#0e7490">下游设备</text>
+
+  <!-- 右侧：错误示范 -->
+  <rect x="610" y="95" width="320" height="360" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <rect x="610" y="95" width="320" height="38" rx="10" fill="#fee2e2"/>
+  <text x="630" y="121" font-size="15" font-weight="bold" fill="#b91c1c">✗ 常见错误</text>
+
+  <text x="630" y="165" font-size="13" font-weight="bold" fill="#334155">① 接地线绕一大圈</text>
+  <path d="M640 185 Q700 250 640 230" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowr)"/>
+  <text x="630" y="258" font-size="11.5" fill="#64748b">线长 → 电感大 → 残压翻倍</text>
+
+  <text x="630" y="295" font-size="13" font-weight="bold" fill="#334155">② 普通空开代替 SCB</text>
+  <text x="630" y="317" font-size="11.5" fill="#64748b">不具备浪涌选择性，易误断 / 拒断</text>
+
+  <text x="630" y="352" font-size="13" font-weight="bold" fill="#334155">③ 导线太细</text>
+  <text x="630" y="374" font-size="11.5" fill="#64748b">T1 相线 ≥16mm²、地线 ≥25mm²</text>
+
+  <text x="630" y="409" font-size="13" font-weight="bold" fill="#334155">④ 接地电阻过大</text>
+  <text x="630" y="431" font-size="11.5" fill="#64748b">一般 ≤4Ω，机房/数据中心 ≤1Ω</text>
+
+  <!-- 底部硬指标 -->
+  <rect x="30" y="475" width="900" height="105" rx="10" fill="#1e3a5f"/>
+  <text x="480" y="508" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">装完必做三件事</text>
+  <text x="70" y="540" font-size="14" fill="#e0f2fe">① 看状态窗是否绿色　② 实测接地电阻并记录　③ 建台账（型号 / 位置 / 日期），雷雨季前巡检</text>
+  <text x="480" y="569" text-anchor="middle" font-size="12" fill="#93c5fd">SPD 是消耗品：状态窗红了立即更换，雷区一年一换很正常</text>
+</svg>

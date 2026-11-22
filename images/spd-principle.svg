@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+    <marker id="arrowr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowo" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ea580c"/>
+    </marker>
+  </defs>
+  <rect width="960" height="600" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">SPD 工作原理：并联泄流 + 电压钳位</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">核心元件是压敏电阻 MOV：电压正常时高阻"隐身"，浪涌超阈值时纳秒级导通，把能量泄入大地</text>
+
+  <!-- 主电路 -->
+  <rect x="30" y="95" width="900" height="245" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="50" y="120" font-size="13" font-weight="bold" fill="#64748b">电路示意（SPD 并联在相线与地线之间）</text>
+
+  <!-- 相线 L -->
+  <line x1="55" y1="185" x2="905" y2="185" stroke="#dc2626" stroke-width="4"/>
+  <text x="60" y="172" font-size="13" font-weight="bold" fill="#b91c1c">相线 L（电源进线）</text>
+  <!-- 浪涌侵入箭头 -->
+  <line x1="55" y1="185" x2="150" y2="185" stroke="#dc2626" stroke-width="4" marker-end="url(#arrowr)"/>
+  <text x="100" y="212" text-anchor="middle" font-size="12" fill="#dc2626">浪涌侵入</text>
+
+  <!-- SPD 并联支路 -->
+  <line x1="480" y1="185" x2="480" y2="215" stroke="#475569" stroke-width="3"/>
+  <rect x="410" y="215" width="140" height="62" rx="8" fill="#fef3c7" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="480" y="240" text-anchor="middle" font-size="15" font-weight="bold" fill="#c2410c">浪涌保护器 SPD</text>
+  <text x="480" y="263" text-anchor="middle" font-size="12" fill="#9a3412">核心：压敏电阻 MOV</text>
+  <line x1="480" y1="277" x2="480" y2="302" stroke="#ea580c" stroke-width="4" marker-end="url(#arrowo)"/>
+  <text x="495" y="295" font-size="12" font-weight="bold" fill="#ea580c">泄流</text>
+
+  <!-- 地线 PE -->
+  <line x1="410" y1="305" x2="550" y2="305" stroke="#16a34a" stroke-width="3"/>
+  <line x1="480" y1="305" x2="480" y2="312" stroke="#16a34a" stroke-width="3"/>
+  <line x1="465" y1="312" x2="495" y2="312" stroke="#16a34a" stroke-width="3"/>
+  <line x1="469" y1="318" x2="491" y2="318" stroke="#16a34a" stroke-width="3"/>
+  <line x1="473" y1="324" x2="487" y2="324" stroke="#16a34a" stroke-width="3"/>
+  <text x="560" y="310" font-size="12" fill="#15803d">PE 保护地</text>
+
+  <!-- 被保护设备 -->
+  <line x1="700" y1="185" x2="700" y2="215" stroke="#475569" stroke-width="3"/>
+  <rect x="640" y="215" width="220" height="62" rx="8" fill="#e0f2fe" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="750" y="240" text-anchor="middle" font-size="14" font-weight="bold" fill="#0e7490">被保护设备</text>
+  <text x="750" y="262" text-anchor="middle" font-size="12" fill="#155e75">服务器 / PLC / 电源板</text>
+  <line x1="750" y1="277" x2="750" y2="305" stroke="#475569" stroke-width="3"/>
+
+  <!-- 往设备去的浪涌 + 钳位标注 -->
+  <text x="640" y="172" font-size="12" fill="#dc2626">残余浪涌继续向前</text>
+  <rect x="600" y="125" width="255" height="32" rx="16" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="727" y="147" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">设备端电压被钳位在 Up（安全值）</text>
+
+  <!-- 状态对比 -->
+  <rect x="30" y="360" width="440" height="215" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <rect x="30" y="360" width="440" height="38" rx="10" fill="#dcfce7"/>
+  <text x="50" y="386" font-size="16" font-weight="bold" fill="#15803d">状态一：电压正常 → 高阻"隐身"</text>
+  <text x="50" y="425" font-size="13" fill="#334155">工作电压低于 MOV 启动阈值，SPD 呈极高电阻</text>
+  <text x="50" y="450" font-size="13" fill="#334155">相当于开路，只有微安级漏电流</text>
+  <text x="50" y="475" font-size="13" fill="#334155">完全不影响线路正常运行</text>
+  <rect x="50" y="495" width="400" height="60" rx="6" fill="#f0fdf4"/>
+  <text x="65" y="520" font-size="13" font-weight="bold" fill="#15803d">类比：安全阀关得死死的</text>
+  <text x="65" y="543" font-size="12" fill="#166534">水压正常时，阀门不动作，管道照常供水</text>
+
+  <rect x="490" y="360" width="440" height="215" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <rect x="490" y="360" width="440" height="38" rx="10" fill="#fee2e2"/>
+  <text x="510" y="386" font-size="16" font-weight="bold" fill="#b91c1c">状态二：浪涌来袭 → 纳秒级导通</text>
+  <text x="510" y="425" font-size="13" fill="#334155">电压超过阈值，MOV 电阻骤降、瞬间导通</text>
+  <text x="510" y="450" font-size="13" fill="#334155">浪涌电流被泄入大地，电压钳位到残压 Up</text>
+  <text x="510" y="475" font-size="13" fill="#334155">电压回落后，又自动恢复高阻状态</text>
+  <rect x="510" y="495" width="400" height="60" rx="6" fill="#fef2f2"/>
+  <text x="525" y="520" font-size="13" font-weight="bold" fill="#b91c1c">类比：安全阀瞬间打开泄压</text>
+  <text x="525" y="543" font-size="12" fill="#7f1d1d">水压超线立即开阀泄水，压力稳住后又自动关闭</text>
+</svg>

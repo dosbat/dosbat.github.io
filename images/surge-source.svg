@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowb" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+  </defs>
+  <rect width="960" height="560" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">浪涌从哪来：外部雷击 + 内部操作</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">雷电只是一半；电机启停、电网投切每天都在"制造"浪涌，并顺着导线送进设备</text>
+
+  <!-- 外部来源 -->
+  <rect x="30" y="95" width="440" height="210" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <rect x="30" y="95" width="440" height="38" rx="10" fill="#fee2e2"/>
+  <text x="50" y="121" font-size="16" font-weight="bold" fill="#b91c1c">外部来源 · 雷电</text>
+  <text x="50" y="160" font-size="14" font-weight="bold" fill="#334155">① 直击雷</text>
+  <text x="50" y="182" font-size="12" fill="#64748b">雷击建筑、避雷针或架空线，雷电流沿导体泄入</text>
+  <text x="50" y="214" font-size="14" font-weight="bold" fill="#334155">② 感应雷（最常见）</text>
+  <text x="50" y="236" font-size="12" fill="#64748b">附近雷击的电磁脉冲，在线路上感应出浪涌——没被劈中也中招</text>
+  <text x="50" y="268" font-size="14" font-weight="bold" fill="#334155">③ 雷电波侵入</text>
+  <text x="50" y="290" font-size="12" fill="#64748b">雷击架空线后，雷电波沿导线传导，数百米外窜进配电箱</text>
+
+  <!-- 内部来源 -->
+  <rect x="490" y="95" width="440" height="210" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <rect x="490" y="95" width="440" height="38" rx="10" fill="#e0f2fe"/>
+  <text x="510" y="121" font-size="16" font-weight="bold" fill="#0e7490">内部来源 · 操作过电压（天天发生）</text>
+  <text x="510" y="160" font-size="14" font-weight="bold" fill="#334155">① 电机启停 / 接触器分合</text>
+  <text x="510" y="182" font-size="12" fill="#64748b">大功率电机启动与停止的瞬态冲击</text>
+  <text x="510" y="214" font-size="14" font-weight="bold" fill="#334155">② 变压器投切 / 电容补偿</text>
+  <text x="510" y="236" font-size="12" fill="#64748b">变压器投切、电容器组补偿切换的涌流</text>
+  <text x="510" y="268" font-size="14" font-weight="bold" fill="#334155">③ 电网故障的切除与重合闸</text>
+  <text x="510" y="290" font-size="12" fill="#64748b">短路故障瞬间的电压突变，幅值小但频次高，日积月累损伤绝缘</text>
+
+  <!-- 汇聚 -->
+  <line x1="250" y1="290" x2="440" y2="318" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowb)"/>
+  <line x1="710" y1="290" x2="520" y2="318" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowb)"/>
+  <rect x="290" y="320" width="380" height="40" rx="20" fill="#1e3a5f"/>
+  <text x="480" y="346" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">浪涌：几十微秒 · 高达数万伏的瞬态过电压</text>
+
+  <!-- 四条入侵路径 -->
+  <text x="30" y="392" font-size="15" font-weight="bold" fill="#1e3a5f">四条入侵路径，SPD 也对应分四类：</text>
+  <rect x="30" y="405" width="215" height="60" rx="8" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="137" y="431" text-anchor="middle" font-size="14" font-weight="bold" fill="#b91c1c">电源线路</text>
+  <text x="137" y="453" text-anchor="middle" font-size="12" fill="#7f1d1d">相线 L / N / PE</text>
+  <rect x="260" y="405" width="215" height="60" rx="8" fill="#fef3c7" stroke="#ea580c"/>
+  <text x="367" y="431" text-anchor="middle" font-size="14" font-weight="bold" fill="#c2410c">信号 / 网络线路</text>
+  <text x="367" y="453" text-anchor="middle" font-size="12" fill="#7c2d12">RJ45 / 视频 / 控制线</text>
+  <rect x="490" y="405" width="215" height="60" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="597" y="431" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803d">通信线路</text>
+  <text x="597" y="453" text-anchor="middle" font-size="12" fill="#14532d">RS485 / 现场总线</text>
+  <rect x="720" y="405" width="210" height="60" rx="8" fill="#e0f2fe" stroke="#0891b2"/>
+  <text x="825" y="431" text-anchor="middle" font-size="14" font-weight="bold" fill="#0e7490">接地线</text>
+  <text x="825" y="453" text-anchor="middle" font-size="12" fill="#164e63">PE 保护地</text>
+
+  <text x="480" y="505" text-anchor="middle" font-size="13" font-weight="bold" fill="#dc2626">只装电源 SPD、漏了信号线？设备照样从网口、通信口被打坏</text>
+  <text x="480" y="532" text-anchor="middle" font-size="12" fill="#64748b">电源 SPD、信号 SPD、网络 SPD 各管一段——装对线路是第一步</text>
+</svg>
