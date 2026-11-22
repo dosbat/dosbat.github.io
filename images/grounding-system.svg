@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/>
+    </marker>
+  </defs>
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <text x="480" y="44" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">电源与接地：等电位联结，一个都不能漏</text>
+  <text x="480" y="74" text-anchor="middle" font-size="14" fill="#64748b">机柜、桥架、金属管、地板支架、门框全部接入等电位排 —— PE 与 N 严格分设</text>
+
+  <!-- 等电位汇流排 -->
+  <rect x="370" y="290" width="220" height="34" rx="6" fill="#16a34a" stroke="#15803d" stroke-width="2"/>
+  <text x="480" y="312" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">等电位汇流排（接地排）</text>
+
+  <!-- 上方接入的设备 -->
+  <rect x="40" y="120" width="150" height="60" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text x="115" y="145" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">机柜柜体</text>
+  <text x="115" y="166" text-anchor="middle" font-size="11" fill="#64748b">柜门另加跨接线</text>
+
+  <rect x="225" y="120" width="150" height="60" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text x="300" y="145" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">金属桥架</text>
+  <text x="300" y="166" text-anchor="middle" font-size="11" fill="#64748b">跨接线截面达标</text>
+
+  <rect x="585" y="120" width="150" height="60" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text x="660" y="145" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">金属管路</text>
+  <text x="660" y="166" text-anchor="middle" font-size="11" fill="#64748b">全长电气连通</text>
+
+  <rect x="770" y="120" width="150" height="60" rx="8" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text x="845" y="145" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">地板支架</text>
+  <text x="845" y="166" text-anchor="middle" font-size="11" fill="#64748b">防静电地板</text>
+
+  <!-- 连线到汇流排 -->
+  <path d="M115,180 L115,250 L400,250 L400,290" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M300,180 L300,270 L440,270 L440,290" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M660,180 L660,270 L520,270 L520,290" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M845,180 L845,250 L560,250 L560,290" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- 接地干线到大地 -->
+  <line x1="480" y1="324" x2="480" y2="370" stroke="#16a34a" stroke-width="4"/>
+  <text x="495" y="352" font-size="12" fill="#15803d">接地干线</text>
+  <rect x="430" y="370" width="100" height="30" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="480" y="390" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">接地电阻测试点</text>
+
+  <!-- 接地符号 -->
+  <line x1="480" y1="400" x2="480" y2="420" stroke="#16a34a" stroke-width="3"/>
+  <line x1="455" y1="420" x2="505" y2="420" stroke="#16a34a" stroke-width="3"/>
+  <line x1="462" y1="428" x2="498" y2="428" stroke="#16a34a" stroke-width="2.5"/>
+  <line x1="470" y1="436" x2="490" y2="436" stroke="#16a34a" stroke-width="2"/>
+  <text x="480" y="462" text-anchor="middle" font-size="12" fill="#15803d">联合接地常见 ≤1Ω</text>
+
+  <!-- 右侧电源检查 -->
+  <rect x="40" y="270" width="320" height="220" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text x="200" y="300" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">供电验收四件事</text>
+  <text x="60" y="332" font-size="12" fill="#334155">1. 双路 PDU 来自不同 UPS/回路</text>
+  <text x="60" y="354" font-size="12" fill="#334155">   模拟断一路，设备不掉电</text>
+  <text x="60" y="384" font-size="12" fill="#334155">2. UPS 带载放电实测后备时间</text>
+  <text x="60" y="414" font-size="12" fill="#334155">3. 插头防脱、相负荷平衡</text>
+  <text x="60" y="444" font-size="12" fill="#334155">4. SPD 状态窗正常、接线齐全</text>
+  <text x="60" y="474" font-size="11" fill="#94a3b8">电池室温度 20~30℃</text>
+
+  <!-- 左侧警示 -->
+  <rect x="600" y="270" width="320" height="220" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text x="760" y="300" text-anchor="middle" font-size="15" font-weight="bold" fill="#c2410c">三个高频翻车点</text>
+  <text x="620" y="334" font-size="12" fill="#9a3412">✗ 机柜、桥架未做接地跨接</text>
+  <text x="620" y="366" font-size="12" fill="#9a3412">✗ 双路 PDU 实际来自同一空开</text>
+  <text x="620" y="398" font-size="12" fill="#9a3412">✗ PE 与 N 混接</text>
+  <text x="620" y="436" font-size="12" font-weight="bold" fill="#c2410c">验收要出第三方/监理见证的</text>
+  <text x="620" y="456" font-size="12" font-weight="bold" fill="#c2410c">接地电阻测试报告，不能只写</text>
+  <text x="620" y="476" font-size="12" font-weight="bold" fill="#c2410c">「接地正常」</text>
+</svg>

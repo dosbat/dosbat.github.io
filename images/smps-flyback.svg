@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+  </defs>
+  <rect width="960" height="500" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">反激变换器（Flyback）：小功率电源的绝对主力</text>
+  <text x="480" y="70" text-anchor="middle" font-size="14" fill="#64748b">开关管导通时变压器储能，关断时把能量「甩」给次级——变压器同时是电感</text>
+
+  <!-- 输入侧 -->
+  <rect x="30" y="130" width="140" height="230" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="100" y="160" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">整流滤波</text>
+  <text x="100" y="190" text-anchor="middle" font-size="12" fill="#64748b">220V AC</text>
+  <text x="100" y="212" text-anchor="middle" font-size="12" fill="#64748b">↓</text>
+  <text x="100" y="234" text-anchor="middle" font-size="12" fill="#64748b">整流桥</text>
+  <text x="100" y="256" text-anchor="middle" font-size="12" fill="#64748b">↓</text>
+  <text x="100" y="278" text-anchor="middle" font-size="12" fill="#64748b">高压 DC</text>
+  <text x="100" y="308" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">约 300V</text>
+  <text x="100" y="338" text-anchor="middle" font-size="11" fill="#94a3b8">大电解电容滤波</text>
+
+  <!-- 高频开关 -->
+  <line x1="170" y1="245" x2="215" y2="245" stroke="#0891b2" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="218" y="205" width="120" height="80" rx="8" fill="#fef3c7" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="278" y="238" text-anchor="middle" font-size="14" font-weight="bold" fill="#c2410c">开关管</text>
+  <text x="278" y="260" text-anchor="middle" font-size="12" fill="#9a3412">MOSFET</text>
+  <text x="278" y="278" text-anchor="middle" font-size="11" fill="#b45309">高频通断</text>
+
+  <!-- PWM -->
+  <rect x="218" y="320" width="120" height="60" rx="8" fill="#e0f2fe" stroke="#0891b2" stroke-width="2"/>
+  <text x="278" y="345" text-anchor="middle" font-size="13" font-weight="bold" fill="#0e7490">PWM 芯片</text>
+  <text x="278" y="366" text-anchor="middle" font-size="11" fill="#64748b">控制占空比</text>
+  <line x1="278" y1="320" x2="278" y2="285" stroke="#0891b2" stroke-width="2" stroke-dasharray="4,3"/>
+
+  <!-- 变压器 -->
+  <rect x="390" y="175" width="180" height="200" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="480" y="205" text-anchor="middle" font-size="15" font-weight="bold" fill="#0e7490">高频变压器</text>
+  <!-- 初级绕组 -->
+  <path d="M430 235 q 12 10 0 20 q 12 10 0 20 q 12 10 0 20 q 12 10 0 20" fill="none" stroke="#c2410c" stroke-width="3"/>
+  <text x="408" y="285" text-anchor="middle" font-size="11" fill="#c2410c">初级</text>
+  <!-- 磁芯 -->
+  <line x1="455" y1="225" x2="455" y2="320" stroke="#64748b" stroke-width="6"/>
+  <!-- 次级绕组 -->
+  <path d="M505 235 q -12 10 0 20 q -12 10 0 20 q -12 10 0 20 q -12 10 0 20" fill="none" stroke="#0891b2" stroke-width="3"/>
+  <text x="535" y="285" text-anchor="middle" font-size="11" fill="#0e7490">次级</text>
+  <text x="480" y="355" text-anchor="middle" font-size="11" fill="#94a3b8">兼作储能电感</text>
+
+  <line x1="338" y1="245" x2="385" y2="245" stroke="#ea580c" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <!-- 次级整流 -->
+  <line x1="570" y1="245" x2="615" y2="245" stroke="#0891b2" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="618" y="205" width="120" height="80" rx="8" fill="#e0f2fe" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="678" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#0e7490">整流二极管</text>
+  <text x="678" y="260" text-anchor="middle" font-size="11" fill="#64748b">肖特基</text>
+  <text x="678" y="278" text-anchor="middle" font-size="11" fill="#64748b">快恢复</text>
+
+  <!-- 输出 -->
+  <line x1="738" y1="245" x2="783" y2="245" stroke="#0891b2" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="786" y="195" width="145" height="100" rx="10" fill="#fef3c7" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="858" y="228" text-anchor="middle" font-size="15" font-weight="bold" fill="#c2410c">直流输出</text>
+  <text x="858" y="254" text-anchor="middle" font-size="13" fill="#9a3412">24V / 5V</text>
+  <text x="858" y="278" text-anchor="middle" font-size="11" fill="#94a3b8">滤波电容平滑</text>
+
+  <!-- 反馈 -->
+  <path d="M858 295 L858 400 L278 400 L278 380" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <text x="570" y="392" text-anchor="middle" font-size="12" fill="#7e22ce">光耦反馈：输出变化 → 隔离 → PWM 调占空比 → 稳压</text>
+
+  <!-- 底部 -->
+  <rect x="30" y="430" width="900" height="55" rx="8" fill="#fffbeb" stroke="#f59e0b"/>
+  <text x="45" y="453" font-size="13" fill="#78350f">关键理解：开关管导通时初级储能、次级二极管截止；关断时初级能量释放到次级——所以叫「反激」。</text>
+  <text x="45" y="475" font-size="13" fill="#78350f">变压器磁芯必须留气隙储能，这是反激变压器和普通变压器的本质区别。</text>
+</svg>

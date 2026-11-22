@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+    <marker id="arroworange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ea580c"/>
+    </marker>
+  </defs>
+  <rect width="960" height="480" fill="#f8fafc"/>
+  <text x="480" y="46" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">弱电机房验收：七个阶段，一环扣一环</text>
+  <text x="480" y="78" text-anchor="middle" font-size="14" fill="#64748b">问题发现得越晚越贵 —— 第②步隐蔽工程一旦封闭，补管改接地就要拆装修</text>
+
+  <!-- 上排 ①②③④ -->
+  <rect x="20" y="120" width="200" height="118" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="120" y="154" text-anchor="middle" font-size="16" font-weight="bold" fill="#0e7490">① 图纸与到货</text>
+  <text x="120" y="184" text-anchor="middle" font-size="12" fill="#64748b">核对竣工图</text>
+  <text x="120" y="208" text-anchor="middle" font-size="12" fill="#64748b">设备材料合格证</text>
+
+  <rect x="255" y="120" width="200" height="118" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+  <text x="355" y="154" text-anchor="middle" font-size="16" font-weight="bold" fill="#c2410c">② 隐蔽工程</text>
+  <text x="355" y="184" text-anchor="middle" font-size="12" fill="#9a3412">桥架、管路、预埋</text>
+  <text x="355" y="208" text-anchor="middle" font-size="12" fill="#9a3412">接地（最关键）</text>
+
+  <rect x="490" y="120" width="200" height="118" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="590" y="154" text-anchor="middle" font-size="16" font-weight="bold" fill="#0e7490">③ 安装抽检</text>
+  <text x="590" y="184" text-anchor="middle" font-size="12" fill="#64748b">敷设、端接工艺</text>
+  <text x="590" y="208" text-anchor="middle" font-size="12" fill="#64748b">标签两端一致</text>
+
+  <rect x="725" y="120" width="200" height="118" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="825" y="154" text-anchor="middle" font-size="16" font-weight="bold" fill="#0e7490">④ 链路认证</text>
+  <text x="825" y="184" text-anchor="middle" font-size="12" fill="#64748b">铜缆 100% 测试</text>
+  <text x="825" y="208" text-anchor="middle" font-size="12" fill="#64748b">光纤逐条测损耗</text>
+
+  <line x1="220" y1="180" x2="250" y2="180" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="455" y1="180" x2="485" y2="180" stroke="#ea580c" stroke-width="2.5" marker-end="url(#arroworange)"/>
+  <line x1="690" y1="180" x2="720" y2="180" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- ④ → ⑤ 折返 -->
+  <path d="M825,238 L825,285" stroke="#0891b2" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- 下排 ⑤⑥⑦（从右到左） -->
+  <rect x="725" y="290" width="200" height="118" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="825" y="324" text-anchor="middle" font-size="16" font-weight="bold" fill="#0e7490">⑤ 上电联调</text>
+  <text x="825" y="354" text-anchor="middle" font-size="12" fill="#64748b">电源、网络</text>
+  <text x="825" y="378" text-anchor="middle" font-size="12" fill="#64748b">动环、监控</text>
+
+  <rect x="490" y="290" width="200" height="118" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="590" y="324" text-anchor="middle" font-size="16" font-weight="bold" fill="#0e7490">⑥ 文档移交</text>
+  <text x="590" y="354" text-anchor="middle" font-size="12" fill="#64748b">图纸、测试报告</text>
+  <text x="590" y="378" text-anchor="middle" font-size="12" fill="#64748b">配置备份、清单</text>
+
+  <rect x="255" y="290" width="200" height="118" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="355" y="324" text-anchor="middle" font-size="16" font-weight="bold" fill="#0e7490">⑦ 试运行终验</text>
+  <text x="355" y="354" text-anchor="middle" font-size="12" fill="#64748b">故障整改与复测</text>
+  <text x="355" y="378" text-anchor="middle" font-size="12" fill="#64748b">培训、签字</text>
+
+  <line x1="725" y1="350" x2="695" y2="350" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="490" y1="350" x2="460" y2="350" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- 底部提示 -->
+  <rect x="20" y="432" width="915" height="34" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="477" y="454" text-anchor="middle" font-size="13" fill="#0e7490">越往右问题越贵：链路测试报告、隐蔽工程照片、配置备份 —— 签字前一样都不能少</text>
+</svg>

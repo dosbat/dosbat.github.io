@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+  </defs>
+  <rect width="960" height="540" fill="#f8fafc"/>
+  <text x="480" y="44" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">链路认证测试：铜缆与光纤，两把尺子</text>
+  <text x="480" y="74" text-anchor="middle" font-size="14" fill="#64748b">每条链路 100% 测试，不能抽测 —— 用校准有效期内的专业认证测试仪</text>
+
+  <!-- 左：铜缆永久链路 -->
+  <rect x="20" y="100" width="450" height="400" rx="12" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <text x="245" y="134" text-anchor="middle" font-size="17" font-weight="bold" fill="#0e7490">铜缆：永久链路模型</text>
+
+  <rect x="45" y="160" width="120" height="46" rx="6" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="105" y="180" text-anchor="middle" font-size="12" font-weight="bold" fill="#075985">测试仪</text>
+  <text x="105" y="197" text-anchor="middle" font-size="10" fill="#0369a1">DSX 系列</text>
+
+  <rect x="185" y="160" width="80" height="46" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="225" y="188" text-anchor="middle" font-size="11" fill="#475569">测试仪跳线</text>
+  <rect x="275" y="152" width="120" height="62" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="335" y="174" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">永久链路</text>
+  <text x="335" y="192" text-anchor="middle" font-size="11" fill="#166534">墙到配线架</text>
+  <text x="335" y="207" text-anchor="middle" font-size="10" fill="#166534">≤ 90 m</text>
+  <rect x="405" y="160" width="48" height="46" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="429" y="188" text-anchor="middle" font-size="11" fill="#475569">跳线</text>
+
+  <line x1="165" y1="183" x2="183" y2="183" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="265" y1="183" x2="273" y2="183" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="395" y1="183" x2="403" y2="183" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="245" y="248" text-anchor="middle" font-size="12" fill="#64748b">认证判据（不含测试仪跳线）→ 永久链路合格 ≠ 信道一定合格</text>
+
+  <text x="45" y="282" font-size="13" font-weight="bold" fill="#334155">必测参数：</text>
+  <text x="45" y="308" font-size="12" fill="#475569">· 接线图 Wire Map（8芯对应，无错对/串绕）</text>
+  <text x="45" y="330" font-size="12" fill="#475569">· 插入损耗 IL / 回波损耗 RL</text>
+  <text x="45" y="352" font-size="12" fill="#475569">· 近端串音 NEXT / PS NEXT</text>
+  <text x="45" y="374" font-size="12" fill="#475569">· ACR-N / ACR-F / PS ACR-F</text>
+  <text x="45" y="396" font-size="12" fill="#475569">· 时延偏差、直流环路电阻</text>
+  <text x="45" y="418" font-size="12" fill="#475569">· PS ANEXT（Cat6A 以上必测）</text>
+
+  <rect x="45" y="438" width="400" height="44" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="245" y="458" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400e">红线：水平永久链路 ≤90m，信道含跳线 ≤100m</text>
+  <text x="245" y="475" text-anchor="middle" font-size="11" fill="#a16207">报告导出原始数据 + PDF，含仪器序列号与校准日期</text>
+
+  <!-- 右：光纤 -->
+  <rect x="490" y="100" width="450" height="400" rx="12" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+  <text x="715" y="134" text-anchor="middle" font-size="17" font-weight="bold" fill="#6d28d9">光纤：损耗预算先算再测</text>
+
+  <rect x="515" y="158" width="410" height="76" rx="8" fill="#f5f3ff" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="720" y="180" text-anchor="middle" font-size="12" font-weight="bold" fill="#5b21b6">总损耗 = 长度×衰减系数 + 连接器件×0.75dB</text>
+  <text x="720" y="200" text-anchor="middle" font-size="12" fill="#6d28d9">+ 熔接点×0.3dB + 工程裕量 3dB</text>
+  <text x="720" y="222" text-anchor="middle" font-size="12" font-weight="bold" fill="#5b21b6">判据：光模块功率预算 ≥ 链路总损耗</text>
+
+  <text x="515" y="266" font-size="13" font-weight="bold" fill="#334155">测试方法（两手都要）：</text>
+  <text x="515" y="292" font-size="12" fill="#475569">· 光源 + 光功率计 → 端到端插入损耗</text>
+  <text x="515" y="314" font-size="12" fill="#475569">· OTDR → 全程衰减曲线与事件点</text>
+  <text x="515" y="336" font-size="12" fill="#475569">  （熔接、弯曲、连接器脏污）</text>
+
+  <text x="515" y="370" font-size="13" font-weight="bold" fill="#334155">现场要点：</text>
+  <text x="515" y="396" font-size="12" fill="#475569">· 双向 OTDR 取平均，消除单向误差</text>
+  <text x="515" y="418" font-size="12" fill="#475569">· 熔接点实测宜 ≤0.08 dB</text>
+  <text x="515" y="440" font-size="12" fill="#475569">· 法兰端面清洁 + 防尘帽</text>
+  <text x="515" y="462" font-size="12" fill="#475569">· 极性 A/B、收发方向与光模块匹配</text>
+  <text x="515" y="484" font-size="12" fill="#475569">· MPO 多芯链路核极性线序</text>
+
+  <text x="480" y="526" text-anchor="middle" font-size="13" font-weight="bold" fill="#c2410c">有一个指标不合格即判该链路不合格，允许修复后复检 —— 光缆一条无法修复即判不合格</text>
+</svg>

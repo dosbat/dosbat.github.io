@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="960" height="520" fill="#f8fafc"/>
+  <text x="480" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#1e3a5f">开关电源五大关键器件：选型看什么</text>
+  <text x="480" y="70" text-anchor="middle" font-size="14" fill="#64748b">同样拓扑，器件选得好不好，直接决定效率、温升、寿命和 EMI</text>
+
+  <!-- 表头 -->
+  <rect x="30" y="95" width="900" height="40" rx="6" fill="#1e3a5f"/>
+  <text x="160" y="122" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">器件</text>
+  <text x="430" y="122" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">核心参数</text>
+  <text x="750" y="122" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">选型要点 / 失效后果</text>
+
+  <!-- 行1 MOSFET -->
+  <rect x="30" y="135" width="900" height="68" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="30" y="135" width="230" height="68" fill="#dbeafe"/>
+  <text x="145" y="170" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">开关管 MOSFET</text>
+  <text x="430" y="162" text-anchor="middle" font-size="12" fill="#475569">耐压 Vds、导通电阻 Rds(on)</text>
+  <text x="430" y="184" text-anchor="middle" font-size="12" fill="#475569">开关速度、栅极电荷 Qg</text>
+  <text x="750" y="162" text-anchor="middle" font-size="12" fill="#334155">耐压留 1.5~2 倍余量（尖峰）</text>
+  <text x="750" y="184" text-anchor="middle" font-size="12" fill="#b91c1c">余量不足 → 击穿炸管</text>
+
+  <!-- 行2 变压器 -->
+  <rect x="30" y="203" width="900" height="68" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="30" y="203" width="230" height="68" fill="#e0f2fe"/>
+  <text x="145" y="238" text-anchor="middle" font-size="14" font-weight="bold" fill="#0e7490">高频变压器</text>
+  <text x="430" y="230" text-anchor="middle" font-size="12" fill="#475569">磁芯材质、匝数比、气隙</text>
+  <text x="430" y="252" text-anchor="middle" font-size="12" fill="#475569">饱和磁通密度、漏感</text>
+  <text x="750" y="230" text-anchor="middle" font-size="12" fill="#334155">反激必须开气隙储能</text>
+  <text x="750" y="252" text-anchor="middle" font-size="12" fill="#b91c1c">磁芯饱和 → 开关管过流损坏</text>
+
+  <!-- 行3 二极管 -->
+  <rect x="30" y="271" width="900" height="68" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="30" y="271" width="230" height="68" fill="#fef3c7"/>
+  <text x="145" y="306" text-anchor="middle" font-size="14" font-weight="bold" fill="#b45309">输出整流二极管</text>
+  <text x="430" y="298" text-anchor="middle" font-size="12" fill="#475569">反向耐压、正向电流</text>
+  <text x="430" y="320" text-anchor="middle" font-size="12" fill="#475569">反向恢复时间 trr、压降 Vf</text>
+  <text x="750" y="298" text-anchor="middle" font-size="12" fill="#334155">低压大电流用肖特基（Vf 低）</text>
+  <text x="750" y="320" text-anchor="middle" font-size="12" fill="#b91c1c">恢复太慢 → 发热、尖峰、EMI 差</text>
+
+  <!-- 行4 电容 -->
+  <rect x="30" y="339" width="900" height="68" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="30" y="339" width="230" height="68" fill="#f3e8ff"/>
+  <text x="145" y="374" text-anchor="middle" font-size="14" font-weight="bold" fill="#7e22ce">电解电容</text>
+  <text x="430" y="366" text-anchor="middle" font-size="12" fill="#475569">容量、耐压、纹波电流</text>
+  <text x="430" y="388" text-anchor="middle" font-size="12" fill="#475569">寿命（小时@温度）、ESR</text>
+  <text x="750" y="366" text-anchor="middle" font-size="12" fill="#334155">105℃ 长寿命款，远离热源</text>
+  <text x="750" y="388" text-anchor="middle" font-size="12" fill="#b91c1c">纹波电流超限 → 鼓包失效</text>
+
+  <!-- 行5 PWM -->
+  <rect x="30" y="407" width="900" height="68" fill="#ffffff" stroke="#e2e8f0"/>
+  <rect x="30" y="407" width="230" height="68" fill="#dcfce7"/>
+  <text x="145" y="442" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803d">PWM 控制芯片</text>
+  <text x="430" y="434" text-anchor="middle" font-size="12" fill="#475569">开关频率、最大占空比</text>
+  <text x="430" y="456" text-anchor="middle" font-size="12" fill="#475569">保护功能（OCP/OVP/OTP）</text>
+  <text x="750" y="434" text-anchor="middle" font-size="12" fill="#334155">-protect 齐全更可靠</text>
+  <text x="750" y="456" text-anchor="middle" font-size="12" fill="#b91c1c">环路补偿不良 → 振荡不稳</text>
+
+  <text x="480" y="500" text-anchor="middle" font-size="12" fill="#64748b">共性规律：耐压/电流留余量、注意热设计、关注高频特性——数据手册的「极限值」不是「工作值」。</text>
+</svg>

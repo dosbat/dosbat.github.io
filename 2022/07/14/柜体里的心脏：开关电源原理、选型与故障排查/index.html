@@ -1,0 +1,552 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>柜体里的&quot;心脏&quot;：开关电源原理、选型与故障排查 | DOS/BAT</title><meta name="author" content="0x01"><meta name="copyright" content="0x01"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="开关电源是控制柜里最容易被忽视、却最不能出错的部件。本文用图解方式讲透它的工作原理，结合柜体集成实际讲选型要点，并给出一套可照着走的故障诊断流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="柜体里的&quot;心脏&quot;：开关电源原理、选型与故障排查">
+<meta property="og:url" content="https://dosbat.com/2022/07/14/%E6%9F%9C%E4%BD%93%E9%87%8C%E7%9A%84%E5%BF%83%E8%84%8F%EF%BC%9A%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%8E%9F%E7%90%86%E3%80%81%E9%80%89%E5%9E%8B%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/index.html">
+<meta property="og:site_name" content="DOS&#x2F;BAT">
+<meta property="og:description" content="开关电源是控制柜里最容易被忽视、却最不能出错的部件。本文用图解方式讲透它的工作原理，结合柜体集成实际讲选型要点，并给出一套可照着走的故障诊断流程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png">
+<meta property="article:published_time" content="2022-07-14T01:20:00.000Z">
+<meta property="article:modified_time" content="2026-11-22T13:29:02.396Z">
+<meta property="article:author" content="0x01">
+<meta property="article:tag" content="故障排查">
+<meta property="article:tag" content="硬件基础">
+<meta property="article:tag" content="开关电源">
+<meta property="article:tag" content="电源">
+<meta property="article:tag" content="电气">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png"><link rel="shortcut icon" href="https://s1.ax1x.com/2023/09/09/pP62Apj.png"><link rel="canonical" href="https://dosbat.com/2022/07/14/%E6%9F%9C%E4%BD%93%E9%87%8C%E7%9A%84%E5%BF%83%E8%84%8F%EF%BC%9A%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%8E%9F%E7%90%86%E3%80%81%E9%80%89%E5%9E%8B%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 0x01","link":"链接: ","source":"来源: DOS/BAT","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '柜体里的"心脏"：开关电源原理、选型与故障排查',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-22 21:29:02'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><span id="fps"></span><link rel="stylesheet" href="/css/readPercent.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">127</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">138</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">40</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-globe"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/"><i class="fa-fw fas fa-bolt"></i><span> 弱电</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-warehouse"></i><span> 收藏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-server"></i><span> 网站</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/linux/hot.html"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-address-card"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%B5%84%E6%96%99%E6%B1%87%E7%BC%96/"><i class="fa-fw fas fa-soap"></i><span> 资料汇编</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2023/09/01/pP0Lmyd.png')"><nav id="nav"><span id="blog-info"><a href="/" title="DOS/BAT"><span class="site-name">DOS/BAT</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-globe"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/"><i class="fa-fw fas fa-bolt"></i><span> 弱电</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-warehouse"></i><span> 收藏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-server"></i><span> 网站</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/linux/hot.html"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-address-card"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%B5%84%E6%96%99%E6%B1%87%E7%BC%96/"><i class="fa-fw fas fa-soap"></i><span> 资料汇编</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">柜体里的&quot;心脏&quot;：开关电源原理、选型与故障排查</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-07-14T01:20:00.000Z" title="发表于 2022-07-14 09:20:00">2022-07-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-22T13:29:02.396Z" title="更新于 2026-11-22 21:29:02">2026-11-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/">系统运维</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%B3%BB%E7%BB%9F%E8%BF%90%E7%BB%B4/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/">网络技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="柜体里的&quot;心脏&quot;：开关电源原理、选型与故障排查"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>打开任何一面控制柜，最先看到的往往不是 PLC，也不是交换机，而是导轨上那个不起眼的金属盒子——<strong>24V 开关电源</strong>。</p>
+<p>它负责把 220V 交流电变成稳定的 24V 直流电，供给 PLC、传感器、继电器、触摸屏等所有低压器件。可以说，<strong>柜子里所有聪明的大脑，都靠它一口一口喂电</strong>。</p>
+<p>但它也是最容易被忽视的部件。选小了带的负载不够，选差了纹波超标干扰通信，坏了又往往表现为”设备莫名其妙重启”——排查时谁也想不到是电源的问题。</p>
+<p>本文用图解 + 实战的方式，把开关电源讲清楚。</p>
+<h2 id="一、什么是开关电源"><a href="#一、什么是开关电源" class="headerlink" title="一、什么是开关电源"></a>一、什么是开关电源</h2><p><strong>开关电源</strong>（Switch Mode Power Supply，SMPS）是一种利用高频开关器件（MOSFET）交替导通和关断，配合变压器和滤波电路，把一种电压转换成另一种电压的电源装置。</p>
+<p>对比一下老式的<strong>线性电源</strong>，差异一目了然：</p>
+<p><img src="/images/linear-vs-switching.png" alt="线性电源与开关电源对比"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>线性电源</th>
+<th>开关电源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工作原理</td>
+<td>工频变压器降压后线性稳压</td>
+<td>高频开关 + PWM 调制</td>
+</tr>
+<tr>
+<td>效率</td>
+<td>40%~60%</td>
+<td><strong>85%~95%</strong></td>
+</tr>
+<tr>
+<td>体积重量</td>
+<td>大、重（硅钢片变压器）</td>
+<td>小、轻（高频磁芯变压器）</td>
+</tr>
+<tr>
+<td>发热</td>
+<td>大，需要大散热片</td>
+<td>小</td>
+</tr>
+<tr>
+<td>输入范围</td>
+<td>窄（220V±10%）</td>
+<td><strong>宽（85~264V AC）</strong></td>
+</tr>
+<tr>
+<td>输出稳定性</td>
+<td>好</td>
+<td>好，动态响应稍逊</td>
+</tr>
+<tr>
+<td>纹波噪声</td>
+<td>极小</td>
+<td>较大（需滤波）</td>
+</tr>
+<tr>
+<td>价格</td>
+<td>低（简单电路）</td>
+<td>略高，但现在已很便宜</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>为什么柜体里都用开关电源？</strong></p>
+<p>三个字：<strong>效率、体积、宽压</strong>。</p>
+<ul>
+<li><strong>效率</strong>：工业现场 24V 电源常年通电，效率从 50% 提到 90%，意味着少一半的电变成热量。夏天柜内温度能差 10℃ 以上，直接影响元器件寿命。</li>
+<li><strong>体积</strong>：现在的柜体越做越紧凑，一个 60W 的线性电源能占掉半条导轨，同功率的开关电源只有一本书厚。</li>
+<li><strong>宽压</strong>：电网波动、发电机供电、UPS 切换这些场景，开关电源的宽输入范围能扛得住，线性电源早就输出电压不稳了。</li>
+</ul>
+<h2 id="二、工作原理：一张图讲透"><a href="#二、工作原理：一张图讲透" class="headerlink" title="二、工作原理：一张图讲透"></a>二、工作原理：一张图讲透</h2><p>开关电源的核心思路是：<strong>先把交流电整流成高压直流，再用高频开关把它”切碎”成脉冲，通过高频变压器降压，最后滤波还原成平滑的低压直流。</strong></p>
+<p><img src="/images/smps-workflow.png" alt="开关电源工作原理流程图"></p>
+<p>按信号流向拆成六个环节：</p>
+<h3 id="1-输入整流：AC-→-高压-DC"><a href="#1-输入整流：AC-→-高压-DC" class="headerlink" title="1. 输入整流：AC → 高压 DC"></a>1. 输入整流：AC → 高压 DC</h3><p>220V 交流电先经过 EMI 滤波器（滤除电网干扰，也防止电源自身的高频噪声污染电网），然后进入整流桥，变成约 <strong>310V 的脉动直流</strong>（220V × 1.414），再由大容量电解电容滤波成平滑高压直流。</p>
+<blockquote>
+<p>这就是为什么开关电源断电后，内部电容仍能电人——310V 直流不是闹着玩的。拆修前必须放电，等指示灯完全熄灭、用万用表确认无电压再动手。</p>
+</blockquote>
+<h3 id="2-高频开关：把直流”切碎”"><a href="#2-高频开关：把直流”切碎”" class="headerlink" title="2. 高频开关：把直流”切碎”"></a>2. 高频开关：把直流”切碎”</h3><p>这是开关电源的灵魂。PWM 控制芯片驱动 MOSFET 开关管，以每秒几万次到几十万次的频率反复导通/关断，把 310V 直流切成高频方波脉冲。</p>
+<p><strong>为什么要用高频？</strong></p>
+<p>变压器的体积和频率成反比。工频 50Hz 变压器需要一大坨硅钢片，而 100kHz 的变压器只需要一个小磁芯。这就是开关电源能做得这么小的根本原因。</p>
+<p><strong>PWM 如何稳压？</strong></p>
+<p>控制芯片通过调节脉冲的<strong>占空比</strong>（导通时间占整个周期的比例）来控制输出能量：</p>
+<ul>
+<li>输出电压偏低 → 增大占空比 → 传递更多能量 → 电压回升</li>
+<li>输出电压偏高 → 减小占空比 → 传递更少能量 → 电压回落</li>
+</ul>
+<p>这个闭环每秒调整几万次，所以负载突变时电压也能稳住。</p>
+<h3 id="3-高频变压器：降压-隔离"><a href="#3-高频变压器：降压-隔离" class="headerlink" title="3. 高频变压器：降压 + 隔离"></a>3. 高频变压器：降压 + 隔离</h3><p>高频脉冲通过变压器降压到需要的电压等级（如 24V）。变压器同时提供<strong>电气隔离</strong>——输入端和输出端之间没有直接的电气连接，耐压通常 3kV 以上，这是安全的关键保障。</p>
+<h3 id="4-输出整流滤波：脉冲-→-平滑-DC"><a href="#4-输出整流滤波：脉冲-→-平滑-DC" class="headerlink" title="4. 输出整流滤波：脉冲 → 平滑 DC"></a>4. 输出整流滤波：脉冲 → 平滑 DC</h3><p>变压器输出的仍是高频交流脉冲，经过肖特基二极管整流（选用肖特基是因为它开关速度快、压降小），再由电感和电容组成的 LC 滤波器平滑，最终得到稳定的低压直流。</p>
+<h3 id="5-反馈环路：闭环稳压"><a href="#5-反馈环路：闭环稳压" class="headerlink" title="5. 反馈环路：闭环稳压"></a>5. 反馈环路：闭环稳压</h3><p>输出端电压通过光耦（Optocoupler）反馈给初级侧的 PWM 控制芯片。光耦的作用是实现<strong>隔离反馈</strong>——次级的信息能传回初级，但两边没有电气连接。</p>
+<blockquote>
+<p>这也是开关电源的一个典型故障点：光耦老化后反馈失真，输出电压会飘高或飘低。后面故障排查部分会讲。</p>
+</blockquote>
+<h3 id="6-保护电路"><a href="#6-保护电路" class="headerlink" title="6. 保护电路"></a>6. 保护电路</h3><p>正规的开关电源都带这几重保护：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>保护类型</th>
+<th>触发条件</th>
+<th>典型表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>过流保护（OCP）</td>
+<td>负载电流超限</td>
+<td>输出电压下降或打嗝式重启</td>
+</tr>
+<tr>
+<td>过压保护（OVP）</td>
+<td>输出异常升高</td>
+<td>切断输出</td>
+</tr>
+<tr>
+<td>短路保护（SCP）</td>
+<td>输出短路</td>
+<td>打嗝模式，间歇性输出</td>
+</tr>
+<tr>
+<td>过温保护（OTP）</td>
+<td>内部温度过高</td>
+<td>降额或关断</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>“打嗝模式”（Hiccup Mode）</strong> 是个很有用的设计：短路时电源周期性尝试启动，短路消失后自动恢复，不需要断电重启。排查时看到输出时有时无、指示灯闪烁，很可能就是打嗝保护在动作。</p>
+<h2 id="三、选型：柜体集成看哪些参数"><a href="#三、选型：柜体集成看哪些参数" class="headerlink" title="三、选型：柜体集成看哪些参数"></a>三、选型：柜体集成看哪些参数</h2><p>面对一堆型号，重点看这几个参数：</p>
+<h3 id="1-输出电压和功率"><a href="#1-输出电压和功率" class="headerlink" title="1. 输出电压和功率"></a>1. 输出电压和功率</h3><ul>
+<li><strong>电压</strong>：工业控制柜绝大多数用 <strong>24V DC</strong>，少数用 12V 或 5V</li>
+<li><strong>功率</strong>：计算所有负载功率之和，然后 <strong>乘以 1.5~2 的余量</strong></li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">例：PLC 15W + 触摸屏 10W + 传感器 8×2W = 41W</span><br><span class="line">选 60W 或 100W 电源，不要选 50W 卡着上限</span><br></pre></td></tr></table></figure>
+<p><strong>余量不是浪费</strong>：</p>
+<ul>
+<li>感性负载（继电器、电磁阀）启动瞬间电流是稳态的 3~5 倍</li>
+<li>电源长期满负荷运行，电解电容寿命会大幅缩短</li>
+<li>夏天柜内 50℃ 以上时，电源需要<strong>降额使用</strong>（很多品牌的降额曲线：50℃ 时只能用额定功率的 80%）</li>
+</ul>
+<blockquote>
+<p><strong>实战经验</strong>：选功率时把散热条件一起算进去。柜内有空调/风扇可以按 1.5 倍余量，密闭柜体没散热的按 2 倍，甚至更大。</p>
+</blockquote>
+<h3 id="2-输入电压范围"><a href="#2-输入电压范围" class="headerlink" title="2. 输入电压范围"></a>2. 输入电压范围</h3><p>务必选 <strong>85~264V AC 宽压输入</strong> 的型号。只支持 220V±10% 的窄压款，在以下场景会出问题：</p>
+<ul>
+<li>偏远地区电网波动大</li>
+<li>柴油发电机供电（电压频率都不稳）</li>
+<li>与大功率设备共用回路上电瞬间电压跌落</li>
+</ul>
+<h3 id="3-纹波与噪声"><a href="#3-纹波与噪声" class="headerlink" title="3. 纹波与噪声"></a>3. 纹波与噪声</h3><p>纹波是叠加在直流输出上的交流成分。<strong>纹波过大会导致：</strong></p>
+<ul>
+<li>模拟量采样跳动（4-20mA 信号不准）</li>
+<li>通信误码（RS485、CAN 总线莫名其妙丢包）</li>
+<li>继电器误动作</li>
+</ul>
+<p>普通应用要求纹波 &lt; 100mV（峰峰值），精密仪器要求 &lt; 50mV。选型时看规格书的 <strong>Ripple &amp; Noise</strong> 参数。</p>
+<h3 id="4-安装方式"><a href="#4-安装方式" class="headerlink" title="4. 安装方式"></a>4. 安装方式</h3><ul>
+<li><strong>DIN 导轨安装</strong>：最常用，35mm 标准导轨，拆装方便</li>
+<li><strong>面板安装 / 机架式</strong>：大功率或特殊场合</li>
+</ul>
+<p>柜内布局时，开关电源要装在<strong> airflow 通畅的位置</strong>，上下留出散热空间。别贴着发热元件（变频器、断路器）装，热量叠加会显著缩短寿命。</p>
+<h3 id="5-认证与品牌"><a href="#5-认证与品牌" class="headerlink" title="5. 认证与品牌"></a>5. 认证与品牌</h3><p>工业场合优先选有 <strong>CE / UL / CCC</strong> 认证的产品。品牌方面，明纬（Mean Well）是行业标配，西门子、施耐德、菲尼克斯的电源贵但可靠性更高。杂牌电源省下的钱，可能会在半夜故障时被加倍罚回来。</p>
+<h3 id="6-冗余设计"><a href="#6-冗余设计" class="headerlink" title="6. 冗余设计"></a>6. 冗余设计</h3><p>重要场合（不能停机的产线、消防系统）用 <strong>冗余电源模块 + 两个电源</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">两路交流输入 → 两个开关电源 → 冗余模块（OR-ing Diode）→ 24V 母线</span><br></pre></td></tr></table></figure>
+<p>任一路电源故障，另一路无缝接管。冗余模块还能实现故障隔离和告警输出。</p>
+<h2 id="四、柜体里的实际应用"><a href="#四、柜体里的实际应用" class="headerlink" title="四、柜体里的实际应用"></a>四、柜体里的实际应用</h2><p><img src="/images/smps-in-cabinet.png" alt="控制柜内的开关电源"></p>
+<p>典型的 24V 供电回路：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">市电 220V</span><br><span class="line">   │</span><br><span class="line">   ├─ 断路器（2P / 6A）</span><br><span class="line">   │</span><br><span class="line">   ├─ 开关电源（220V AC → 24V DC）</span><br><span class="line">   │</span><br><span class="line">   ├─ 直流断路器（1P / 按负载选）</span><br><span class="line">   │</span><br><span class="line">   ├─ 24V 母线（端子排分配）</span><br><span class="line">   │</span><br><span class="line">   └─ 负载：PLC / 触摸屏 / 传感器 / 继电器 / 交换机</span><br></pre></td></tr></table></figure>
+<p><strong>几个容易被忽视的细节：</strong></p>
+<ol>
+<li><strong>输入端必须加断路器</strong> —— 便于检修时断开，也作为短路保护的后备</li>
+<li><strong>PE 保护接地必须可靠</strong> —— 金属外壳接地电阻 &lt; 4Ω（图里标注了接地端子）</li>
+<li><strong>L/N 千万别接反</strong> —— 虽然整流桥能自适应，但内部 EMI 滤波电路和安规设计是按 L 线有保险丝做的，接反会埋隐患</li>
+<li><strong>输出端正负极别接反</strong> —— 24V 接反会直接烧坏 PLC 和传感器，有些电源有防反接保护，但别赌</li>
+<li><strong>线径选够</strong> —— 按电流算，别只按”能插进去”选。24V/10A 回路至少要 1.5mm²</li>
+<li><strong>标签清晰</strong> —— 线号管、端子标识、电源电压标注，检修时会感谢自己</li>
+</ol>
+<h2 id="五、故障排查：一套可照着走的流程"><a href="#五、故障排查：一套可照着走的流程" class="headerlink" title="五、故障排查：一套可照着走的流程"></a>五、故障排查：一套可照着走的流程</h2><p><img src="/images/smps-troubleshooting.png" alt="开关电源故障诊断流程图"></p>
+<h3 id="第-1-步：看指示灯"><a href="#第-1-步：看指示灯" class="headerlink" title="第 1 步：看指示灯"></a>第 1 步：看指示灯</h3><p>电源正面通常有 <strong>DC OK</strong> 绿色 LED：</p>
+<ul>
+<li><strong>灯亮</strong>：次级有输出，电源基本正常</li>
+<li><strong>灯不亮</strong>：先查输入侧——交流电压是否正常、断路器是否跳闸、保险丝是否熔断</li>
+</ul>
+<blockquote>
+<p>注意有些电源灯亮但输出电压不对，灯只表示”有输出”，不代表”输出正常”。必须万用表实测。</p>
+</blockquote>
+<h3 id="第-2-步：测量输出电压"><a href="#第-2-步：测量输出电压" class="headerlink" title="第 2 步：测量输出电压"></a>第 2 步：测量输出电压</h3><p>万用表直流档，红表笔接 +V，黑表笔接 -V（或 COM）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>测量值</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24V ± 5%（22.8~25.2V）</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>明显偏低（如 20V）</td>
+<td>过载或电源老化</td>
+</tr>
+<tr>
+<td>接近 0V</td>
+<td>短路保护或电源损坏</td>
+</tr>
+<tr>
+<td>忽高忽低</td>
+<td>反馈环路故障或输入不稳</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>测量时注意</strong>：要在<strong>输出端端子</strong>测，不要在负载端测。如果电源端正常、负载端偏低，说明是线路压降或接触不良，不是电源问题。</p>
+<h3 id="第-3-步：判断是否过载"><a href="#第-3-步：判断是否过载" class="headerlink" title="第 3 步：判断是否过载"></a>第 3 步：判断是否过载</h3><p>断开所有负载，单独测电源输出：</p>
+<ul>
+<li>电压恢复正常 → <strong>负载侧有问题</strong>（某个支路短路或过载）</li>
+<li>电压仍偏低 → <strong>电源本身老化或损坏</strong></li>
+</ul>
+<p>逐个接回负载，每接一路测一次电压，就能定位到具体是哪一路有问题。</p>
+<p><strong>感性负载的电流冲击</strong>是常见元凶：电磁阀、接触器线圈吸合瞬间电流是稳态的几倍，多个同时动作时会把电源拉垮。解决办法是加大电源功率，或者分时动作（PLC 程序里错开 100ms）。</p>
+<h3 id="第-4-步：测纹波"><a href="#第-4-步：测纹波" class="headerlink" title="第 4 步：测纹波"></a>第 4 步：测纹波</h3><p>万用表交流档（mV 档）并联在输出端，读数应 &lt; 100mV。有条件用示波器看波形更准确。</p>
+<p>纹波超标的表现是<strong>设备间歇性抽风</strong>：通信丢包、模拟量跳动、触摸屏偶发死机。这类问题最容易被误判为”程序 bug”或”干扰”，实际上换个电源就好了。</p>
+<h3 id="第-5-步：检查散热"><a href="#第-5-步：检查散热" class="headerlink" title="第 5 步：检查散热"></a>第 5 步：检查散热</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 红外测温仪测外壳温度</span></span><br><span class="line"><span class="comment"># 正常：&lt; 60℃</span></span><br><span class="line"><span class="comment"># 警告：60~70℃</span></span><br><span class="line"><span class="comment"># 危险：&gt; 70℃，电容寿命急剧缩短</span></span><br></pre></td></tr></table></figure>
+<p>柜内温度过高时：</p>
+<ul>
+<li>加风扇或空调</li>
+<li>增大电源功率规格（大马小车，发热更小）</li>
+<li>检查电源周围的散热空间是否被堵</li>
+</ul>
+<h3 id="第-6-步：观察打嗝和异响"><a href="#第-6-步：观察打嗝和异响" class="headerlink" title="第 6 步：观察打嗝和异响"></a>第 6 步：观察打嗝和异响</h3><ul>
+<li><strong>输出间歇性通断</strong> → 打嗝保护动作，先断开负载排查短路</li>
+<li><strong>内部有”滋滋”高频啸叫</strong> → 变压器或电感松动、负载严重不匹配，尽快更换</li>
+<li><strong>有焦糊味</strong> → 立即断电，内部元件已过热损坏</li>
+</ul>
+<h3 id="常见故障速查表"><a href="#常见故障速查表" class="headerlink" title="常见故障速查表"></a>常见故障速查表</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>最可能原因</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指示灯不亮</td>
+<td>输入断电/保险丝断</td>
+<td>查断路器、测输入电压</td>
+</tr>
+<tr>
+<td>灯亮无输出</td>
+<td>输出短路保护</td>
+<td>断开负载，查短路点</td>
+</tr>
+<tr>
+<td>输出电压偏低</td>
+<td>过载/电源老化</td>
+<td>减负载或换更大功率</td>
+</tr>
+<tr>
+<td>输出忽高忽低</td>
+<td>反馈光耦老化</td>
+<td>更换电源</td>
+</tr>
+<tr>
+<td>纹波大、通信丢包</td>
+<td>滤波电容失效</td>
+<td>更换电源</td>
+</tr>
+<tr>
+<td>外壳发烫</td>
+<td>过载/散热不良</td>
+<td>改善散热或加大功率</td>
+</tr>
+<tr>
+<td>间歇性重启</td>
+<td>打嗝保护/接触不良</td>
+<td>查负载短路、紧固端子</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="六、写在最后"><a href="#六、写在最后" class="headerlink" title="六、写在最后"></a>六、写在最后</h2><p>开关电源在柜体里存在感很低——装上去能用好几年，没人会想起它。但一旦它出问题，排查起来能让人怀疑人生，因为表现往往是”系统不稳定”这种模糊症状。</p>
+<p><strong>三条经验：</strong></p>
+<ol>
+<li><strong>选型别抠</strong>：功率留 1.5~2 倍余量，宽压输入，认准品牌。省下的几十块钱，抵不上一次半夜抢修。</li>
+<li><strong>接线要规范</strong>：L/N、正负极、PE 接地线，一个都不能错。柜内线号和标识做清楚。</li>
+<li><strong>排查先测电源</strong>：遇到”设备莫名其妙重启””通信不稳定”这类玄学问题，<strong>第一步先拿万用表测电源电压和纹波</strong>，这一步能省掉后面 80% 的无用功。</li>
+</ol>
+<p>柜子里这个不起眼的金属盒子，值得你多花两分钟关注它。</p>
+<hr>
+<p><strong>相关阅读</strong></p>
+<ul>
+<li><a href="https://dosbat.com/2026/10/19/Linux故障排查实战：从现象到定位的系统方法/">Linux 故障排查实战：从现象到定位的系统方法</a></li>
+<li><a href="https://dosbat.com/2026/11/08/Ubuntu 24.04 服务器初始化实战：磁盘、Swap、Docker 与 Nginx 容器化部署/">Ubuntu 24.04 服务器初始化实战</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://dosbat.com">0x01</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://dosbat.com/2022/07/14/%E6%9F%9C%E4%BD%93%E9%87%8C%E7%9A%84%E5%BF%83%E8%84%8F%EF%BC%9A%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%8E%9F%E7%90%86%E3%80%81%E9%80%89%E5%9E%8B%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/">https://dosbat.com/2022/07/14/%E6%9F%9C%E4%BD%93%E9%87%8C%E7%9A%84%E5%BF%83%E8%84%8F%EF%BC%9A%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%8E%9F%E7%90%86%E3%80%81%E9%80%89%E5%9E%8B%E4%B8%8E%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://dosbat.com" target="_blank">DOS/BAT</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/">故障排查</a><a class="post-meta__tags" href="/tags/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/">硬件基础</a><a class="post-meta__tags" href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/">开关电源</a><a class="post-meta__tags" href="/tags/%E7%94%B5%E6%BA%90/">电源</a><a class="post-meta__tags" href="/tags/%E7%94%B5%E6%B0%94/">电气</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/7c84jm0o/" title="yum安装提示没有可用软件包"><img class="cover" src="https://s21.ax1x.com/2024/10/26/pAwvJUS.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">yum安装提示没有可用软件包</div></div></a></div><div class="next-post pull-right"><a href="/oqj8hfji/" title="Shell脚本实现数组冒泡排序"><img class="cover" src="https://s21.ax1x.com/2024/10/26/pAwvU3j.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Shell脚本实现数组冒泡排序</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/hqde44k9/" title="Linux 故障排查实战：从现象到定位的系统方法"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-19</div><div class="title">Linux 故障排查实战：从现象到定位的系统方法</div></div></a></div><div><a href="/2025/03/19/%E4%B8%80%E6%96%87%E6%90%9E%E6%87%82%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%EF%BC%9A%E5%8E%9F%E7%90%86%E3%80%81%E9%A9%B1%E5%8A%A8%E4%B8%8E%E5%AE%9E%E6%88%98%E6%8E%A5%E7%BA%BF/" title="一文搞懂步进电机：原理、驱动与实战接线"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-19</div><div class="title">一文搞懂步进电机：原理、驱动与实战接线</div></div></a></div><div><a href="/2026/01/12/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E8%BF%9B%E9%98%B6%EF%BC%9A%E6%8B%93%E6%89%91%E3%80%81%E5%8F%98%E5%8E%8B%E5%99%A8%E4%B8%8E%20EMI%EF%BC%8C%E4%B8%80%E6%96%87%E8%AE%B2%E9%80%8F%E5%86%85%E9%83%A8%E8%AE%BE%E8%AE%A1/" title="开关电源进阶：拓扑、变压器与 EMI，一文讲透内部设计"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-12</div><div class="title">开关电源进阶：拓扑、变压器与 EMI，一文讲透内部设计</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0x01</div><div class="author-info__description">有人辞官归故里，有人星夜赶科场。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">127</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">138</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">40</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/dosbat"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/isslower" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dosbat666@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://dosbat.com/link" target="_blank" title="收藏"><i class="fas fa-server"></i></a><a class="social-icon" href="https://dosbat.com/tags" target="_blank" title="便签"><i class="fab fa-tags"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><div><strong><a href="https://dosbat.com">☕日常学习，分享记录📃</a></strong></div><div><strong><a href="mailto:dosbat666@gmail.com">👨‍🌾联系我吧🙋</a></strong></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90"><span class="toc-number">1.</span> <span class="toc-text">一、什么是开关电源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A%E4%B8%80%E5%BC%A0%E5%9B%BE%E8%AE%B2%E9%80%8F"><span class="toc-number">2.</span> <span class="toc-text">二、工作原理：一张图讲透</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BE%93%E5%85%A5%E6%95%B4%E6%B5%81%EF%BC%9AAC-%E2%86%92-%E9%AB%98%E5%8E%8B-DC"><span class="toc-number">2.1.</span> <span class="toc-text">1. 输入整流：AC → 高压 DC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%AB%98%E9%A2%91%E5%BC%80%E5%85%B3%EF%BC%9A%E6%8A%8A%E7%9B%B4%E6%B5%81%E2%80%9D%E5%88%87%E7%A2%8E%E2%80%9D"><span class="toc-number">2.2.</span> <span class="toc-text">2. 高频开关：把直流”切碎”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%AB%98%E9%A2%91%E5%8F%98%E5%8E%8B%E5%99%A8%EF%BC%9A%E9%99%8D%E5%8E%8B-%E9%9A%94%E7%A6%BB"><span class="toc-number">2.3.</span> <span class="toc-text">3. 高频变压器：降压 + 隔离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%BE%93%E5%87%BA%E6%95%B4%E6%B5%81%E6%BB%A4%E6%B3%A2%EF%BC%9A%E8%84%89%E5%86%B2-%E2%86%92-%E5%B9%B3%E6%BB%91-DC"><span class="toc-number">2.4.</span> <span class="toc-text">4. 输出整流滤波：脉冲 → 平滑 DC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%8F%8D%E9%A6%88%E7%8E%AF%E8%B7%AF%EF%BC%9A%E9%97%AD%E7%8E%AF%E7%A8%B3%E5%8E%8B"><span class="toc-number">2.5.</span> <span class="toc-text">5. 反馈环路：闭环稳压</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E4%BF%9D%E6%8A%A4%E7%94%B5%E8%B7%AF"><span class="toc-number">2.6.</span> <span class="toc-text">6. 保护电路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%80%89%E5%9E%8B%EF%BC%9A%E6%9F%9C%E4%BD%93%E9%9B%86%E6%88%90%E7%9C%8B%E5%93%AA%E4%BA%9B%E5%8F%82%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">三、选型：柜体集成看哪些参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BE%93%E5%87%BA%E7%94%B5%E5%8E%8B%E5%92%8C%E5%8A%9F%E7%8E%87"><span class="toc-number">3.1.</span> <span class="toc-text">1. 输出电压和功率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BE%93%E5%85%A5%E7%94%B5%E5%8E%8B%E8%8C%83%E5%9B%B4"><span class="toc-number">3.2.</span> <span class="toc-text">2. 输入电压范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BA%B9%E6%B3%A2%E4%B8%8E%E5%99%AA%E5%A3%B0"><span class="toc-number">3.3.</span> <span class="toc-text">3. 纹波与噪声</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="toc-number">3.4.</span> <span class="toc-text">4. 安装方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%AE%A4%E8%AF%81%E4%B8%8E%E5%93%81%E7%89%8C"><span class="toc-number">3.5.</span> <span class="toc-text">5. 认证与品牌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%86%97%E4%BD%99%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.6.</span> <span class="toc-text">6. 冗余设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9F%9C%E4%BD%93%E9%87%8C%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">四、柜体里的实际应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%EF%BC%9A%E4%B8%80%E5%A5%97%E5%8F%AF%E7%85%A7%E7%9D%80%E8%B5%B0%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">五、故障排查：一套可照着走的流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-1-%E6%AD%A5%EF%BC%9A%E7%9C%8B%E6%8C%87%E7%A4%BA%E7%81%AF"><span class="toc-number">5.1.</span> <span class="toc-text">第 1 步：看指示灯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-2-%E6%AD%A5%EF%BC%9A%E6%B5%8B%E9%87%8F%E8%BE%93%E5%87%BA%E7%94%B5%E5%8E%8B"><span class="toc-number">5.2.</span> <span class="toc-text">第 2 步：测量输出电压</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-3-%E6%AD%A5%EF%BC%9A%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E8%BF%87%E8%BD%BD"><span class="toc-number">5.3.</span> <span class="toc-text">第 3 步：判断是否过载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-4-%E6%AD%A5%EF%BC%9A%E6%B5%8B%E7%BA%B9%E6%B3%A2"><span class="toc-number">5.4.</span> <span class="toc-text">第 4 步：测纹波</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-5-%E6%AD%A5%EF%BC%9A%E6%A3%80%E6%9F%A5%E6%95%A3%E7%83%AD"><span class="toc-number">5.5.</span> <span class="toc-text">第 5 步：检查散热</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC-6-%E6%AD%A5%EF%BC%9A%E8%A7%82%E5%AF%9F%E6%89%93%E5%97%9D%E5%92%8C%E5%BC%82%E5%93%8D"><span class="toc-number">5.6.</span> <span class="toc-text">第 6 步：观察打嗝和异响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">5.7.</span> <span class="toc-text">常见故障速查表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">6.</span> <span class="toc-text">六、写在最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/3gri66tg/" title="RHCSA认证考试-附加题"><img src="https://s21.ax1x.com/2024/10/16/pANeWkt.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RHCSA认证考试-附加题"/></a><div class="content"><a class="title" href="/3gri66tg/" title="RHCSA认证考试-附加题">RHCSA认证考试-附加题</a><time datetime="2026-11-22T13:29:00.532Z" title="发表于 2026-11-22 21:29:00">2026-11-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/elk9xk27/" title="ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南"><img src="/images/elk-architecture.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南"/></a><div class="content"><a class="title" href="/elk9xk27/" title="ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南">ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南</a><time datetime="2026-11-16T14:30:00.000Z" title="发表于 2026-11-16 22:30:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/v7mvaljv/" title="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑"><img src="/images/o2v-architecture.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑"/></a><div class="content"><a class="title" href="/v7mvaljv/" title="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑">OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑</a><time datetime="2026-11-16T14:10:00.000Z" title="发表于 2026-11-16 22:10:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"><img src="/images/minio-deployment-modes.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"/></a><div class="content"><a class="title" href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型">MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型</a><time datetime="2026-11-16T13:50:00.000Z" title="发表于 2026-11-16 21:50:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口"><img src="/images/firewalld-decision.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 通过 Firewalld 服务限制 IP 和端口"/></a><div class="content"><a class="title" href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口">Linux 通过 Firewalld 服务限制 IP 和端口</a><time datetime="2026-11-16T13:10:00.000Z" title="发表于 2026-11-16 21:10:00">2026-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 0x01</div><div class="footer_custom_text"><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"><span id="percent">0<span>%</span></span></i></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const el = document.getElementById("waline-wrap"); //这里是你的评论div#id
+  var idPath = el.getAttribute('comment_id');
+  if (!idPath) {
+    idPath = decodeURI(window.location.pathname);
+  }
+  const initWaline = (Fn) => {
+    const waline = Fn(Object.assign({
+      el: '#waline-wrap',         //这里是你的评论div#id，跟上面的el中定义的值一致
+      serverURL: 'https://waline.dosbat.com/',  //主题配置文件中配置的服务地址
+      search: false,              //关闭表情查找 不大好用
+      emoji: [
+        'https://unpkg.com/@waline/emojis@1.1.0/bilibili',
+        'https://unpkg.com/@waline/emojis@1.1.0/qq',
+      ],
+      reaction: true,              // 开启反应，可以点击按钮对文章进行评价
+      pageview: false,  // 主题配置文件中配置的浏览量统计
+      dark: 'html[data-theme="dark"]',           
+      path: window.location.pathname,            
+      comment: false,      // 主题配置文件中配置的评论数统计
+      imageUploader: (file) => {
+          if (!file) {  
+            throw new Error('No file provided');  
+          }  
+          let formData = new FormData();
+          let headers = new Headers();
+          formData.append('file', file);
+          formData.append('album_id', 1234); //去不的相册id，id可进入相册页面用F12查看
+          headers.set('Authorization', 'Bearer xxxxxxxxxxxxx');   // 记得改自己的token，去不给的token是1234|xxxx，前面的数字和竖杠不需要，加上Bearer 变成Bearer xxxxx才能认证通过
+          headers.set('Accept', 'application/json');
+          return fetch('https://7bu.top/api/v1/upload', {    // 去不图床的API就是此链接，如果你用的其他图床就改成其他的
+            method: 'POST',
+            headers: headers,
+            body: formData,
+            mode: 'cors',
+          })
+            .then((resp) => resp.json())
+            .then((resp) => resp.data.links.url);
+        },
+    }, {"requiredMeta":["nick","mail"],"locale":{"placeholder":"昵称和邮箱为必填项，为了您能及时收到相关回复的邮件通知，请确保邮箱的正确性！"}}))
+
+    const destroyWaline = () => {
+      waline.destroy()
+    }
+
+    btf.addGlobalFn('pjax', destroyWaline, 'destroyWaline')
+  }
+
+  const loadWaline = async () => {
+    if (initFn) initWaline(initFn)
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/@waline/client@3.1.2/dist/waline.min.css')
+      const { init } = await import('https://cdn.jsdelivr.net/npm/@waline/client@3.1.2/dist/waline.min.js')
+      initFn = init || Waline.init
+      initWaline(initFn)
+      window.walineFn = initFn
+    }
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async src="/js/fps.js"></script><script defer data-pjax src="/js/readPercent.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/Linux-系统/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐧 Linux 系统<br>(33)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/服务与中间件/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚙️ 服务与中间件<br>(32)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/容器与自动化/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐳 容器与自动化<br>(15)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/网络技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🌐 网络技术<br>(15)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/系统运维/网络技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🌐 网络技术<br>(1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/资料汇编/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 资料汇编<br>(13)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/编程开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 编程开发<br>(11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/弱电与电气智能化/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚡ 弱电与电气智能化<br>(5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://dosbat.com/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(25% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #69e8f2}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/zisgiumi/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANJz3d.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-09</span><a class="blog-slider__title" href="/zisgiumi/" alt="">腾讯云TCP运维题库-单选题</a><div class="blog-slider__text">腾讯云TCP运维题库-第一部分</div><a class="blog-slider__button" href="/zisgiumi/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/3h328hon/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/26/pAwvU3j.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-09</span><a class="blog-slider__title" href="/3h328hon/" alt="">腾讯云TCP运维题库-多选题</a><div class="blog-slider__text">腾讯云TCP运维题库-多选题</div><a class="blog-slider__button" href="/3h328hon/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/nwi200ri/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANehff.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-02-15</span><a class="blog-slider__title" href="/nwi200ri/" alt="">RHCSA认证考试-第一台机器</a><div class="blog-slider__text">RHCSA认证考试-第一台机器</div><a class="blog-slider__button" href="/nwi200ri/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/3gri66tg/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANeWkt.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-11-22</span><a class="blog-slider__title" href="/3gri66tg/" alt="">RHCSA认证考试-附加题</a><div class="blog-slider__text">RHCSA认证考试附加题</div><a class="blog-slider__button" href="/3gri66tg/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/zzo8b94p/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANYpjI.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-02-20</span><a class="blog-slider__title" href="/zzo8b94p/" alt="">RHCSA认证考试-第二台机器</a><div class="blog-slider__text">RHCSA认证考试-第二台机器</div><a class="blog-slider__button" href="/zzo8b94p/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/p62piz46/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANJqHK.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-12-09</span><a class="blog-slider__title" href="/p62piz46/" alt="">Git常用命令大全</a><div class="blog-slider__text">Git是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。</div><a class="blog-slider__button" href="/p62piz46/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/0hh955pk/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/19/pAUTLJf.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-16</span><a class="blog-slider__title" href="/0hh955pk/" alt="">提问的智慧</a><div class="blog-slider__text">你所提技术问题的解答的好坏, 很大程度上取决于你提问的方式与此问题的难度。本指南将教你如何正确地提问以获得你满意的答案。</div><a class="blog-slider__button" href="/0hh955pk/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/j6q5pl25/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANYSgA.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-01</span><a class="blog-slider__title" href="/j6q5pl25/" alt="">Docker 备忘录</a><div class="blog-slider__text">Docker是一个用于开发、传送和运行应用程序的开放平台。Docker 使您能够将应用程序与基础设施分开，以便您可以快速交付软件。使用 Docker，您可以像管理应用程序一样管理基础设施。通过利用 Docker 的快速交付、测试和部署代码的方法，您可以显着减少编写代码和在生产中运行代码之间的延迟。在这篇文章中，我将提到我们需要或大多数用例的 docker 命令。</div><a class="blog-slider__button" href="/j6q5pl25/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --></body></html>
