@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>摇表一响，绝缘现形：兆欧表的原理、接线与判读实战 | DOS/BAT</title><meta name="author" content="0x01"><meta name="copyright" content="0x01"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="万用表量得出通断，却量不出绝缘好不好——因为绝缘要在高压下才现原形。这篇用六张图讲清摇表（兆欧表）为什么能测绝缘、流比计怎么工作、L&#x2F;E&#x2F;G 三个端子怎么接、吸收比怎么读、电压等级怎么选，以及那些容易出错的操作细节。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摇表一响，绝缘现形：兆欧表的原理、接线与判读实战">
+<meta property="og:url" content="https://dosbat.com/w41l7tjo/index.html">
+<meta property="og:site_name" content="DOS&#x2F;BAT">
+<meta property="og:description" content="万用表量得出通断，却量不出绝缘好不好——因为绝缘要在高压下才现原形。这篇用六张图讲清摇表（兆欧表）为什么能测绝缘、流比计怎么工作、L&#x2F;E&#x2F;G 三个端子怎么接、吸收比怎么读、电压等级怎么选，以及那些容易出错的操作细节。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png">
+<meta property="article:published_time" content="2025-08-14T06:22:00.000Z">
+<meta property="article:modified_time" content="2026-11-23T14:35:15.551Z">
+<meta property="article:author" content="0x01">
+<meta property="article:tag" content="运维">
+<meta property="article:tag" content="摇表">
+<meta property="article:tag" content="兆欧表">
+<meta property="article:tag" content="绝缘电阻">
+<meta property="article:tag" content="电气测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png"><link rel="shortcut icon" href="https://s1.ax1x.com/2023/09/09/pP62Apj.png"><link rel="canonical" href="https://dosbat.com/w41l7tjo/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 0x01","link":"链接: ","source":"来源: DOS/BAT","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '摇表一响，绝缘现形：兆欧表的原理、接线与判读实战',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-23 22:35:15'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><span id="fps"></span><link rel="stylesheet" href="/css/readPercent.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">146</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">42</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-globe"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/"><i class="fa-fw fas fa-bolt"></i><span> 弱电</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-warehouse"></i><span> 收藏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-server"></i><span> 网站</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/linux/hot.html"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-address-card"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%B5%84%E6%96%99%E6%B1%87%E7%BC%96/"><i class="fa-fw fas fa-soap"></i><span> 资料汇编</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2023/09/01/pP0Lmyd.png')"><nav id="nav"><span id="blog-info"><a href="/" title="DOS/BAT"><span class="site-name">DOS/BAT</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-globe"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/"><i class="fa-fw fas fa-bolt"></i><span> 弱电</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-warehouse"></i><span> 收藏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-server"></i><span> 网站</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书单</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/linux/hot.html"><i class="fa-fw fas fa-code"></i><span> 命令</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-address-card"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/categories/%E8%B5%84%E6%96%99%E6%B1%87%E7%BC%96/"><i class="fa-fw fas fa-soap"></i><span> 资料汇编</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-message"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">摇表一响，绝缘现形：兆欧表的原理、接线与判读实战</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-14T06:22:00.000Z" title="发表于 2025-08-14 14:22:00">2025-08-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-23T14:35:15.551Z" title="更新于 2026-11-23 22:35:15">2026-11-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/">弱电与电气智能化</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%BC%B1%E7%94%B5%E4%B8%8E%E7%94%B5%E6%B0%94%E6%99%BA%E8%83%BD%E5%8C%96/%E7%94%B5%E6%B0%94%E6%B5%8B%E8%AF%95%E4%B8%8E%E4%BB%AA%E8%A1%A8/">电气测试与仪表</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="摇表一响，绝缘现形：兆欧表的原理、接线与判读实战"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>判断一台电机、一截电缆还能不能用，有一道最简单的考题：<strong>量一下绝缘电阻</strong>。</p>
+<p>但用万用表量绝缘，基本白搭。万用表电阻档的输出电压只有几伏，而绝缘缺陷——受潮、老化、表面脏污——往往要在几十伏到几千伏的电场下才暴露出来。低压下测出来几十兆欧”良好”，一通高压就击穿。</p>
+<p>这就是为什么现场老师傅查绝缘，掏出来的总是那个带摇柄的铁盒子——<strong>摇表</strong>，学名兆欧表（Megger）。它能在被测物上加几百到几千伏直流高压，专治绝缘的”隐疾”。这篇把它讲透。</p>
+<h2 id="一、摇表到底是什么：给绝缘”体检”的高压表"><a href="#一、摇表到底是什么：给绝缘”体检”的高压表" class="headerlink" title="一、摇表到底是什么：给绝缘”体检”的高压表"></a>一、摇表到底是什么：给绝缘”体检”的高压表</h2><p>摇表的核心任务只有一个：<strong>在被测绝缘上加一个稳定的直流高压，测出流过绝缘的微小泄漏电流，换算出绝缘电阻</strong>。</p>
+<p>绝缘电阻 = 施加的直流电压 ÷ 流过绝缘的泄漏电流。电压越高、泄漏电流越小，说明绝缘越好。</p>
+<p><img src="/images/megger-overview.svg" alt="摇表是什么：外观与三个接线端子"></p>
+<p>传统摇表由三部分构成：</p>
+<ul>
+<li><strong>手摇发电机</strong>——摇柄带动，输出 500V、1000V、2500V 等不同等级的直流高压，不用外接电源，野外、无电场合都能用。</li>
+<li><strong>流比计表头</strong>——指针式测量机构，刻度单位是兆欧（MΩ），一端是”0”，一端是”∞”（无穷大）。这是摇表区别于万用表的关键，后面细讲。</li>
+<li><strong>三个接线端子</strong>——L（Line，线路端）、E（Earth，接地端）、G（Guard，屏蔽端）。</li>
+</ul>
+<p>现在也有<strong>电子式兆欧表</strong>：用电池升压代替手摇发电机，测量原理一样，能自动计时、算吸收比、存储数据。但手摇式因为结构坚固、抗干扰、能直观看到指针随时间摆动的过程，在很多现场依然是主力。</p>
+<h2 id="二、为什么摇表不怕转速不稳：流比计的巧思"><a href="#二、为什么摇表不怕转速不稳：流比计的巧思" class="headerlink" title="二、为什么摇表不怕转速不稳：流比计的巧思"></a>二、为什么摇表不怕转速不稳：流比计的巧思</h2><p>手摇发电机的电压随转速波动，按理说测出来的电阻也应该跟着跳。但摇表的指针却很稳——秘密在<strong>流比计</strong>这个测量机构上。</p>
+<p><img src="/images/megger-principle.svg" alt="流比计工作原理"></p>
+<p>流比计里有两个线圈，绕在同一个转轴上，通电后产生<strong>方向相反的转矩</strong>：</p>
+<ul>
+<li><strong>电流线圈</strong>：与被测绝缘电阻串联。绝缘越好、泄漏电流越小，这个线圈的电流越小。</li>
+<li><strong>电压线圈</strong>：与发电机输出电压相关。电压越高，这个线圈的电流越大。</li>
+</ul>
+<p>指针最终停在哪，取决于<strong>两个线圈电流的比值（I₁/I₂）</strong>，而不是某一个电流的绝对值。发电机电压升高时，两个线圈的电流一起变大，比值基本不变——指针纹丝不动。</p>
+<p>这就是摇表的妙处：<strong>只要转速达到额定值（约 120 r/min）的 80% 以上并保持平稳，电压的小幅波动不影响读数</strong>。当然，转速忽快忽慢会导致指针晃，边摇边读、读到稳定值为准，仍是基本功。</p>
+<h3 id="表盘为什么是”倒着”的"><a href="#表盘为什么是”倒着”的" class="headerlink" title="表盘为什么是”倒着”的"></a>表盘为什么是”倒着”的</h3><p>摇表刻度从右往左是 0 → ∞：绝缘越好，指针越靠”∞”；绝缘击穿短路，指针打到”0”。记住这个方向，判读才不会反。</p>
+<h2 id="三、三个端子怎么接：L、E、G-的分工"><a href="#三、三个端子怎么接：L、E、G-的分工" class="headerlink" title="三、三个端子怎么接：L、E、G 的分工"></a>三、三个端子怎么接：L、E、G 的分工</h2><p>接线是摇表最容易出错的环节。三个端子各有分工，用错了测出来的数就没意义。</p>
+<p><img src="/images/megger-wiring.svg" alt="摇表的接线方法"></p>
+<p><strong>L（线路端）</strong>：接被测物的<strong>导体部分</strong>——电机绕组、电缆芯线、线路相线。</p>
+<p><strong>E（接地端）</strong>：接被测物的<strong>外壳或大地</strong>——电机机壳（要刮掉漆露金属）、电缆金属护套、接地干线。</p>
+<p><strong>G（屏蔽端 / 保护环）</strong>：这是最容易被忽略、也最能体现专业度的一个端子。它接在被测物<strong>绝缘表面</strong>或屏蔽层上，作用是把沿表面流动的泄漏电流”抄近道”引回发电机，<strong>不让这股电流经过测量线圈</strong>。</p>
+<p>为什么需要 G 端？测电缆绝缘时，芯线对护套之间既有”穿过绝缘体内部”的体电流，也有”沿绝缘表面爬过去”的表面电流。表面受潮、脏污时，后者会很大，如果不排除，测出来的是体电阻和表面电阻的并联值，偏小得离谱，让人误判电缆内部受潮。接上 G 端后，表面电流被旁路掉，读数反映的是真实的<strong>体积绝缘电阻</strong>。</p>
+<p>一句话记住：<strong>一般测量只用 L、E；测电缆、测潮湿脏污设备，务必加 G。</strong></p>
+<h3 id="三种典型接法速查"><a href="#三种典型接法速查" class="headerlink" title="三种典型接法速查"></a>三种典型接法速查</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>测量对象</th>
+<th>L 接</th>
+<th>E 接</th>
+<th>G 接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线路对地绝缘</td>
+<td>被测相线</td>
+<td>大地 / PE</td>
+<td>一般不接</td>
+</tr>
+<tr>
+<td>电机绕组对地</td>
+<td>绕组端子</td>
+<td>机壳裸金属</td>
+<td>潮湿时接绕组端部</td>
+</tr>
+<tr>
+<td>电缆芯线对护套</td>
+<td>芯线</td>
+<td>金属护套</td>
+<td>芯线绝缘表面屏蔽环</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="四、摇测的标准动作：从开路试验到放电"><a href="#四、摇测的标准动作：从开路试验到放电" class="headerlink" title="四、摇测的标准动作：从开路试验到放电"></a>四、摇测的标准动作：从开路试验到放电</h2><p>摇表操作有严格的顺序，每一步都有讲究。跟着下面这套流程走，既准又安全。</p>
+<p><img src="/images/megger-operation.svg" alt="摇表测量标准操作流程"></p>
+<p><strong>第 1 步：停电、验电、放电。</strong> 被测设备必须完全断电，确认无感应电。对电缆、电机绕组、电容器这类有电容的设备，先对地充分放电。严禁带电测量——这是铁律。</p>
+<p><strong>第 2 步：开路、短路试验（检查摇表好坏）。</strong> 测量前先自检：</p>
+<ul>
+<li><strong>开路试验</strong>：L、E 两线悬空不接，摇到额定转速，指针应指向 <strong>∞</strong>。</li>
+<li><strong>短路试验</strong>：L、E 两线短接，轻轻一摇，指针应指向 <strong>0</strong>。</li>
+</ul>
+<p>两项都正常，说明摇表本身没问题。指针到不了位，先检修仪表再测。</p>
+<p><strong>第 3 步：正确接线。</strong> 按上一节的方法接好 L、E、G。被测物表面擦干净，去掉油污和水汽。摇表放平、放稳，远离大电流导体和强磁场。</p>
+<p><strong>第 4 步：匀速摇测、读数。</strong> 顺时针摇动手柄，速度由慢渐快，到 <strong>120 r/min</strong> 左右保持匀速。<strong>边摇边读</strong>，以摇满 1 分钟（60 秒）时的读数为准。指针若打到 0，说明绝缘可能短路，立即停止摇动，防止表内线圈过热烧坏。</p>
+<p><strong>第 5 步：先断 L，再停摇。</strong> 这一条是保护仪表的关键。对大电容设备（长电缆、大电机），测量结束时<strong>必须先把 L 线从被测物上断开，再让摇表停下来</strong>。否则设备储存的电荷会反向冲击表头线圈，把摇表打坏。</p>
+<p><strong>第 6 步：再次放电、记录。</strong> 测完后对被测物充分放电，记录读数、环境温湿度。绝缘电阻受温度影响很大，不记温度的数，过几个月就没法对比了。</p>
+<h3 id="读数目测的小门道"><a href="#读数目测的小门道" class="headerlink" title="读数目测的小门道"></a>读数目测的小门道</h3><p>摇表刻度往往不均匀，越靠近 ∞ 端越密集。读数时视线要正对指针，避免视差。指针稳定在两格之间时，取中间值即可——绝缘电阻判断看的是数量级，不必纠结小数点。</p>
+<h2 id="五、吸收比与极化指数：比单个数值更会”看”绝缘"><a href="#五、吸收比与极化指数：比单个数值更会”看”绝缘" class="headerlink" title="五、吸收比与极化指数：比单个数值更会”看”绝缘"></a>五、吸收比与极化指数：比单个数值更会”看”绝缘</h2><p>只看一个绝缘电阻值，有时会误判。同样 100 MΩ，可能是绝缘很好，也可能是受潮初期——这时候要看<strong>绝缘电阻随时间的变化</strong>。</p>
+<p><img src="/images/megger-absorption.svg" alt="吸收比与极化指数判读"></p>
+<p>给绝缘加压后，流过它的电流由三部分组成：</p>
+<ul>
+<li><strong>电容电流</strong>：加压瞬间最大，快速衰减到零（给绝缘”充电”）。</li>
+<li><strong>吸收电流</strong>：缓慢衰减，反映绝缘介质的极化过程，受潮时会显著增大。</li>
+<li><strong>泄漏电流</strong>：稳定不变，真正反映绝缘的好坏。</li>
+</ul>
+<p>绝缘受潮时，吸收电流衰减很慢，表现为”绝缘电阻随时间上升得很慢”；绝缘良好时，指针会随时间明显往上爬。利用这个特性，就有了两个判据：</p>
+<p><strong>吸收比 K = R60s / R15s</strong><br>即加压 60 秒与 15 秒时的绝缘电阻之比。绝缘良好时，K 明显大于 1；一般认为 <strong>K &lt; 1.3 时，绝缘可能受潮</strong>。适用于电容量较小的设备。</p>
+<p><strong>极化指数 PI = R10min / R1min</strong><br>即 10 分钟与 1 分钟读数之比。对大电容设备（大型变压器、发电机、长电缆），吸收过程长达数分钟，用极化指数判断更准。一般 <strong>PI ≥ 2.0 认为绝缘良好</strong>。</p>
+<p><strong>使用提示</strong>：小电容设备测个绝缘电阻就够了；大电容设备既看绝缘电阻，也要看吸收比或极化指数。现在数字式兆欧表大多能自动算好这两个值，直接显示。</p>
+<h2 id="六、选表就用这一张：电压等级与判读速查"><a href="#六、选表就用这一张：电压等级与判读速查" class="headerlink" title="六、选表就用这一张：电压等级与判读速查"></a>六、选表就用这一张：电压等级与判读速查</h2><p>选摇表，核心是<strong>电压等级要匹配被测设备的绝缘等级</strong>。选低了测不出隐患，选高了可能把低压绝缘打坏。</p>
+<p><img src="/images/megger-selection.svg" alt="摇表选型与判读速查"></p>
+<p><strong>电压等级怎么选：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>被测设备额定电压</th>
+<th>推荐兆欧表电压</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>500 V 以下</td>
+<td>500 V 或 1000 V</td>
+</tr>
+<tr>
+<td>500 V ~ 3000 V</td>
+<td>1000 V ~ 2500 V</td>
+</tr>
+<tr>
+<td>3000 V ~ 10000 V</td>
+<td>2500 V ~ 5000 V</td>
+</tr>
+<tr>
+<td>绝缘子、高压设备</td>
+<td>2500 V ~ 5000 V</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>常见档位有 100V、250V、500V、1000V、2500V、5000V、10000V。<strong>原则是表的电压等级略高于设备额定电压，但不能高太多</strong>——用 2500V 表去测 220V 的弱电回路，是要出事的。</p>
+<p><strong>阻值怎么判读：</strong></p>
+<ul>
+<li>低压设备绝缘电阻一般要求 <strong>≥ 0.5 MΩ</strong>（经验值：每千伏工作电压不低于 1 MΩ）。</li>
+<li>电机绕组：一般不低于 <strong>1 MΩ/kV</strong>。</li>
+<li>数值只是参考，更重要的是<strong>纵向对比</strong>——和这台设备上次测的、和历史数据比，下降明显就要警惕；也要和同型号设备横向比。</li>
+<li>温度每升高 10℃，绝缘电阻大致减半，所以不同季节的数据要换算到同一温度再比较。</li>
+</ul>
+<h2 id="七、写在最后"><a href="#七、写在最后" class="headerlink" title="七、写在最后"></a>七、写在最后</h2><p>摇表是电工手里最朴素、也最可靠的绝缘诊断工具。它的逻辑其实很干净：</p>
+<ol>
+<li><strong>给绝缘加高压</strong>——低压测不出的问题，高压下现形。</li>
+<li><strong>用流比计读数</strong>——测的是电流比值，所以不怕手摇电压波动。</li>
+<li><strong>看变化而不只看数值</strong>——吸收比、极化指数比单个电阻值更能说明绝缘状态。</li>
+</ol>
+<p>最后三条实战忠告：</p>
+<ul>
+<li><strong>永远先断电、后放电、再摇测</strong>，带电测量是拿命开玩笑。</li>
+<li><strong>测大电容设备，先断 L 再停摇</strong>，这一下能保住你的摇表。</li>
+<li><strong>记录要带温度和湿度</strong>，否则数据攒了一堆，真到要用时没法比。</li>
+</ul>
+<p>会摇表的人很多，摇得准、判得对的人不多。差别就在这些细节里。</p>
+<hr>
+<p><strong>相关阅读</strong></p>
+<ul>
+<li><a href="https://dosbat.com/3jrzgbry/">柜体里的心脏：开关电源原理、选型与故障排查</a></li>
+<li><a href="https://dosbat.com/7kpi6pft/">扛下那一记浪涌：SPD 原理、分级布防与选型实战</a></li>
+<li><a href="https://dosbat.com/85mtkczb/">从桥架到动环：一张清单守住机房交付</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://dosbat.com">0x01</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://dosbat.com/w41l7tjo/">https://dosbat.com/w41l7tjo/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://dosbat.com" target="_blank">DOS/BAT</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%BF%90%E7%BB%B4/">运维</a><a class="post-meta__tags" href="/tags/%E6%91%87%E8%A1%A8/">摇表</a><a class="post-meta__tags" href="/tags/%E5%85%86%E6%AC%A7%E8%A1%A8/">兆欧表</a><a class="post-meta__tags" href="/tags/%E7%BB%9D%E7%BC%98%E7%94%B5%E9%98%BB/">绝缘电阻</a><a class="post-meta__tags" href="/tags/%E7%94%B5%E6%B0%94%E6%B5%8B%E8%AF%95/">电气测试</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/3g12sqxr/" title="网工常见英文词汇"><img class="cover" src="https://s21.ax1x.com/2024/10/26/pAwvGE8.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">网工常见英文词汇</div></div></a></div><div class="next-post pull-right"><a href="/7tpe5wpj/" title="一文搞懂步进电机：原理、驱动与实战接线"><img class="cover" src="https://s1.ax1x.com/2023/09/01/pP0Lmyd.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">一文搞懂步进电机：原理、驱动与实战接线</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/elk9xk27/" title="ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南"><img class="cover" src="/images/elk-architecture.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-16</div><div class="title">ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南</div></div></a></div><div><a href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"><img class="cover" src="/images/minio-deployment-modes.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-16</div><div class="title">MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型</div></div></a></div><div><a href="/v7mvaljv/" title="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑"><img class="cover" src="/images/o2v-architecture.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-16</div><div class="title">OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/09/09/pP62cut.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">0x01</div><div class="author-info__description">有人辞官归故里，有人星夜赶科场。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">129</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">146</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">42</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/dosbat"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/isslower" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:dosbat666@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://dosbat.com/link" target="_blank" title="收藏"><i class="fas fa-server"></i></a><a class="social-icon" href="https://dosbat.com/tags" target="_blank" title="便签"><i class="fab fa-tags"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><div><strong><a href="https://dosbat.com">☕日常学习，分享记录📃</a></strong></div><div><strong><a href="mailto:dosbat666@gmail.com">👨‍🌾联系我吧🙋</a></strong></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%91%87%E8%A1%A8%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E7%BB%99%E7%BB%9D%E7%BC%98%E2%80%9D%E4%BD%93%E6%A3%80%E2%80%9D%E7%9A%84%E9%AB%98%E5%8E%8B%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">一、摇表到底是什么：给绝缘”体检”的高压表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E6%91%87%E8%A1%A8%E4%B8%8D%E6%80%95%E8%BD%AC%E9%80%9F%E4%B8%8D%E7%A8%B3%EF%BC%9A%E6%B5%81%E6%AF%94%E8%AE%A1%E7%9A%84%E5%B7%A7%E6%80%9D"><span class="toc-number">2.</span> <span class="toc-text">二、为什么摇表不怕转速不稳：流比计的巧思</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%9B%98%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9D%E5%80%92%E7%9D%80%E2%80%9D%E7%9A%84"><span class="toc-number">2.1.</span> <span class="toc-text">表盘为什么是”倒着”的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%89%E4%B8%AA%E7%AB%AF%E5%AD%90%E6%80%8E%E4%B9%88%E6%8E%A5%EF%BC%9AL%E3%80%81E%E3%80%81G-%E7%9A%84%E5%88%86%E5%B7%A5"><span class="toc-number">3.</span> <span class="toc-text">三、三个端子怎么接：L、E、G 的分工</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%85%B8%E5%9E%8B%E6%8E%A5%E6%B3%95%E9%80%9F%E6%9F%A5"><span class="toc-number">3.1.</span> <span class="toc-text">三种典型接法速查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%91%87%E6%B5%8B%E7%9A%84%E6%A0%87%E5%87%86%E5%8A%A8%E4%BD%9C%EF%BC%9A%E4%BB%8E%E5%BC%80%E8%B7%AF%E8%AF%95%E9%AA%8C%E5%88%B0%E6%94%BE%E7%94%B5"><span class="toc-number">4.</span> <span class="toc-text">四、摇测的标准动作：从开路试验到放电</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E6%95%B0%E7%9B%AE%E6%B5%8B%E7%9A%84%E5%B0%8F%E9%97%A8%E9%81%93"><span class="toc-number">4.1.</span> <span class="toc-text">读数目测的小门道</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%90%B8%E6%94%B6%E6%AF%94%E4%B8%8E%E6%9E%81%E5%8C%96%E6%8C%87%E6%95%B0%EF%BC%9A%E6%AF%94%E5%8D%95%E4%B8%AA%E6%95%B0%E5%80%BC%E6%9B%B4%E4%BC%9A%E2%80%9D%E7%9C%8B%E2%80%9D%E7%BB%9D%E7%BC%98"><span class="toc-number">5.</span> <span class="toc-text">五、吸收比与极化指数：比单个数值更会”看”绝缘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%80%89%E8%A1%A8%E5%B0%B1%E7%94%A8%E8%BF%99%E4%B8%80%E5%BC%A0%EF%BC%9A%E7%94%B5%E5%8E%8B%E7%AD%89%E7%BA%A7%E4%B8%8E%E5%88%A4%E8%AF%BB%E9%80%9F%E6%9F%A5"><span class="toc-number">6.</span> <span class="toc-text">六、选表就用这一张：电压等级与判读速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">7.</span> <span class="toc-text">七、写在最后</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/3gri66tg/" title="RHCSA认证考试-附加题"><img src="https://s21.ax1x.com/2024/10/16/pANeWkt.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RHCSA认证考试-附加题"/></a><div class="content"><a class="title" href="/3gri66tg/" title="RHCSA认证考试-附加题">RHCSA认证考试-附加题</a><time datetime="2026-11-22T13:29:00.532Z" title="发表于 2026-11-22 21:29:00">2026-11-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/elk9xk27/" title="ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南"><img src="/images/elk-architecture.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南"/></a><div class="content"><a class="title" href="/elk9xk27/" title="ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南">ELK Stack 实战：Docker Compose 部署、Logstash 管道与分片调优全配置指南</a><time datetime="2026-11-16T14:30:00.000Z" title="发表于 2026-11-16 22:30:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/v7mvaljv/" title="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑"><img src="/images/o2v-architecture.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑"/></a><div class="content"><a class="title" href="/v7mvaljv/" title="OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑">OpenObserve + Vector 实战：日志、指标统一采集与 1.0 版本避坑</a><time datetime="2026-11-16T14:10:00.000Z" title="发表于 2026-11-16 22:10:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"><img src="/images/minio-deployment-modes.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型"/></a><div class="content"><a class="title" href="/w4lbdbp0/" title="MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型">MinIO 对象存储实战：5 种部署方式、S3 接入与 2026 现状选型</a><time datetime="2026-11-16T13:50:00.000Z" title="发表于 2026-11-16 21:50:00">2026-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口"><img src="/images/firewalld-decision.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 通过 Firewalld 服务限制 IP 和端口"/></a><div class="content"><a class="title" href="/idcgz1ck/" title="Linux 通过 Firewalld 服务限制 IP 和端口">Linux 通过 Firewalld 服务限制 IP 和端口</a><time datetime="2026-11-16T13:10:00.000Z" title="发表于 2026-11-16 21:10:00">2026-11-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 0x01</div><div class="footer_custom_text"><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"><span id="percent">0<span>%</span></span></i></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const el = document.getElementById("waline-wrap"); //这里是你的评论div#id
+  var idPath = el.getAttribute('comment_id');
+  if (!idPath) {
+    idPath = decodeURI(window.location.pathname);
+  }
+  const initWaline = (Fn) => {
+    const waline = Fn(Object.assign({
+      el: '#waline-wrap',         //这里是你的评论div#id，跟上面的el中定义的值一致
+      serverURL: 'https://waline.dosbat.com/',  //主题配置文件中配置的服务地址
+      search: false,              //关闭表情查找 不大好用
+      emoji: [
+        'https://unpkg.com/@waline/emojis@1.1.0/bilibili',
+        'https://unpkg.com/@waline/emojis@1.1.0/qq',
+      ],
+      reaction: true,              // 开启反应，可以点击按钮对文章进行评价
+      pageview: false,  // 主题配置文件中配置的浏览量统计
+      dark: 'html[data-theme="dark"]',           
+      path: window.location.pathname,            
+      comment: false,      // 主题配置文件中配置的评论数统计
+      imageUploader: (file) => {
+          if (!file) {  
+            throw new Error('No file provided');  
+          }  
+          let formData = new FormData();
+          let headers = new Headers();
+          formData.append('file', file);
+          formData.append('album_id', 1234); //去不的相册id，id可进入相册页面用F12查看
+          headers.set('Authorization', 'Bearer xxxxxxxxxxxxx');   // 记得改自己的token，去不给的token是1234|xxxx，前面的数字和竖杠不需要，加上Bearer 变成Bearer xxxxx才能认证通过
+          headers.set('Accept', 'application/json');
+          return fetch('https://7bu.top/api/v1/upload', {    // 去不图床的API就是此链接，如果你用的其他图床就改成其他的
+            method: 'POST',
+            headers: headers,
+            body: formData,
+            mode: 'cors',
+          })
+            .then((resp) => resp.json())
+            .then((resp) => resp.data.links.url);
+        },
+    }, {"requiredMeta":["nick","mail"],"locale":{"placeholder":"昵称和邮箱为必填项，为了您能及时收到相关回复的邮件通知，请确保邮箱的正确性！"}}))
+
+    const destroyWaline = () => {
+      waline.destroy()
+    }
+
+    btf.addGlobalFn('pjax', destroyWaline, 'destroyWaline')
+  }
+
+  const loadWaline = async () => {
+    if (initFn) initWaline(initFn)
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/@waline/client@3.1.2/dist/waline.min.css')
+      const { init } = await import('https://cdn.jsdelivr.net/npm/@waline/client@3.1.2/dist/waline.min.js')
+      initFn = init || Waline.init
+      initWaline(initFn)
+      window.walineFn = initFn
+    }
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async src="/js/fps.js"></script><script defer data-pjax src="/js/readPercent.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/Linux-系统/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐧 Linux 系统<br>(33)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/服务与中间件/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚙️ 服务与中间件<br>(32)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/容器与自动化/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐳 容器与自动化<br>(15)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/网络技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🌐 网络技术<br>(15)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/系统运维/网络技术/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🌐 网络技术<br>(1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/资料汇编/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 资料汇编<br>(13)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/编程开发/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 编程开发<br>(11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://dosbat.com/categories/弱电与电气智能化/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">⚡ 弱电与电气智能化<br>(7)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://dosbat.com/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(25% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #69e8f2}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/zisgiumi/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANJz3d.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-09</span><a class="blog-slider__title" href="/zisgiumi/" alt="">腾讯云TCP运维题库-单选题</a><div class="blog-slider__text">腾讯云TCP运维题库-第一部分</div><a class="blog-slider__button" href="/zisgiumi/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/3h328hon/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/26/pAwvU3j.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-09</span><a class="blog-slider__title" href="/3h328hon/" alt="">腾讯云TCP运维题库-多选题</a><div class="blog-slider__text">腾讯云TCP运维题库-多选题</div><a class="blog-slider__button" href="/3h328hon/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/nwi200ri/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANehff.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-02-15</span><a class="blog-slider__title" href="/nwi200ri/" alt="">RHCSA认证考试-第一台机器</a><div class="blog-slider__text">RHCSA认证考试-第一台机器</div><a class="blog-slider__button" href="/nwi200ri/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/3gri66tg/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANeWkt.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2026-11-22</span><a class="blog-slider__title" href="/3gri66tg/" alt="">RHCSA认证考试-附加题</a><div class="blog-slider__text">RHCSA认证考试附加题</div><a class="blog-slider__button" href="/3gri66tg/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/zzo8b94p/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANYpjI.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-02-20</span><a class="blog-slider__title" href="/zzo8b94p/" alt="">RHCSA认证考试-第二台机器</a><div class="blog-slider__text">RHCSA认证考试-第二台机器</div><a class="blog-slider__button" href="/zzo8b94p/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/p62piz46/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANJqHK.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-12-09</span><a class="blog-slider__title" href="/p62piz46/" alt="">Git常用命令大全</a><div class="blog-slider__text">Git是一个开源的分布式版本控制系统，可以有效、高速地处理从很小到非常大的项目版本管理。</div><a class="blog-slider__button" href="/p62piz46/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/0hh955pk/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/19/pAUTLJf.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-12-16</span><a class="blog-slider__title" href="/0hh955pk/" alt="">提问的智慧</a><div class="blog-slider__text">你所提技术问题的解答的好坏, 很大程度上取决于你提问的方式与此问题的难度。本指南将教你如何正确地提问以获得你满意的答案。</div><a class="blog-slider__button" href="/0hh955pk/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="/j6q5pl25/" alt=""><img width="48" height="48" src="https://s21.ax1x.com/2024/10/16/pANYSgA.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-01-01</span><a class="blog-slider__title" href="/j6q5pl25/" alt="">Docker 备忘录</a><div class="blog-slider__text">Docker是一个用于开发、传送和运行应用程序的开放平台。Docker 使您能够将应用程序与基础设施分开，以便您可以快速交付软件。使用 Docker，您可以像管理应用程序一样管理基础设施。通过利用 Docker 的快速交付、测试和部署代码的方法，您可以显着减少编写代码和在生产中运行代码之间的延迟。在这篇文章中，我将提到我们需要或大多数用例的 docker 命令。</div><a class="blog-slider__button" href="/j6q5pl25/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --></body></html>
