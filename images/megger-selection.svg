@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="960" height="620" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">选表与判读：一张表搞定</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">电压等级要匹配被测设备的绝缘等级——低了测不出隐患，高了可能打坏低压绝缘</text>
+
+  <!-- 电压等级选表 -->
+  <rect x="30" y="95" width="560" height="235" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <rect x="30" y="95" width="560" height="38" rx="10" fill="#e0f2fe"/>
+  <text x="50" y="121" font-size="16" font-weight="bold" fill="#0e7490">电压等级怎么选</text>
+  <!-- 表头 -->
+  <rect x="45" y="145" width="245" height="30" fill="#f1f5f9"/>
+  <text x="55" y="166" font-size="12" font-weight="bold" fill="#475569">被测设备额定电压</text>
+  <rect x="290" y="145" width="285" height="30" fill="#f1f5f9"/>
+  <text x="300" y="166" font-size="12" font-weight="bold" fill="#475569">推荐兆欧表电压</text>
+  <rect x="45" y="175" width="530" height="34" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="55" y="198" font-size="13" fill="#334155">500 V 以下</text>
+  <text x="300" y="198" font-size="13" font-weight="bold" fill="#0e7490">500 V 或 1000 V</text>
+  <rect x="45" y="209" width="530" height="34" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="55" y="232" font-size="13" fill="#334155">500 V ~ 3000 V</text>
+  <text x="300" y="232" font-size="13" font-weight="bold" fill="#0e7490">1000 V ~ 2500 V</text>
+  <rect x="45" y="243" width="530" height="34" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="55" y="266" font-size="13" fill="#334155">3000 V ~ 10000 V</text>
+  <text x="300" y="266" font-size="13" font-weight="bold" fill="#0e7490">2500 V ~ 5000 V</text>
+  <rect x="45" y="277" width="530" height="34" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="55" y="300" font-size="13" fill="#334155">绝缘子、高压设备</text>
+  <text x="300" y="300" font-size="13" font-weight="bold" fill="#0e7490">2500 V ~ 5000 V</text>
+  <text x="50" y="322" font-size="11.5" fill="#64748b">常见档位：100 / 250 / 500 / 1000 / 2500 / 5000 / 10000 V</text>
+
+  <!-- 警示 -->
+  <rect x="610" y="95" width="320" height="235" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text x="630" y="125" font-size="15" font-weight="bold" fill="#c2410c">别把电压选高了</text>
+  <text x="630" y="160" font-size="13" fill="#7c2d12">用 2500V 表去测 220V 弱电回路，</text>
+  <text x="630" y="184" font-size="13" fill="#7c2d12">是要出事的。</text>
+  <line x1="630" y1="205" x2="910" y2="205" stroke="#fed7aa" stroke-width="2"/>
+  <text x="630" y="238" font-size="13" font-weight="bold" fill="#c2410c">原则</text>
+  <text x="630" y="264" font-size="13" fill="#7c2d12">表的电压等级略高于设备</text>
+  <text x="630" y="288" font-size="13" fill="#7c2d12">额定电压即可，不能高太多。</text>
+  <text x="630" y="316" font-size="12" fill="#9a3412">选低了测不出隐患，选高了打坏绝缘</text>
+
+  <!-- 阻值判读 -->
+  <rect x="30" y="350" width="900" height="175" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <rect x="30" y="350" width="900" height="38" rx="10" fill="#dcfce7"/>
+  <text x="50" y="376" font-size="16" font-weight="bold" fill="#15803d">阻值怎么判读</text>
+  <text x="50" y="410" font-size="13.5" fill="#334155">· 低压设备绝缘电阻一般要求 ≥ 0.5 MΩ（经验值：每千伏工作电压不低于 1 MΩ）</text>
+  <text x="50" y="438" font-size="13.5" fill="#334155">· 电机绕组一般不低于 1 MΩ/kV；数值只是参考，关键看纵向和横向对比</text>
+  <rect x="50" y="455" width="860" height="52" rx="6" fill="#f0fdf4"/>
+  <text x="65" y="477" font-size="13" font-weight="bold" fill="#15803d">纵向比：和这台设备上次的、历史的数据比，下降明显就要警惕</text>
+  <text x="65" y="498" font-size="13" font-weight="bold" fill="#15803d">横向比：和同型号、同工况的其他设备比，明显偏低就有问题</text>
+
+  <!-- 温度提示 -->
+  <rect x="30" y="545" width="900" height="55" rx="8" fill="#fef3c7" stroke="#ea580c"/>
+  <text x="50" y="568" font-size="13.5" font-weight="bold" fill="#c2410c">温度每升高 10℃，绝缘电阻大致减半</text>
+  <text x="50" y="590" font-size="12.5" fill="#78350f">不同季节测的数据要换算到同一温度再比——所以记录时一定要带上温度和湿度</text>
+</svg>

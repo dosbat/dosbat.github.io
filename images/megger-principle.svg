@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+    <marker id="arrowr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+  <rect width="960" height="600" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">流比计：摇表为什么不怕转速不稳</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">指针偏转取决于两个线圈电流的比值 I₁/I₂，而非绝对值——电压波动时比值基本不变</text>
+
+  <!-- 手摇发电机 -->
+  <rect x="30" y="120" width="180" height="150" rx="10" fill="#fef3c7" stroke="#ea580c" stroke-width="2"/>
+  <text x="120" y="150" text-anchor="middle" font-size="14" font-weight="bold" fill="#c2410c">手摇发电机</text>
+  <circle cx="120" cy="200" r="34" fill="#ffffff" stroke="#ea580c" stroke-width="2"/>
+  <line x1="120" y1="200" x2="120" y2="170" stroke="#ea580c" stroke-width="3"/>
+  <line x1="120" y1="200" x2="146" y2="200" stroke="#ea580c" stroke-width="3"/>
+  <text x="120" y="252" text-anchor="middle" font-size="12" fill="#9a3412">输出直流高压 U</text>
+  <text x="120" y="272" text-anchor="middle" font-size="11" fill="#9a3412">120 r/min</text>
+
+  <!-- 电流流向 -->
+  <line x1="210" y1="195" x2="285" y2="195" stroke="#0891b2" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="248" y="183" text-anchor="middle" font-size="11" fill="#0e7490">高压</text>
+
+  <!-- 流比计表头 -->
+  <rect x="290" y="105" width="380" height="290" rx="12" fill="#ffffff" stroke="#475569" stroke-width="2.5"/>
+  <text x="480" y="135" text-anchor="middle" font-size="15" font-weight="bold" fill="#1e3a5f">磁电系流比计（两个线圈绕在同一转轴）</text>
+
+  <!-- 电流线圈 -->
+  <rect x="315" y="165" width="155" height="95" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="392" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#b91c1c">电流线圈</text>
+  <text x="392" y="212" text-anchor="middle" font-size="12" fill="#7f1d1d">电流 I₁ = U / Rx</text>
+  <text x="392" y="234" text-anchor="middle" font-size="11" fill="#7f1d1d">串在被测绝缘回路</text>
+  <text x="392" y="252" text-anchor="middle" font-size="11" fill="#7f1d1d">绝缘越好 → I₁ 越小</text>
+
+  <!-- 电压线圈 -->
+  <rect x="490" y="165" width="155" height="95" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="567" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#1d4ed8">电压线圈</text>
+  <text x="567" y="212" text-anchor="middle" font-size="12" fill="#1e40af">电流 I₂ ∝ U</text>
+  <text x="567" y="234" text-anchor="middle" font-size="11" fill="#1e40af">与发电机电压相关</text>
+  <text x="567" y="252" text-anchor="middle" font-size="11" fill="#1e40af">电压越高 → I₂ 越大</text>
+
+  <!-- 转矩示意 -->
+  <line x1="392" y1="265" x2="430" y2="300" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowr)"/>
+  <text x="398" y="288" font-size="10" fill="#b91c1c">转矩 M₁</text>
+  <line x1="567" y1="265" x2="530" y2="300" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="548" y="288" font-size="10" fill="#1d4ed8">转矩 M₂</text>
+
+  <!-- 指针 -->
+  <text x="480" y="325" text-anchor="middle" font-size="13" font-weight="bold" fill="#334155">两转矩方向相反，指针停在有合力矩为 0 的位置</text>
+  <text x="480" y="355" text-anchor="middle" font-size="17" font-weight="bold" fill="#dc2626">指针偏转 ∝ I₁ / I₂（电流比值）</text>
+  <text x="480" y="382" text-anchor="middle" font-size="12" fill="#64748b">转速波动 → U 变 → I₁、I₂ 一起变 → 比值不变 → 指针稳</text>
+
+  <!-- 被测绝缘 -->
+  <rect x="700" y="150" width="230" height="110" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="815" y="180" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803d">被测绝缘电阻 Rx</text>
+  <text x="815" y="205" text-anchor="middle" font-size="12" fill="#166534">电机绕组 / 电缆芯线</text>
+  <text x="815" y="230" text-anchor="middle" font-size="12" fill="#166534">对外壳 / 大地的绝缘</text>
+  <line x1="670" y1="195" x2="700" y2="195" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowr)"/>
+  <text x="685" y="185" text-anchor="middle" font-size="10" fill="#b91c1c">I₁</text>
+
+  <!-- 底部问答 -->
+  <rect x="30" y="415" width="900" height="155" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="50" y="446" font-size="15" font-weight="bold" fill="#1e3a5f">为什么这个设计这么妙？</text>
+  <text x="50" y="478" font-size="13.5" fill="#334155">① 手摇电压随转速起伏是必然的，但流比计测的是比值，两个线圈"同涨同跌"，读数不受影响。</text>
+  <text x="50" y="508" font-size="13.5" fill="#334155">② 只要转速达到额定值（约 120 r/min）的 80% 以上并保持平稳，就能得到可靠读数。</text>
+  <text x="50" y="538" font-size="13.5" fill="#334155">③ 摇表刻度从右往左是 0 → ∞：绝缘越好电流越小，指针越靠 ∞；短路时打到 0。</text>
+  <text x="50" y="562" font-size="12" fill="#dc2626">转速忽快忽慢仍会让指针晃——边摇边读、读到稳定值，仍是基本功。</text>
+</svg>

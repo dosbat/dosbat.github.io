@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0891b2"/>
+    </marker>
+  </defs>
+  <rect width="960" height="620" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">摇测标准动作：六步走，一步都不能省</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">从停电验电到先断 L 再停摇——每一步都有讲究，既为了测准，也为了安全和保护仪表</text>
+
+  <!-- 步骤卡片 row1 -->
+  <rect x="30" y="100" width="285" height="185" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="62" cy="132" r="18" fill="#dc2626"/>
+  <text x="62" y="138" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">1</text>
+  <text x="90" y="138" font-size="15" font-weight="bold" fill="#b91c1c">停电 · 验电 · 放电</text>
+  <text x="50" y="172" font-size="12.5" fill="#334155">设备完全断电，确认无感应电</text>
+  <text x="50" y="196" font-size="12.5" fill="#334155">电缆、绕组、电容先对地放电</text>
+  <rect x="50" y="215" width="245" height="52" rx="6" fill="#fef2f2"/>
+  <text x="62" y="237" font-size="12" font-weight="bold" fill="#b91c1c">铁律：严禁带电测量</text>
+  <text x="62" y="257" font-size="11" fill="#7f1d1d">雷电时、高压设备旁禁止摇测</text>
+
+  <line x1="322" y1="192" x2="365" y2="192" stroke="#0891b2" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="370" y="100" width="285" height="185" rx="10" fill="#ffffff" stroke="#ea580c" stroke-width="2"/>
+  <circle cx="402" cy="132" r="18" fill="#ea580c"/>
+  <text x="402" y="138" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">2</text>
+  <text x="430" y="138" font-size="15" font-weight="bold" fill="#c2410c">开路 · 短路自检</text>
+  <text x="390" y="172" font-size="12.5" fill="#334155">开路试验：L、E 悬空，摇到额定</text>
+  <text x="405" y="194" font-size="12" fill="#64748b">转速，指针应指 ∞</text>
+  <text x="390" y="220" font-size="12.5" fill="#334155">短路试验：L、E 短接，轻摇</text>
+  <text x="405" y="242" font-size="12" fill="#64748b">指针应指 0</text>
+  <text x="390" y="270" font-size="11.5" fill="#c2410c">两项正常，摇表才算好使</text>
+
+  <line x1="662" y1="192" x2="705" y2="192" stroke="#0891b2" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="710" y="100" width="220" height="185" rx="10" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <circle cx="742" cy="132" r="18" fill="#0891b2"/>
+  <text x="742" y="138" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">3</text>
+  <text x="770" y="138" font-size="15" font-weight="bold" fill="#0e7490">正确接线</text>
+  <text x="730" y="172" font-size="12.5" fill="#334155">L 接导体，E 接外壳/地</text>
+  <text x="730" y="196" font-size="12.5" fill="#334155">测电缆、潮湿设备加 G</text>
+  <text x="730" y="220" font-size="12.5" fill="#334155">表面擦净，去掉油污水汽</text>
+  <text x="730" y="248" font-size="12.5" fill="#334155">摇表放平、放稳</text>
+  <text x="730" y="272" font-size="11.5" fill="#64748b">远离大电流导体和强磁场</text>
+
+  <!-- 步骤卡片 row2 -->
+  <rect x="30" y="310" width="285" height="185" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <circle cx="62" cy="342" r="18" fill="#16a34a"/>
+  <text x="62" y="348" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">4</text>
+  <text x="90" y="348" font-size="15" font-weight="bold" fill="#15803d">匀速摇测 · 读数</text>
+  <text x="50" y="382" font-size="12.5" fill="#334155">顺时针摇，由慢渐快</text>
+  <text x="50" y="406" font-size="12.5" fill="#334155">到 120 r/min 保持匀速</text>
+  <rect x="50" y="425" width="245" height="52" rx="6" fill="#f0fdf4"/>
+  <text x="62" y="447" font-size="12" font-weight="bold" fill="#15803d">边摇边读，以 1 分钟读数为准</text>
+  <text x="62" y="467" font-size="11" fill="#166534">指针打到 0 → 立即停摇防线圈过热</text>
+
+  <line x1="322" y1="402" x2="365" y2="402" stroke="#0891b2" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="370" y="310" width="285" height="185" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="402" cy="342" r="18" fill="#dc2626"/>
+  <text x="402" y="348" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">5</text>
+  <text x="430" y="348" font-size="15" font-weight="bold" fill="#b91c1c">先断 L，再停摇</text>
+  <text x="390" y="382" font-size="12.5" fill="#334155">大电容设备（长电缆、大电机）</text>
+  <text x="390" y="406" font-size="12.5" fill="#334155">测完先把 L 线从被测物断开</text>
+  <rect x="390" y="425" width="245" height="52" rx="6" fill="#fef2f2"/>
+  <text x="402" y="447" font-size="12" font-weight="bold" fill="#b91c1c">再让发电机停下来</text>
+  <text x="402" y="467" font-size="11" fill="#7f1d1d">否则电容电荷反冲，打坏表头</text>
+
+  <line x1="662" y1="402" x2="705" y2="402" stroke="#0891b2" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="710" y="310" width="220" height="185" rx="10" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+  <circle cx="742" cy="342" r="18" fill="#8b5cf6"/>
+  <text x="742" y="348" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">6</text>
+  <text x="770" y="348" font-size="15" font-weight="bold" fill="#6d28d9">放电 · 记录</text>
+  <text x="730" y="382" font-size="12.5" fill="#334155">测完对被测物充分放电</text>
+  <text x="730" y="406" font-size="12.5" fill="#334155">记录阻值、温度、湿度</text>
+  <text x="730" y="434" font-size="12.5" fill="#334155">温度影响极大，不记温度</text>
+  <text x="730" y="458" font-size="12.5" fill="#334155">的数据没法横向对比</text>
+  <text x="730" y="482" font-size="11.5" fill="#6d28d9">大设备还要记吸收比</text>
+
+  <!-- 底部要点 -->
+  <rect x="30" y="520" width="900" height="80" rx="10" fill="#1e3a5f"/>
+  <text x="480" y="552" text-anchor="middle" font-size="16" font-weight="bold" fill="#ffffff">一条保命、一条护表、一条测准</text>
+  <text x="480" y="582" text-anchor="middle" font-size="14" fill="#e0f2fe">先断电后放电是保命　·　先断 L 再停摇是护表　·　匀速摇满 1 分钟是测准</text>
+</svg>

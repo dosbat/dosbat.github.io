@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+  <rect width="960" height="600" fill="#f8fafc"/>
+  <text x="480" y="40" text-anchor="middle" font-size="25" font-weight="bold" fill="#1e3a5f">摇表是什么：给绝缘"体检"的高压表</text>
+  <text x="480" y="68" text-anchor="middle" font-size="14" fill="#64748b">万用表量不出绝缘隐患——摇表在被测物上加几百到几千伏直流高压，让缺陷现形</text>
+
+  <!-- 摇表主体 -->
+  <rect x="60" y="110" width="360" height="380" rx="14" fill="#ffffff" stroke="#475569" stroke-width="2.5"/>
+  <text x="240" y="140" text-anchor="middle" font-size="14" font-weight="bold" fill="#64748b">指针式摇表（手摇发电机式）</text>
+
+  <!-- 表盘 -->
+  <circle cx="240" cy="255" r="88" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 170 300 A 88 88 0 0 1 310 300" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+  <!-- 刻度 -->
+  <line x1="176" y1="292" x2="182" y2="284" stroke="#475569" stroke-width="2"/>
+  <line x1="195" y1="258" x2="203" y2="262" stroke="#475569" stroke-width="2"/>
+  <line x1="240" y1="242" x2="240" y2="252" stroke="#475569" stroke-width="2"/>
+  <line x1="285" y1="258" x2="277" y2="262" stroke="#475569" stroke-width="2"/>
+  <line x1="304" y1="292" x2="298" y2="284" stroke="#475569" stroke-width="2"/>
+  <text x="174" y="315" font-size="13" font-weight="bold" fill="#dc2626">0</text>
+  <text x="300" y="315" font-size="13" font-weight="bold" fill="#16a34a">∞</text>
+  <!-- 指针 -->
+  <line x1="240" y1="255" x2="288" y2="228" stroke="#dc2626" stroke-width="3"/>
+  <circle cx="240" cy="255" r="6" fill="#dc2626"/>
+  <text x="240" y="340" text-anchor="middle" font-size="12" fill="#64748b">刻度单位 MΩ（兆欧）</text>
+
+  <!-- 三个端子 -->
+  <circle cx="130" cy="410" r="24" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="130" y="416" text-anchor="middle" font-size="16" font-weight="bold" fill="#b91c1c">L</text>
+  <circle cx="240" cy="410" r="24" fill="#fef3c7" stroke="#ea580c" stroke-width="2"/>
+  <text x="240" y="416" text-anchor="middle" font-size="16" font-weight="bold" fill="#c2410c">E</text>
+  <circle cx="350" cy="410" r="24" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="350" y="416" text-anchor="middle" font-size="16" font-weight="bold" fill="#15803d">G</text>
+  <text x="130" y="452" text-anchor="middle" font-size="11" fill="#b91c1c">线路端</text>
+  <text x="240" y="452" text-anchor="middle" font-size="11" fill="#c2410c">接地端</text>
+  <text x="350" y="452" text-anchor="middle" font-size="11" fill="#15803d">屏蔽端</text>
+
+  <!-- 摇柄 -->
+  <circle cx="390" cy="150" r="20" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+  <line x1="390" y1="150" x2="425" y2="120" stroke="#475569" stroke-width="4"/>
+  <circle cx="425" cy="120" r="8" fill="#475569"/>
+  <text x="385" y="187" text-anchor="middle" font-size="11" fill="#64748b">摇柄</text>
+
+  <!-- 右侧说明 -->
+  <rect x="460" y="110" width="470" height="380" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="480" y="142" font-size="16" font-weight="bold" fill="#1e3a5f">摇表能干什么</text>
+  <text x="480" y="176" font-size="14" font-weight="bold" fill="#334155">绝缘电阻 = 施加的直流电压 ÷ 泄漏电流</text>
+  <rect x="480" y="190" width="430" height="44" rx="6" fill="#f1f5f9"/>
+  <text x="495" y="218" font-size="13" fill="#475569">电压越高、泄漏电流越小 → 绝缘越好</text>
+
+  <text x="480" y="270" font-size="14" font-weight="bold" fill="#334155">为什么不用万用表？</text>
+  <text x="480" y="298" font-size="13" fill="#64748b">万用表电阻档只有几伏输出，受潮、老化等缺陷</text>
+  <text x="480" y="320" font-size="13" fill="#64748b">在低压下不暴露——量着"良好"，一通高压就击穿</text>
+  <text x="480" y="348" font-size="13" fill="#64748b">摇表输出 500V / 1000V / 2500V 直流高压，</text>
+  <text x="480" y="370" font-size="13" fill="#64748b">专治绝缘的"隐疾"。常见档位还有 250V、5000V。</text>
+
+  <rect x="480" y="392" width="430" height="80" rx="8" fill="#e0f2fe" stroke="#0891b2"/>
+  <text x="495" y="418" font-size="14" font-weight="bold" fill="#0e7490">两种类型</text>
+  <text x="495" y="442" font-size="12.5" fill="#155e75">手摇式：不用电源、抗干扰、能看指针摆动过程</text>
+  <text x="495" y="463" font-size="12.5" fill="#155e75">电子式：电池升压、自动计时、算吸收比、存数据</text>
+
+  <text x="480" y="548" text-anchor="middle" font-size="13" font-weight="bold" fill="#dc2626">表盘方向要记牢：越靠 ∞ 绝缘越好，打到 0 就是短路击穿</text>
+  <text x="480" y="576" text-anchor="middle" font-size="12" fill="#64748b">摇表学名兆欧表（Megger），是电工查绝缘最朴素的工具</text>
+</svg>
